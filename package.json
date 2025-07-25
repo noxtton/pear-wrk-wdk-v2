@@ -1,0 +1,39 @@
+{
+  "name": "@wdk/core",
+  "version": "1.0.0-beta.2",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "build:types": "rimraf *.d.ts **/*.d.ts; tsc",
+    "docs": "jsdoc -r . --destination ./docs",
+    "lint": "standard",
+    "lint:fix": "standard --fix",
+    "gen:bundle": "npx bare-pack --target ios-arm64 --target ios-arm64-simulator --target ios-x64-simulator --target android-arm --target android-arm64 --target android-ia32 --target android-x64 --linked --out src/worklet.bundle.js tests/wdk-manager-test.js"
+  },
+  "dependencies": {
+    "@wdk/wallet": "https://github.com/tetherto/wdk-wallet#develop",
+    "@wdk/wallet-btc": "https://github.com/tetherto/wdk-wallet-btc#develop",
+    "@wdk/wallet-evm": "https://github.com/tetherto/wdk-wallet-evm#develop",
+    "@wdk/wallet-evm-erc-4337": "https://github.com/tetherto/wdk-wallet-evm-erc-4337#develop",
+    "@wdk/wallet-solana": "https://github.com/tetherto/wdk-wallet-solana#develop",
+    "@wdk/wallet-spark": "https://github.com/tetherto/wdk-wallet-spark#develop",
+    "@wdk/wallet-ton": "https://github.com/tetherto/wdk-wallet-ton#develop",
+    "@wdk/wallet-ton-gasless": "https://github.com/tetherto/wdk-wallet-ton-gasless#develop",
+    "@wdk/wallet-tron": "https://github.com/tetherto/wdk-wallet-tron#develop",
+    "@wdk/wallet-tron-gasfree": "https://github.com/tetherto/wdk-wallet-tron-gasfree#develop",
+    "bare-wdk-runtime": "^1.5.3",
+    "bip39": "3.1.0",
+    "async_hooks": "npm:bare-async-hooks@^0.0.0",
+    "perf_hooks": "npm:bare-performance@^1.0.0",
+    "os": "npm:bare-os@^3.6.1",
+    "encoding": "npm:bare-encoding@^1.0.0"
+  },
+  "devDependencies": {
+    "jsdoc": "4.0.4",
+    "rimraf": "6.0.1",
+    "standard": "17.1.2",
+    "typescript": "5.8.3"
+  },
+  "author": "Tether",
+  "license": "Apache-2.0"
+}
