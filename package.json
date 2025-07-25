@@ -1,6 +1,6 @@
 {
-  "name": "@wdk/core",
-  "version": "1.0.0-beta.2",
+  "name": "@wdk/bare",
+  "version": "0.0.1",
   "main": "index.js",
   "type": "module",
   "scripts": {
