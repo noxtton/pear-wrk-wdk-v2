@@ -32,8 +32,6 @@ import * as bip39 from 'bip39'
 
 /** @typedef {import('@wdk/wallet-btc').BtcWalletConfig} BtcWalletConfig */
 
-/** @typedef {import('@wdk/wallet-spark').SparkWalletConfig} SparkWalletConfig */
-
 /** @typedef {import('@wdk/wallet-solana').SolanaWalletConfig} SolanaWalletConfig */
 
 /** @typedef {string | Uint8Array} Seed */
@@ -46,7 +44,6 @@ import * as bip39 from 'bip39'
  * @property {Seed} ton - The ton's wallet seed phrase.
  * @property {Seed} tron - The tron's wallet seed phrase.
  * @property {Seed} bitcoin - The bitcoin's wallet seed phrase.
- * @property {Seed} spark - The spark's wallet seed phrase.
  * @property {Seed} solana - The solana's wallet seed phrase.
  */
 
@@ -58,7 +55,6 @@ import * as bip39 from 'bip39'
  * @property {TonWalletConfig | TonGaslessWalletConfig} ton - The ton blockchain configuration.
  * @property {TronWalletConfig | TronGasfreeWalletConfig} tron - The tron blockchain configuration.
  * @property {BtcWalletConfig} bitcoin - The bitcoin blockchain configuration.
- * @property {SparkWalletConfig} spark - The spark blockchain configuration.
  * @property {SolanaWalletConfig} solana - The solana blockchain configuration.
  */
 
@@ -81,7 +77,6 @@ export const Blockchain = {
     Ton: 'ton',
     Tron: 'tron',
     Bitcoin: 'bitcoin',
-    // Spark: 'spark',
     Solana: 'solana'
 }
 
@@ -377,11 +372,6 @@ export default class WdkManager {
                 const { default: WalletManagerBtc } = await import('@wdk/wallet-btc')
 
                 this._wallets.bitcoin = new WalletManagerBtc(seed, config.bitcoin)
-            }
-            else if (blockchain === 'spark') {
-                const { default: WalletManagerSpark } = await import('@wdk/wallet-spark')
-
-                this._wallets.spark = new WalletManagerSpark(seed, config.spark)
             }
             else if (blockchain === 'solana') {
                 const { default: WalletManagerSolana } = await import('@wdk/wallet-solana')

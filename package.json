@@ -16,17 +16,14 @@
     "@wdk/wallet-evm": "https://github.com/tetherto/wdk-wallet-evm#develop",
     "@wdk/wallet-evm-erc-4337": "https://github.com/tetherto/wdk-wallet-evm-erc-4337#develop",
     "@wdk/wallet-solana": "https://github.com/tetherto/wdk-wallet-solana#develop",
-    "@wdk/wallet-spark": "https://github.com/tetherto/wdk-wallet-spark#develop",
     "@wdk/wallet-ton": "https://github.com/tetherto/wdk-wallet-ton#develop",
     "@wdk/wallet-ton-gasless": "https://github.com/tetherto/wdk-wallet-ton-gasless#develop",
     "@wdk/wallet-tron": "https://github.com/tetherto/wdk-wallet-tron#develop",
     "@wdk/wallet-tron-gasfree": "https://github.com/tetherto/wdk-wallet-tron-gasfree#develop",
     "bare-wdk-runtime": "^1.5.3",
     "bip39": "3.1.0",
-    "async_hooks": "npm:bare-async-hooks@^0.0.0",
-    "perf_hooks": "npm:bare-performance@^1.0.0",
-    "os": "npm:bare-os@^3.6.1",
-    "encoding": "npm:bare-encoding@^1.0.0"
+    "encoding": "npm:bare-encoding@^1.0.0",
+    "os": "npm:bare-os@^3.6.1"
   },
   "devDependencies": {
     "jsdoc": "4.0.4",
