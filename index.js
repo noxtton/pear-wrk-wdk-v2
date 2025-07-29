@@ -19,10 +19,10 @@
 /** @typedef {import('@wdk/wallet').TransferResult} TransferResult */
 /** @typedef {import('@wdk/wallet').IWalletAccount} IWalletAccount */
 
-/** @typedef {import('./src/wdk-manager.js').Seed} Seed */
-/** @typedef {import('./src/wdk-manager.js').Seeds} Seeds */
-/** @typedef {import('./src/wdk-manager.js').WdkConfig} WdkConfig */
+/** @typedef {import('./src/wdk-core/wdk-manager.js').Seed} Seed */
+/** @typedef {import('./src/wdk-core/wdk-manager.js').Seeds} Seeds */
+/** @typedef {import('./src/wdk-core/wdk-manager.js').WdkConfig} WdkConfig */
 
-/** @typedef {import('./src/wdk-manager.js').TransferConfig} TransferConfig */
+/** @typedef {import('./src/wdk-core/wdk-manager.js').TransferConfig} TransferConfig */
 
-export { default, Blockchain } from './src/wdk-manager.js'
+export { default, Blockchain } from './src/wdk-core/wdk-manager.js'

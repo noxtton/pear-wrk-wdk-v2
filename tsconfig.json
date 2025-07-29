@@ -1,7 +1,7 @@
 {
   "include": [
     "index.js",
-    "src/wdk-manager.js"
+    "src/wdk-core/wdk-manager.js"
   ],
   "compilerOptions": {
     "target": "ES2015",

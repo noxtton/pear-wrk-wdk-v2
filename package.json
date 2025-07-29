@@ -2,13 +2,13 @@
   "name": "@wdk/bare",
   "version": "0.0.1",
   "main": "index.js",
-  "type": "module",
   "scripts": {
     "build:types": "rimraf *.d.ts **/*.d.ts; tsc",
     "docs": "jsdoc -r . --destination ./docs",
     "lint": "standard",
     "lint:fix": "standard --fix",
-    "gen:bundle": "npx bare-pack --target ios-arm64 --target ios-arm64-simulator --target ios-x64-simulator --target android-arm --target android-arm64 --target android-ia32 --target android-x64 --linked --out src/worklet.bundle.js tests/wdk-manager-test.js"
+    "gen:bundle": "npx bare-pack --target darwin-arm64 --linked --out src/wdk-worklet.bundle.js src/wdk-worklet.js",
+    "gen:schema": "node src/schema/schema.js"
   },
   "dependencies": {
     "@wdk/wallet": "https://github.com/tetherto/wdk-wallet#develop",
@@ -20,13 +20,15 @@
     "@wdk/wallet-ton-gasless": "https://github.com/tetherto/wdk-wallet-ton-gasless#develop",
     "@wdk/wallet-tron": "https://github.com/tetherto/wdk-wallet-tron#develop",
     "@wdk/wallet-tron-gasfree": "https://github.com/tetherto/wdk-wallet-tron-gasfree#develop",
+    "bare-ipc": "^1.1.1",
     "bare-wdk-runtime": "^1.5.3",
     "bip39": "3.1.0",
     "encoding": "npm:bare-encoding@^1.0.0",
+    "hrpc": "^4.0.1",
+    "hyperschema": "^1.12.4",
     "os": "npm:bare-os@^3.6.1"
   },
   "devDependencies": {
-    "jsdoc": "4.0.4",
     "rimraf": "6.0.1",
     "standard": "17.1.2",
     "typescript": "5.8.3"

@@ -2,7 +2,7 @@
 	"ethereum": {
 		"chainId": 1,
 		"blockchain": "ethereum",
-		"provider": "https://rpc.mevblocker.io/fast",
+		"provider": "https://eth-mainnet.g.alchemy.com/v2/sgA4I4e_97UnfNiohE23sv5BvjWtXtYO",
 		"bundlerUrl": "https://api.candide.dev/public/v3/ethereum",
 		"paymasterUrl": "https://api.candide.dev/public/v3/ethereum",
 		"paymasterAddress": "0x8b1f6cb5d062aa2ce8d581942bbb960420d875ba",
@@ -17,7 +17,7 @@
 	"arbitrum": {
 		"chainId": 42161,
 		"blockchain": "arbitrum",
-		"provider": "https://1rpc.io/arb",
+		"provider": "https://arb-mainnet.g.alchemy.com/v2/sgA4I4e_97UnfNiohE23sv5BvjWtXtYO",
 		"bundlerUrl": "https://api.candide.dev/public/v3/arbitrum",
 		"paymasterUrl": "https://api.candide.dev/public/v3/arbitrum",
 		"paymasterAddress": "0x8b1f6cb5d062aa2ce8d581942bbb960420d875ba",
@@ -32,7 +32,7 @@
 	"polygon": {
 		"chainId": 137,
 		"blockchain": "polygon",
-		"provider": "https://polygon-rpc.com",
+		"provider": "https://polygon-mainnet.g.alchemy.com/v2/sgA4I4e_97UnfNiohE23sv5BvjWtXtYO",
 		"bundlerUrl": "https://api.candide.dev/public/v3/polygon",
 		"paymasterUrl": "https://api.candide.dev/public/v3/polygon",
 		"paymasterAddress": "0x8b1f6cb5d062aa2ce8d581942bbb960420d875ba",
