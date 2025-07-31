@@ -39,6 +39,29 @@
       ]
     },
     {
+      "name": "rpc-exception",
+      "namespace": "wdk-core",
+      "compact": false,
+      "flagsPosition": 0,
+      "fields": [
+        {
+          "name": "code",
+          "type": "string",
+          "version": 1
+        },
+        {
+          "name": "message",
+          "type": "string",
+          "version": 1
+        },
+        {
+          "name": "error",
+          "type": "string",
+          "version": 1
+        }
+      ]
+    },
+    {
       "name": "workletStart-request",
       "namespace": "wdk-core",
       "compact": false,
@@ -84,7 +107,7 @@
         {
           "name": "exception",
           "required": false,
-          "type": "string",
+          "type": "@wdk-core/rpc-exception",
           "version": 1
         }
       ]
@@ -117,7 +140,7 @@
         {
           "name": "exception",
           "required": false,
-          "type": "string",
+          "type": "@wdk-core/rpc-exception",
           "version": 1
         }
       ]
@@ -156,7 +179,7 @@
         {
           "name": "exception",
           "required": false,
-          "type": "string",
+          "type": "@wdk-core/rpc-exception",
           "version": 1
         }
       ]
@@ -195,6 +218,26 @@
         {
           "name": "exception",
           "required": false,
+          "type": "@wdk-core/rpc-exception",
+          "version": 1
+        }
+      ]
+    },
+    {
+      "name": "quoteSendTransaction-request-options",
+      "namespace": "wdk-core",
+      "compact": false,
+      "flagsPosition": -1,
+      "fields": [
+        {
+          "name": "to",
+          "required": true,
+          "type": "string",
+          "version": 1
+        },
+        {
+          "name": "value",
+          "required": true,
           "type": "string",
           "version": 1
         }
@@ -221,7 +264,7 @@
         {
           "name": "options",
           "required": true,
-          "type": "string",
+          "type": "@wdk-core/quoteSendTransaction-request-options",
           "version": 1
         }
       ]
@@ -240,7 +283,7 @@
         {
           "name": "exception",
           "required": false,
-          "type": "string",
+          "type": "@wdk-core/rpc-exception",
           "version": 1
         }
       ]
@@ -279,7 +322,7 @@
         {
           "name": "exception",
           "required": false,
-          "type": "string",
+          "type": "@wdk-core/rpc-exception",
           "version": 1
         }
       ]
@@ -318,7 +361,7 @@
         {
           "name": "exception",
           "required": false,
-          "type": "string",
+          "type": "@wdk-core/rpc-exception",
           "version": 1
         }
       ]
@@ -363,6 +406,32 @@
         {
           "name": "exception",
           "required": false,
+          "type": "@wdk-core/rpc-exception",
+          "version": 1
+        }
+      ]
+    },
+    {
+      "name": "abstractedAccountTransfer-request-options",
+      "namespace": "wdk-core",
+      "compact": false,
+      "flagsPosition": -1,
+      "fields": [
+        {
+          "name": "token",
+          "required": true,
+          "type": "string",
+          "version": 1
+        },
+        {
+          "name": "recipient",
+          "required": true,
+          "type": "string",
+          "version": 1
+        },
+        {
+          "name": "amount",
+          "required": true,
           "type": "string",
           "version": 1
         }
@@ -389,7 +458,7 @@
         {
           "name": "options",
           "required": true,
-          "type": "string",
+          "type": "@wdk-core/abstractedAccountTransfer-request-options",
           "version": 1
         }
       ]
@@ -413,6 +482,32 @@
         {
           "name": "exception",
           "required": false,
+          "type": "@wdk-core/rpc-exception",
+          "version": 1
+        }
+      ]
+    },
+    {
+      "name": "abstractedAccountQuoteTransfer-request-options",
+      "namespace": "wdk-core",
+      "compact": false,
+      "flagsPosition": -1,
+      "fields": [
+        {
+          "name": "token",
+          "required": true,
+          "type": "string",
+          "version": 1
+        },
+        {
+          "name": "recipient",
+          "required": true,
+          "type": "string",
+          "version": 1
+        },
+        {
+          "name": "amount",
+          "required": true,
           "type": "string",
           "version": 1
         }
@@ -439,7 +534,7 @@
         {
           "name": "options",
           "required": true,
-          "type": "string",
+          "type": "@wdk-core/abstractedAccountQuoteTransfer-request-options",
           "version": 1
         }
       ]
@@ -458,7 +553,7 @@
         {
           "name": "exception",
           "required": false,
-          "type": "string",
+          "type": "@wdk-core/rpc-exception",
           "version": 1
         }
       ]

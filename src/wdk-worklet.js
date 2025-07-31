@@ -134,20 +134,8 @@ rpc.onGetAbstractedAddressTokenBalance(async payload => {
 
 rpc.onAbstractedAccountTransfer(async payload => {
   try {
-    let options = null
-    try {
-      options = JSON.parse(payload.options)
-    } catch (err) {
-      return {
-        exception: rpcException({
-          code: ERROR_CODES.BAD_REQUEST,
-          message: `Error while converting options parameter json string to object.`,
-          error: err,
-        })
-      }
-    }
-    const transfer = await wdk.abstractedAccountTransfer(payload.network, payload.accountIndex, options)
-    return { fee: transfer.fee, hash: transfer.hash }
+    const transfer = await wdk.abstractedAccountTransfer(payload.network, payload.accountIndex, payload.options)
+    return { fee: transfer.fee }
   } catch (error) {
     return {
       exception: rpcException({
@@ -160,19 +148,7 @@ rpc.onAbstractedAccountTransfer(async payload => {
 
 rpc.onAbstractedAccountQuoteTransfer(async payload => {
   try {
-    let options = null
-    try {
-      options = JSON.parse(payload.options)
-    } catch (err) {
-      return {
-        exception: rpcException({
-          code: ERROR_CODES.BAD_REQUEST,
-          message: `Error while converting options parameter json string to object.`,
-          error: err,
-        })
-      }
-    }
-    const transfer = await wdk.abstractedAccountQuoteTransfer(payload.network, payload.accountIndex, options)
+    const transfer = await wdk.abstractedAccountQuoteTransfer(payload.network, payload.accountIndex, payload.options)
     return { fee: transfer.fee }
   } catch (error) {
     return {

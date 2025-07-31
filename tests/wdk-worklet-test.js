@@ -39,6 +39,16 @@ async function init () {
     tokenAddress: USDT_BALANCE_ADDRESSES[blockchainNetwork],
   })
   console.log(`${blockchainNetwork} Abstracted Token Balance:`, evmAbstractedTokenBalance)
+
+  // const evmAbstractedAddressTransfer = await rpc.abstractedAccountTransfer({
+  //   network: blockchainNetwork,
+  //   accountIndex: 0,
+  //   options: {
+  //     token: 'test token',
+  //     recipient: 'test recipient',
+  //     amount: '0.10',
+  //   }
+  // })
 }
 
 init()

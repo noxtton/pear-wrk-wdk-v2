@@ -21,6 +21,15 @@ schemaNs.register({
   ],
 })
 
+schemaNs.register({
+  name: 'rpc-exception',
+  fields: [
+    { name: 'code', type: 'string' },
+    { name: 'message', type: 'string' },
+    { name: 'error', type: 'string' },
+  ],
+})
+
 /**
  * Worklet start
  */
@@ -38,7 +47,7 @@ schemaNs.register({
   name: 'workletStart-response',
   fields: [
     { name: 'status', type: 'string' },
-    { name: 'exception', type: 'string', required: false }
+    { name: 'exception', type: '@wdk-core/rpc-exception', required: false }
   ],
 })
 
@@ -54,7 +63,7 @@ schemaNs.register({
   name: 'workletStop-response',
   fields: [
     { name: 'status', type: 'string' },
-    { name: 'exception', type: 'string', required: false }
+    { name: 'exception', type: '@wdk-core/rpc-exception', required: false }
   ],
 })
 
@@ -74,7 +83,7 @@ schemaNs.register({
   name: 'getAddress-response',
   fields: [
     { name: 'address', type: 'string' },
-    { name: 'exception', type: 'string', required: false }
+    { name: 'exception', type: '@wdk-core/rpc-exception', required: false }
   ],
 })
 
@@ -93,7 +102,7 @@ schemaNs.register({
   name: 'getAddressBalance-response',
   fields: [
     { name: 'balance', type: 'string' },
-    { name: 'exception', type: 'string', required: false }
+    { name: 'exception', type: '@wdk-core/rpc-exception', required: false }
   ],
 })
 
@@ -101,11 +110,18 @@ schemaNs.register({
  * quoteSendTransaction
  */
 schemaNs.register({
+  name: 'quoteSendTransaction-request-options',
+  fields: [
+    { name: 'to', type: 'string', required: true },
+    { name: 'value', type: 'string', required: true },
+  ],
+})
+schemaNs.register({
   name: 'quoteSendTransaction-request',
   fields: [
     { name: 'network', type: 'string', required: true },
     { name: 'accountIndex', type: 'uint', required: true },
-    { name: 'options', type: 'string', required: true },
+    { name: 'options', type: '@wdk-core/quoteSendTransaction-request-options', required: true },
   ],
 })
 
@@ -113,7 +129,7 @@ schemaNs.register({
   name: 'quoteSendTransaction-response',
   fields: [
     { name: 'fee', type: 'string' },
-    { name: 'exception', type: 'string', required: false }
+    { name: 'exception', type: '@wdk-core/rpc-exception', required: false }
   ],
 })
 
@@ -137,7 +153,7 @@ schemaNs.register({
   name: 'getAbstractedAddress-response',
   fields: [
     { name: 'address', type: 'string' },
-    { name: 'exception', type: 'string', required: false }
+    { name: 'exception', type: '@wdk-core/rpc-exception', required: false }
   ],
 })
 
@@ -156,7 +172,7 @@ schemaNs.register({
   name: 'getAbstractedAddressBalance-response',
   fields: [
     { name: 'balance', type: 'string' },
-    { name: 'exception', type: 'string', required: false }
+    { name: 'exception', type: '@wdk-core/rpc-exception', required: false }
   ],
 })
 
@@ -176,7 +192,7 @@ schemaNs.register({
   name: 'getAbstractedAddressTokenBalance-response',
   fields: [
     { name: 'balance', type: 'string' },
-    { name: 'exception', type: 'string', required: false }
+    { name: 'exception', type: '@wdk-core/rpc-exception', required: false }
   ],
 })
 
@@ -184,11 +200,19 @@ schemaNs.register({
  * abstractedAccountTransfer
  */
 schemaNs.register({
+  name: 'abstractedAccountTransfer-request-options',
+  fields: [
+    { name: 'token', type: 'string', required: true },
+    { name: 'recipient', type: 'string', required: true },
+    { name: 'amount', type: 'string', required: true },
+  ],
+})
+schemaNs.register({
   name: 'abstractedAccountTransfer-request',
   fields: [
     { name: 'network', type: 'string', required: true },
     { name: 'accountIndex', type: 'uint', required: true },
-    { name: 'options', type: 'string', required: true },
+    { name: 'options', type: '@wdk-core/abstractedAccountTransfer-request-options', required: true },
   ],
 })
 
@@ -197,7 +221,7 @@ schemaNs.register({
   fields: [
     { name: 'hash', type: 'string' },
     { name: 'fee', type: 'string' },
-    { name: 'exception', type: 'string', required: false }
+    { name: 'exception', type: '@wdk-core/rpc-exception', required: false }
   ],
 })
 
@@ -205,11 +229,19 @@ schemaNs.register({
  * abstractedAccountQuoteTransfer
  */
 schemaNs.register({
+  name: 'abstractedAccountQuoteTransfer-request-options',
+  fields: [
+    { name: 'token', type: 'string', required: true },
+    { name: 'recipient', type: 'string', required: true },
+    { name: 'amount', type: 'string', required: true },
+  ],
+})
+schemaNs.register({
   name: 'abstractedAccountQuoteTransfer-request',
   fields: [
     { name: 'network', type: 'string', required: true },
     { name: 'accountIndex', type: 'uint', required: true },
-    { name: 'options', type: 'string', required: true },
+    { name: 'options', type: '@wdk-core/abstractedAccountQuoteTransfer-request-options', required: true },
   ],
 })
 
@@ -217,7 +249,7 @@ schemaNs.register({
   name: 'abstractedAccountQuoteTransfer-response',
   fields: [
     { name: 'fee', type: 'string' },
-    { name: 'exception', type: 'string', required: false }
+    { name: 'exception', type: '@wdk-core/rpc-exception', required: false }
   ],
 })
 

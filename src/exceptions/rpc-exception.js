@@ -36,11 +36,11 @@ function stringifyError (error) {
  * @see rpcExceptionResponse
  */
 function rpcException (payload) {
-  return JSON.stringify({
+  return {
     code: payload.code ? payload.code : ERROR_CODES.UNKNOWN,
     message: payload.message ? payload.message : 'Unexpected error occurred.',
     error: stringifyError(payload.error)
-  })
+  }
 }
 
 module.exports = rpcException
