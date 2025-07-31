@@ -51,22 +51,6 @@ schemaNs.register({
   ],
 })
 
-/**
- * Worklet stop
- */
-schemaNs.register({
-  name: 'workletStop-request',
-  fields: [{ name: 'payload', type: 'string', required: false }],
-})
-
-schemaNs.register({
-  name: 'workletStop-response',
-  fields: [
-    { name: 'status', type: 'string' },
-    { name: 'exception', type: '@wdk-core/rpc-exception', required: false }
-  ],
-})
-
 
 /**
  * Get address based on network
@@ -274,12 +258,6 @@ ns.register({
   name: 'workletStart',
   request: { name: '@wdk-core/workletStart-request', stream: false },
   response: { name: '@wdk-core/workletStart-response', stream: false },
-})
-
-ns.register({
-  name: 'workletStop',
-  request: { name: '@wdk-core/workletStop-request', stream: false },
-  response: { name: '@wdk-core/workletStop-response', stream: false },
 })
 
 ns.register({

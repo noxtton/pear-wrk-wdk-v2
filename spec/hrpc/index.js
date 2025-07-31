@@ -9,26 +9,24 @@ const methods = new Map([
   [0, '@wdk-core/log'],
   ['@wdk-core/workletStart', 1],
   [1, '@wdk-core/workletStart'],
-  ['@wdk-core/workletStop', 2],
-  [2, '@wdk-core/workletStop'],
-  ['@wdk-core/getAddress', 3],
-  [3, '@wdk-core/getAddress'],
-  ['@wdk-core/getAddressBalance', 4],
-  [4, '@wdk-core/getAddressBalance'],
-  ['@wdk-core/quoteSendTransaction', 5],
-  [5, '@wdk-core/quoteSendTransaction'],
-  ['@wdk-core/getAbstractedAddress', 6],
-  [6, '@wdk-core/getAbstractedAddress'],
-  ['@wdk-core/getAbstractedAddressBalance', 7],
-  [7, '@wdk-core/getAbstractedAddressBalance'],
-  ['@wdk-core/getAbstractedAddressTokenBalance', 8],
-  [8, '@wdk-core/getAbstractedAddressTokenBalance'],
-  ['@wdk-core/abstractedAccountTransfer', 9],
-  [9, '@wdk-core/abstractedAccountTransfer'],
-  ['@wdk-core/abstractedAccountQuoteTransfer', 10],
-  [10, '@wdk-core/abstractedAccountQuoteTransfer'],
-  ['@wdk-core/dispose', 11],
-  [11, '@wdk-core/dispose']
+  ['@wdk-core/getAddress', 2],
+  [2, '@wdk-core/getAddress'],
+  ['@wdk-core/getAddressBalance', 3],
+  [3, '@wdk-core/getAddressBalance'],
+  ['@wdk-core/quoteSendTransaction', 4],
+  [4, '@wdk-core/quoteSendTransaction'],
+  ['@wdk-core/getAbstractedAddress', 5],
+  [5, '@wdk-core/getAbstractedAddress'],
+  ['@wdk-core/getAbstractedAddressBalance', 6],
+  [6, '@wdk-core/getAbstractedAddressBalance'],
+  ['@wdk-core/getAbstractedAddressTokenBalance', 7],
+  [7, '@wdk-core/getAbstractedAddressTokenBalance'],
+  ['@wdk-core/abstractedAccountTransfer', 8],
+  [8, '@wdk-core/abstractedAccountTransfer'],
+  ['@wdk-core/abstractedAccountQuoteTransfer', 9],
+  [9, '@wdk-core/abstractedAccountQuoteTransfer'],
+  ['@wdk-core/dispose', 10],
+  [10, '@wdk-core/dispose']
 ])
 
 class HRPC {
@@ -38,7 +36,6 @@ class HRPC {
     this._requestEncodings = new Map([
       ['@wdk-core/log', getEncoding('@wdk-core/log-request')],
       ['@wdk-core/workletStart', getEncoding('@wdk-core/workletStart-request')],
-      ['@wdk-core/workletStop', getEncoding('@wdk-core/workletStop-request')],
       ['@wdk-core/getAddress', getEncoding('@wdk-core/getAddress-request')],
       ['@wdk-core/getAddressBalance', getEncoding('@wdk-core/getAddressBalance-request')],
       ['@wdk-core/quoteSendTransaction', getEncoding('@wdk-core/quoteSendTransaction-request')],
@@ -51,7 +48,6 @@ class HRPC {
     ])
     this._responseEncodings = new Map([
       ['@wdk-core/workletStart', getEncoding('@wdk-core/workletStart-response')],
-      ['@wdk-core/workletStop', getEncoding('@wdk-core/workletStop-response')],
       ['@wdk-core/getAddress', getEncoding('@wdk-core/getAddress-response')],
       ['@wdk-core/getAddressBalance', getEncoding('@wdk-core/getAddressBalance-response')],
       ['@wdk-core/quoteSendTransaction', getEncoding('@wdk-core/quoteSendTransaction-response')],
@@ -131,10 +127,6 @@ class HRPC {
     return this._call('@wdk-core/workletStart', args)
   }
 
-  async workletStop (args) {
-    return this._call('@wdk-core/workletStop', args)
-  }
-
   async getAddress (args) {
     return this._call('@wdk-core/getAddress', args)
   }
@@ -177,10 +169,6 @@ class HRPC {
 
   onWorkletStart (responseFn) {
     this._handlers['@wdk-core/workletStart'] = responseFn
-  }
-
-  onWorkletStop (responseFn) {
-    this._handlers['@wdk-core/workletStop'] = responseFn
   }
 
   onGetAddress (responseFn) {

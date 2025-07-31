@@ -156,62 +156,8 @@ const encoding4 = {
   }
 }
 
-// @wdk-core/workletStop-request
-const encoding5 = {
-  preencode (state, m) {
-    state.end++ // max flag is 1 so always one byte
-
-    if (m.payload) c.string.preencode(state, m.payload)
-  },
-  encode (state, m) {
-    const flags = m.payload ? 1 : 0
-
-    c.uint.encode(state, flags)
-
-    if (m.payload) c.string.encode(state, m.payload)
-  },
-  decode (state) {
-    const flags = c.uint.decode(state)
-
-    return {
-      payload: (flags & 1) !== 0 ? c.string.decode(state) : null
-    }
-  }
-}
-
-// @wdk-core/workletStop-response.exception
-const encoding6_1 = encoding4_1
-
-// @wdk-core/workletStop-response
-const encoding6 = {
-  preencode (state, m) {
-    state.end++ // max flag is 2 so always one byte
-
-    if (m.status) c.string.preencode(state, m.status)
-    if (m.exception) encoding6_1.preencode(state, m.exception)
-  },
-  encode (state, m) {
-    const flags =
-      (m.status ? 1 : 0) |
-      (m.exception ? 2 : 0)
-
-    c.uint.encode(state, flags)
-
-    if (m.status) c.string.encode(state, m.status)
-    if (m.exception) encoding6_1.encode(state, m.exception)
-  },
-  decode (state) {
-    const flags = c.uint.decode(state)
-
-    return {
-      status: (flags & 1) !== 0 ? c.string.decode(state) : null,
-      exception: (flags & 2) !== 0 ? encoding6_1.decode(state) : null
-    }
-  }
-}
-
 // @wdk-core/getAddress-request
-const encoding7 = {
+const encoding5 = {
   preencode (state, m) {
     c.string.preencode(state, m.network)
     c.uint.preencode(state, m.accountIndex)
@@ -232,15 +178,15 @@ const encoding7 = {
 }
 
 // @wdk-core/getAddress-response.exception
-const encoding8_1 = encoding4_1
+const encoding6_1 = encoding4_1
 
 // @wdk-core/getAddress-response
-const encoding8 = {
+const encoding6 = {
   preencode (state, m) {
     state.end++ // max flag is 2 so always one byte
 
     if (m.address) c.string.preencode(state, m.address)
-    if (m.exception) encoding8_1.preencode(state, m.exception)
+    if (m.exception) encoding6_1.preencode(state, m.exception)
   },
   encode (state, m) {
     const flags =
@@ -250,31 +196,31 @@ const encoding8 = {
     c.uint.encode(state, flags)
 
     if (m.address) c.string.encode(state, m.address)
-    if (m.exception) encoding8_1.encode(state, m.exception)
+    if (m.exception) encoding6_1.encode(state, m.exception)
   },
   decode (state) {
     const flags = c.uint.decode(state)
 
     return {
       address: (flags & 1) !== 0 ? c.string.decode(state) : null,
-      exception: (flags & 2) !== 0 ? encoding8_1.decode(state) : null
+      exception: (flags & 2) !== 0 ? encoding6_1.decode(state) : null
     }
   }
 }
 
 // @wdk-core/getAddressBalance-request
-const encoding9 = encoding7
+const encoding7 = encoding5
 
 // @wdk-core/getAddressBalance-response.exception
-const encoding10_1 = encoding4_1
+const encoding8_1 = encoding4_1
 
 // @wdk-core/getAddressBalance-response
-const encoding10 = {
+const encoding8 = {
   preencode (state, m) {
     state.end++ // max flag is 2 so always one byte
 
     if (m.balance) c.string.preencode(state, m.balance)
-    if (m.exception) encoding10_1.preencode(state, m.exception)
+    if (m.exception) encoding8_1.preencode(state, m.exception)
   },
   encode (state, m) {
     const flags =
@@ -284,20 +230,20 @@ const encoding10 = {
     c.uint.encode(state, flags)
 
     if (m.balance) c.string.encode(state, m.balance)
-    if (m.exception) encoding10_1.encode(state, m.exception)
+    if (m.exception) encoding8_1.encode(state, m.exception)
   },
   decode (state) {
     const flags = c.uint.decode(state)
 
     return {
       balance: (flags & 1) !== 0 ? c.string.decode(state) : null,
-      exception: (flags & 2) !== 0 ? encoding10_1.decode(state) : null
+      exception: (flags & 2) !== 0 ? encoding8_1.decode(state) : null
     }
   }
 }
 
 // @wdk-core/quoteSendTransaction-request-options
-const encoding11 = {
+const encoding9 = {
   preencode (state, m) {
     c.string.preencode(state, m.to)
     c.string.preencode(state, m.value)
@@ -318,24 +264,24 @@ const encoding11 = {
 }
 
 // @wdk-core/quoteSendTransaction-request.options
-const encoding12_2 = c.frame(encoding11)
+const encoding10_2 = c.frame(encoding9)
 
 // @wdk-core/quoteSendTransaction-request
-const encoding12 = {
+const encoding10 = {
   preencode (state, m) {
     c.string.preencode(state, m.network)
     c.uint.preencode(state, m.accountIndex)
-    encoding12_2.preencode(state, m.options)
+    encoding10_2.preencode(state, m.options)
   },
   encode (state, m) {
     c.string.encode(state, m.network)
     c.uint.encode(state, m.accountIndex)
-    encoding12_2.encode(state, m.options)
+    encoding10_2.encode(state, m.options)
   },
   decode (state) {
     const r0 = c.string.decode(state)
     const r1 = c.uint.decode(state)
-    const r2 = encoding12_2.decode(state)
+    const r2 = encoding10_2.decode(state)
 
     return {
       network: r0,
@@ -346,15 +292,15 @@ const encoding12 = {
 }
 
 // @wdk-core/quoteSendTransaction-response.exception
-const encoding13_1 = encoding4_1
+const encoding11_1 = encoding4_1
 
 // @wdk-core/quoteSendTransaction-response
-const encoding13 = {
+const encoding11 = {
   preencode (state, m) {
     state.end++ // max flag is 2 so always one byte
 
     if (m.fee) c.string.preencode(state, m.fee)
-    if (m.exception) encoding13_1.preencode(state, m.exception)
+    if (m.exception) encoding11_1.preencode(state, m.exception)
   },
   encode (state, m) {
     const flags =
@@ -364,31 +310,31 @@ const encoding13 = {
     c.uint.encode(state, flags)
 
     if (m.fee) c.string.encode(state, m.fee)
-    if (m.exception) encoding13_1.encode(state, m.exception)
+    if (m.exception) encoding11_1.encode(state, m.exception)
   },
   decode (state) {
     const flags = c.uint.decode(state)
 
     return {
       fee: (flags & 1) !== 0 ? c.string.decode(state) : null,
-      exception: (flags & 2) !== 0 ? encoding13_1.decode(state) : null
+      exception: (flags & 2) !== 0 ? encoding11_1.decode(state) : null
     }
   }
 }
 
 // @wdk-core/getAbstractedAddress-request
-const encoding14 = encoding7
+const encoding12 = encoding5
 
 // @wdk-core/getAbstractedAddress-response.exception
-const encoding15_1 = encoding4_1
+const encoding13_1 = encoding4_1
 
 // @wdk-core/getAbstractedAddress-response
-const encoding15 = {
+const encoding13 = {
   preencode (state, m) {
     state.end++ // max flag is 2 so always one byte
 
     if (m.address) c.string.preencode(state, m.address)
-    if (m.exception) encoding15_1.preencode(state, m.exception)
+    if (m.exception) encoding13_1.preencode(state, m.exception)
   },
   encode (state, m) {
     const flags =
@@ -398,25 +344,81 @@ const encoding15 = {
     c.uint.encode(state, flags)
 
     if (m.address) c.string.encode(state, m.address)
-    if (m.exception) encoding15_1.encode(state, m.exception)
+    if (m.exception) encoding13_1.encode(state, m.exception)
   },
   decode (state) {
     const flags = c.uint.decode(state)
 
     return {
       address: (flags & 1) !== 0 ? c.string.decode(state) : null,
-      exception: (flags & 2) !== 0 ? encoding15_1.decode(state) : null
+      exception: (flags & 2) !== 0 ? encoding13_1.decode(state) : null
     }
   }
 }
 
 // @wdk-core/getAbstractedAddressBalance-request
-const encoding16 = encoding7
+const encoding14 = encoding5
 
 // @wdk-core/getAbstractedAddressBalance-response.exception
-const encoding17_1 = encoding4_1
+const encoding15_1 = encoding4_1
 
 // @wdk-core/getAbstractedAddressBalance-response
+const encoding15 = {
+  preencode (state, m) {
+    state.end++ // max flag is 2 so always one byte
+
+    if (m.balance) c.string.preencode(state, m.balance)
+    if (m.exception) encoding15_1.preencode(state, m.exception)
+  },
+  encode (state, m) {
+    const flags =
+      (m.balance ? 1 : 0) |
+      (m.exception ? 2 : 0)
+
+    c.uint.encode(state, flags)
+
+    if (m.balance) c.string.encode(state, m.balance)
+    if (m.exception) encoding15_1.encode(state, m.exception)
+  },
+  decode (state) {
+    const flags = c.uint.decode(state)
+
+    return {
+      balance: (flags & 1) !== 0 ? c.string.decode(state) : null,
+      exception: (flags & 2) !== 0 ? encoding15_1.decode(state) : null
+    }
+  }
+}
+
+// @wdk-core/getAbstractedAddressTokenBalance-request
+const encoding16 = {
+  preencode (state, m) {
+    c.string.preencode(state, m.network)
+    c.uint.preencode(state, m.accountIndex)
+    c.string.preencode(state, m.tokenAddress)
+  },
+  encode (state, m) {
+    c.string.encode(state, m.network)
+    c.uint.encode(state, m.accountIndex)
+    c.string.encode(state, m.tokenAddress)
+  },
+  decode (state) {
+    const r0 = c.string.decode(state)
+    const r1 = c.uint.decode(state)
+    const r2 = c.string.decode(state)
+
+    return {
+      network: r0,
+      accountIndex: r1,
+      tokenAddress: r2
+    }
+  }
+}
+
+// @wdk-core/getAbstractedAddressTokenBalance-response.exception
+const encoding17_1 = encoding4_1
+
+// @wdk-core/getAbstractedAddressTokenBalance-response
 const encoding17 = {
   preencode (state, m) {
     state.end++ // max flag is 2 so always one byte
@@ -444,64 +446,8 @@ const encoding17 = {
   }
 }
 
-// @wdk-core/getAbstractedAddressTokenBalance-request
-const encoding18 = {
-  preencode (state, m) {
-    c.string.preencode(state, m.network)
-    c.uint.preencode(state, m.accountIndex)
-    c.string.preencode(state, m.tokenAddress)
-  },
-  encode (state, m) {
-    c.string.encode(state, m.network)
-    c.uint.encode(state, m.accountIndex)
-    c.string.encode(state, m.tokenAddress)
-  },
-  decode (state) {
-    const r0 = c.string.decode(state)
-    const r1 = c.uint.decode(state)
-    const r2 = c.string.decode(state)
-
-    return {
-      network: r0,
-      accountIndex: r1,
-      tokenAddress: r2
-    }
-  }
-}
-
-// @wdk-core/getAbstractedAddressTokenBalance-response.exception
-const encoding19_1 = encoding4_1
-
-// @wdk-core/getAbstractedAddressTokenBalance-response
-const encoding19 = {
-  preencode (state, m) {
-    state.end++ // max flag is 2 so always one byte
-
-    if (m.balance) c.string.preencode(state, m.balance)
-    if (m.exception) encoding19_1.preencode(state, m.exception)
-  },
-  encode (state, m) {
-    const flags =
-      (m.balance ? 1 : 0) |
-      (m.exception ? 2 : 0)
-
-    c.uint.encode(state, flags)
-
-    if (m.balance) c.string.encode(state, m.balance)
-    if (m.exception) encoding19_1.encode(state, m.exception)
-  },
-  decode (state) {
-    const flags = c.uint.decode(state)
-
-    return {
-      balance: (flags & 1) !== 0 ? c.string.decode(state) : null,
-      exception: (flags & 2) !== 0 ? encoding19_1.decode(state) : null
-    }
-  }
-}
-
 // @wdk-core/abstractedAccountTransfer-request-options
-const encoding20 = {
+const encoding18 = {
   preencode (state, m) {
     c.string.preencode(state, m.token)
     c.string.preencode(state, m.recipient)
@@ -526,24 +472,24 @@ const encoding20 = {
 }
 
 // @wdk-core/abstractedAccountTransfer-request.options
-const encoding21_2 = c.frame(encoding20)
+const encoding19_2 = c.frame(encoding18)
 
 // @wdk-core/abstractedAccountTransfer-request
-const encoding21 = {
+const encoding19 = {
   preencode (state, m) {
     c.string.preencode(state, m.network)
     c.uint.preencode(state, m.accountIndex)
-    encoding21_2.preencode(state, m.options)
+    encoding19_2.preencode(state, m.options)
   },
   encode (state, m) {
     c.string.encode(state, m.network)
     c.uint.encode(state, m.accountIndex)
-    encoding21_2.encode(state, m.options)
+    encoding19_2.encode(state, m.options)
   },
   decode (state) {
     const r0 = c.string.decode(state)
     const r1 = c.uint.decode(state)
-    const r2 = encoding21_2.decode(state)
+    const r2 = encoding19_2.decode(state)
 
     return {
       network: r0,
@@ -554,16 +500,16 @@ const encoding21 = {
 }
 
 // @wdk-core/abstractedAccountTransfer-response.exception
-const encoding22_2 = encoding4_1
+const encoding20_2 = encoding4_1
 
 // @wdk-core/abstractedAccountTransfer-response
-const encoding22 = {
+const encoding20 = {
   preencode (state, m) {
     state.end++ // max flag is 4 so always one byte
 
     if (m.hash) c.string.preencode(state, m.hash)
     if (m.fee) c.string.preencode(state, m.fee)
-    if (m.exception) encoding22_2.preencode(state, m.exception)
+    if (m.exception) encoding20_2.preencode(state, m.exception)
   },
   encode (state, m) {
     const flags =
@@ -575,7 +521,7 @@ const encoding22 = {
 
     if (m.hash) c.string.encode(state, m.hash)
     if (m.fee) c.string.encode(state, m.fee)
-    if (m.exception) encoding22_2.encode(state, m.exception)
+    if (m.exception) encoding20_2.encode(state, m.exception)
   },
   decode (state) {
     const flags = c.uint.decode(state)
@@ -583,33 +529,33 @@ const encoding22 = {
     return {
       hash: (flags & 1) !== 0 ? c.string.decode(state) : null,
       fee: (flags & 2) !== 0 ? c.string.decode(state) : null,
-      exception: (flags & 4) !== 0 ? encoding22_2.decode(state) : null
+      exception: (flags & 4) !== 0 ? encoding20_2.decode(state) : null
     }
   }
 }
 
 // @wdk-core/abstractedAccountQuoteTransfer-request-options
-const encoding23 = encoding20
+const encoding21 = encoding18
 
 // @wdk-core/abstractedAccountQuoteTransfer-request.options
-const encoding24_2 = c.frame(encoding23)
+const encoding22_2 = c.frame(encoding21)
 
 // @wdk-core/abstractedAccountQuoteTransfer-request
-const encoding24 = {
+const encoding22 = {
   preencode (state, m) {
     c.string.preencode(state, m.network)
     c.uint.preencode(state, m.accountIndex)
-    encoding24_2.preencode(state, m.options)
+    encoding22_2.preencode(state, m.options)
   },
   encode (state, m) {
     c.string.encode(state, m.network)
     c.uint.encode(state, m.accountIndex)
-    encoding24_2.encode(state, m.options)
+    encoding22_2.encode(state, m.options)
   },
   decode (state) {
     const r0 = c.string.decode(state)
     const r1 = c.uint.decode(state)
-    const r2 = encoding24_2.decode(state)
+    const r2 = encoding22_2.decode(state)
 
     return {
       network: r0,
@@ -620,15 +566,15 @@ const encoding24 = {
 }
 
 // @wdk-core/abstractedAccountQuoteTransfer-response.exception
-const encoding25_1 = encoding4_1
+const encoding23_1 = encoding4_1
 
 // @wdk-core/abstractedAccountQuoteTransfer-response
-const encoding25 = {
+const encoding23 = {
   preencode (state, m) {
     state.end++ // max flag is 2 so always one byte
 
     if (m.fee) c.string.preencode(state, m.fee)
-    if (m.exception) encoding25_1.preencode(state, m.exception)
+    if (m.exception) encoding23_1.preencode(state, m.exception)
   },
   encode (state, m) {
     const flags =
@@ -638,20 +584,20 @@ const encoding25 = {
     c.uint.encode(state, flags)
 
     if (m.fee) c.string.encode(state, m.fee)
-    if (m.exception) encoding25_1.encode(state, m.exception)
+    if (m.exception) encoding23_1.encode(state, m.exception)
   },
   decode (state) {
     const flags = c.uint.decode(state)
 
     return {
       fee: (flags & 1) !== 0 ? c.string.decode(state) : null,
-      exception: (flags & 2) !== 0 ? encoding25_1.decode(state) : null
+      exception: (flags & 2) !== 0 ? encoding23_1.decode(state) : null
     }
   }
 }
 
 // @wdk-core/dispose-request
-const encoding26 = {
+const encoding24 = {
   preencode (state, m) {
 
   },
@@ -692,28 +638,26 @@ function getEncoding (name) {
     case '@wdk-core/rpc-exception': return encoding2
     case '@wdk-core/workletStart-request': return encoding3
     case '@wdk-core/workletStart-response': return encoding4
-    case '@wdk-core/workletStop-request': return encoding5
-    case '@wdk-core/workletStop-response': return encoding6
-    case '@wdk-core/getAddress-request': return encoding7
-    case '@wdk-core/getAddress-response': return encoding8
-    case '@wdk-core/getAddressBalance-request': return encoding9
-    case '@wdk-core/getAddressBalance-response': return encoding10
-    case '@wdk-core/quoteSendTransaction-request-options': return encoding11
-    case '@wdk-core/quoteSendTransaction-request': return encoding12
-    case '@wdk-core/quoteSendTransaction-response': return encoding13
-    case '@wdk-core/getAbstractedAddress-request': return encoding14
-    case '@wdk-core/getAbstractedAddress-response': return encoding15
-    case '@wdk-core/getAbstractedAddressBalance-request': return encoding16
-    case '@wdk-core/getAbstractedAddressBalance-response': return encoding17
-    case '@wdk-core/getAbstractedAddressTokenBalance-request': return encoding18
-    case '@wdk-core/getAbstractedAddressTokenBalance-response': return encoding19
-    case '@wdk-core/abstractedAccountTransfer-request-options': return encoding20
-    case '@wdk-core/abstractedAccountTransfer-request': return encoding21
-    case '@wdk-core/abstractedAccountTransfer-response': return encoding22
-    case '@wdk-core/abstractedAccountQuoteTransfer-request-options': return encoding23
-    case '@wdk-core/abstractedAccountQuoteTransfer-request': return encoding24
-    case '@wdk-core/abstractedAccountQuoteTransfer-response': return encoding25
-    case '@wdk-core/dispose-request': return encoding26
+    case '@wdk-core/getAddress-request': return encoding5
+    case '@wdk-core/getAddress-response': return encoding6
+    case '@wdk-core/getAddressBalance-request': return encoding7
+    case '@wdk-core/getAddressBalance-response': return encoding8
+    case '@wdk-core/quoteSendTransaction-request-options': return encoding9
+    case '@wdk-core/quoteSendTransaction-request': return encoding10
+    case '@wdk-core/quoteSendTransaction-response': return encoding11
+    case '@wdk-core/getAbstractedAddress-request': return encoding12
+    case '@wdk-core/getAbstractedAddress-response': return encoding13
+    case '@wdk-core/getAbstractedAddressBalance-request': return encoding14
+    case '@wdk-core/getAbstractedAddressBalance-response': return encoding15
+    case '@wdk-core/getAbstractedAddressTokenBalance-request': return encoding16
+    case '@wdk-core/getAbstractedAddressTokenBalance-response': return encoding17
+    case '@wdk-core/abstractedAccountTransfer-request-options': return encoding18
+    case '@wdk-core/abstractedAccountTransfer-request': return encoding19
+    case '@wdk-core/abstractedAccountTransfer-response': return encoding20
+    case '@wdk-core/abstractedAccountQuoteTransfer-request-options': return encoding21
+    case '@wdk-core/abstractedAccountQuoteTransfer-request': return encoding22
+    case '@wdk-core/abstractedAccountQuoteTransfer-response': return encoding23
+    case '@wdk-core/dispose-request': return encoding24
     default: throw new Error('Encoder not found ' + name)
   }
 }

@@ -113,39 +113,6 @@
       ]
     },
     {
-      "name": "workletStop-request",
-      "namespace": "wdk-core",
-      "compact": false,
-      "flagsPosition": 0,
-      "fields": [
-        {
-          "name": "payload",
-          "required": false,
-          "type": "string",
-          "version": 1
-        }
-      ]
-    },
-    {
-      "name": "workletStop-response",
-      "namespace": "wdk-core",
-      "compact": false,
-      "flagsPosition": 0,
-      "fields": [
-        {
-          "name": "status",
-          "type": "string",
-          "version": 1
-        },
-        {
-          "name": "exception",
-          "required": false,
-          "type": "@wdk-core/rpc-exception",
-          "version": 1
-        }
-      ]
-    },
-    {
       "name": "getAddress-request",
       "namespace": "wdk-core",
       "compact": false,

@@ -25,19 +25,6 @@
     },
     {
       "id": 2,
-      "name": "@wdk-core/workletStop",
-      "request": {
-        "name": "@wdk-core/workletStop-request",
-        "stream": false
-      },
-      "response": {
-        "name": "@wdk-core/workletStop-response",
-        "stream": false
-      },
-      "version": 1
-    },
-    {
-      "id": 3,
       "name": "@wdk-core/getAddress",
       "request": {
         "name": "@wdk-core/getAddress-request",
@@ -50,7 +37,7 @@
       "version": 1
     },
     {
-      "id": 4,
+      "id": 3,
       "name": "@wdk-core/getAddressBalance",
       "request": {
         "name": "@wdk-core/getAddressBalance-request",
@@ -63,7 +50,7 @@
       "version": 1
     },
     {
-      "id": 5,
+      "id": 4,
       "name": "@wdk-core/quoteSendTransaction",
       "request": {
         "name": "@wdk-core/quoteSendTransaction-request",
@@ -76,7 +63,7 @@
       "version": 1
     },
     {
-      "id": 6,
+      "id": 5,
       "name": "@wdk-core/getAbstractedAddress",
       "request": {
         "name": "@wdk-core/getAbstractedAddress-request",
@@ -89,7 +76,7 @@
       "version": 1
     },
     {
-      "id": 7,
+      "id": 6,
       "name": "@wdk-core/getAbstractedAddressBalance",
       "request": {
         "name": "@wdk-core/getAbstractedAddressBalance-request",
@@ -102,7 +89,7 @@
       "version": 1
     },
     {
-      "id": 8,
+      "id": 7,
       "name": "@wdk-core/getAbstractedAddressTokenBalance",
       "request": {
         "name": "@wdk-core/getAbstractedAddressTokenBalance-request",
@@ -115,7 +102,7 @@
       "version": 1
     },
     {
-      "id": 9,
+      "id": 8,
       "name": "@wdk-core/abstractedAccountTransfer",
       "request": {
         "name": "@wdk-core/abstractedAccountTransfer-request",
@@ -128,7 +115,7 @@
       "version": 1
     },
     {
-      "id": 10,
+      "id": 9,
       "name": "@wdk-core/abstractedAccountQuoteTransfer",
       "request": {
         "name": "@wdk-core/abstractedAccountQuoteTransfer-request",
@@ -141,7 +128,7 @@
       "version": 1
     },
     {
-      "id": 11,
+      "id": 10,
       "name": "@wdk-core/dispose",
       "request": {
         "name": "@wdk-core/dispose-request",
