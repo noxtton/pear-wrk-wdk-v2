@@ -3,3 +3,4 @@
 src/worklet.bundle.js
 bundle-cp.sh
 /docs
+/bundle
