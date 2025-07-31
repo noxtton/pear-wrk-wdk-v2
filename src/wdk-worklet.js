@@ -5,8 +5,6 @@ const ERROR_CODES = require('./exceptions/error-codes')
 
 const { WdkManager } = require('../src/wdk-core/wdk-manager')
 const rpcException = require('../src/exceptions/rpc-exception')
-const { getEncoding } = require('../spec/schema')
-const wdkManager = require('../spec/hrpc')
 
 const rpc = new HRPC(IPC)
 /**
