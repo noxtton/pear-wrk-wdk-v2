@@ -1,3 +1,4 @@
+global.BareKit = { IPC: require('../src/lib/ipc').serverStream }
 require('../src/wdk-worklet')
 const IPC = require('../src/lib/ipc').clientStream
 const HRPC = require('../spec/hrpc')
@@ -8,7 +9,7 @@ const USDT_BALANCE_ADDRESSES = {
   polygon: '0xc2132d05d31c914a87c6611c10748aeb04b58e8f',
   arbitrum: '0xfd086bc7cd5c481dcc9c85ebe478a1c0b69fcbb9',
   ton: 'EQCxE6mUtQJKFnGfaROTKOt1lZbDiiX1kCixRv7Nw2Id_sDs',
-};
+}
 
 const blockchainNetwork = 'ton'
 

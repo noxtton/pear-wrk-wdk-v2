@@ -1,5 +1,5 @@
 require('bare-wdk-runtime')
-const IPC = require('../src/lib/ipc').serverStream
+const { IPC } = BareKit
 const HRPC = require('../spec/hrpc')
 const ERROR_CODES = require('./exceptions/error-codes')
 
@@ -82,8 +82,6 @@ rpc.onQuoteSendTransaction(async payload => {
   }
 })
 
-
-
 /*****************
  *
  * ABSTRACTION
@@ -158,7 +156,7 @@ rpc.onAbstractedAccountQuoteTransfer(async payload => {
   }
 })
 rpc.onDispose(() => {
-  wdk.dispose();
-  wdk = null;
+  wdk.dispose()
+  wdk = null
 })
 
