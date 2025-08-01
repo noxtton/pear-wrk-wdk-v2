@@ -26,3 +26,9 @@
 /** @typedef {import('./src/wdk-core/wdk-manager.js').TransferConfig} TransferConfig */
 
 export { default, Blockchain } from './src/wdk-core/wdk-manager.js'
+
+// Export spec/hrpc
+export { default as HRPC } from './spec/hrpc'
+
+// Export spec/schema
+export * as schema from './spec/schema'
