@@ -15,31 +15,46 @@ const blockchainNetwork = 'ton'
 
 async function init () {
   console.log('init started')
-  const workletStatus = await rpc.workletStart({
-    enableDebugLogs: 0,
-    seedPhrase: 'rack cruise mouse aspect wise model abstract acquire crack chicken defense blue',
-    config: JSON.stringify(require('../chains.json')),
-  })
-  console.log('worklet status: ', workletStatus)
+  try {
+    const workletStatus = await rpc.workletStart({
+      enableDebugLogs: 0,
+      seedPhrase: 'rack cruise mouse aspect wise model abstract acquire crack chicken defense blue',
+      config: JSON.stringify(require('../chains.json')),
+    })
+    console.log('worklet status: ', workletStatus)
+  } catch (error) {
+    console.log(error)
+  }
 
-  const evmAbstractedAddress = await rpc.getAbstractedAddress({
-    network: blockchainNetwork,
-    accountIndex: 0,
-  })
-  console.log(`${blockchainNetwork} Abstracted Address:`, evmAbstractedAddress)
+  try {
+    const evmAbstractedAddress = await rpc.getAbstractedAddress({
+      network: blockchainNetwork,
+      accountIndex: 0,
+    })
+    console.log(`${blockchainNetwork} Abstracted Address:`, evmAbstractedAddress)
+  } catch (error) {
+    console.log(error)
+  }
+  try {
+    const evmAbstractedBalance = await rpc.getAbstractedAddressBalance({
+      network: blockchainNetwork,
+      accountIndex: 0,
+    })
+    console.log(`${blockchainNetwork} Abstracted Balance:`, evmAbstractedBalance)
+  } catch (error) {
+    console.log(error)
+  }
 
-  const evmAbstractedBalance = await rpc.getAbstractedAddressBalance({
-    network: blockchainNetwork,
-    accountIndex: 0,
-  })
-  console.log(`${blockchainNetwork} Abstracted Balance:`, evmAbstractedBalance)
-
-  const evmAbstractedTokenBalance = await rpc.getAbstractedAddressTokenBalance({
-    network: blockchainNetwork,
-    accountIndex: 0,
-    tokenAddress: USDT_BALANCE_ADDRESSES[blockchainNetwork],
-  })
-  console.log(`${blockchainNetwork} Abstracted Token Balance:`, evmAbstractedTokenBalance)
+  try {
+    const evmAbstractedTokenBalance = await rpc.getAbstractedAddressTokenBalance({
+      network: blockchainNetwork,
+      accountIndex: 0,
+      tokenAddress: USDT_BALANCE_ADDRESSES[blockchainNetwork],
+    })
+    console.log(`${blockchainNetwork} Abstracted Token Balance:`, evmAbstractedTokenBalance)
+  } catch (e) {
+    console.log(e)
+  }
 
   // const evmAbstractedAddressTransfer = await rpc.abstractedAccountTransfer({
   //   network: blockchainNetwork,
