@@ -147,7 +147,7 @@ for (const command of hrpc.schema) {
 }
 
 // Save to file
-const OUTPUT_PATH = './documentation/hrpc-doc.md';
+const OUTPUT_PATH = './hrpc-doc.md';
 fs.writeFileSync(OUTPUT_PATH, markdown, 'utf8');
 
 console.log(`✅ Documentation written to ${OUTPUT_PATH}`);
