@@ -24,7 +24,7 @@ rpc.onGetAddress(async payload => {
   return { address: await wdk.getAddress(payload.network, payload.accountIndex) }
 })
 
-rpc.onGetAbstractedAddressBalance(async payload => {
+rpc.onGetAddressBalance(async payload => {
   const balance = await wdk.getAddressBalance(payload.network, payload.accountIndex)
   return { balance: balance.toString() }
 })
