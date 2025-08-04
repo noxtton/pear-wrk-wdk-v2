@@ -374,6 +374,10 @@ class WdkManager {
         for (const blockchain in this._account_abstraction_wallets) {
             this._account_abstraction_wallets[blockchain].dispose()
         }
+        this._seed = null;
+        this._config = null;
+        this._wallets = { }
+        this._account_abstraction_wallets = { }
     }
 
     /** @private */
