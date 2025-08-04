@@ -20,8 +20,12 @@ rpc.onWorkletStart(async init => {
 })
 
 rpc.onGetAddress(async payload => {
+  try {
+    return { address: await wdk.getAddress(payload.network, payload.accountIndex) }
+  } catch (error) {
+    throw new Error(rpcException.stringifyError(error));
+  }
 
-  return { address: await wdk.getAddress(payload.network, payload.accountIndex) }
 })
 
 rpc.onGetAddressBalance(async payload => {

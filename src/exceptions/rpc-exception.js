@@ -18,7 +18,7 @@ const ERROR_CODES = require('./error-codes')
 
 function stringifyError (error) {
   if (error instanceof Error) {
-    return `${error.name}: ${error.message}\n${error.stack}`
+    return `${error.name}: ${error.message}`
   }
 
   try {
@@ -43,4 +43,7 @@ function rpcException (payload) {
   }
 }
 
-module.exports = rpcException
+module.exports = {
+  rpcException,
+  stringifyError
+}
