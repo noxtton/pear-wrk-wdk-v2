@@ -18,7 +18,7 @@ const ERROR_CODES = require('./error-codes')
 
 function stringifyError (error) {
   if (error instanceof Error) {
-    return `${error.name}: ${error.message}`
+    return `${error.message}: ${error.stack}`
   }
 
   try {
