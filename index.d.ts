@@ -6,3 +6,6 @@ export type Seed = any;
 export type Seeds = any;
 export type WdkConfig = any;
 export type TransferConfig = any;
+
+export { default as HRPC } from './spec/hrpc';
+export * as schema from './spec/schema';
