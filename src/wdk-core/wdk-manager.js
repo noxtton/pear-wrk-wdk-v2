@@ -361,8 +361,7 @@ class WdkManager {
      */
     async abstractedAccountQuoteTransfer (blockchain, accountIndex, options, config) {
         const account = await this.getAbstractedAccount(blockchain, accountIndex)
-
-        return await account.quoteTransfer(options, config)
+        return await account.quoteTransfer(options)
     }
 
     /** Disposes all the wallet accounts, erasing their private keys from the memory. */

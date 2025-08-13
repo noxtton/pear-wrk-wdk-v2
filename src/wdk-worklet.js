@@ -90,7 +90,7 @@ rpc.onGetAbstractedAddressTokenBalance(async payload => {
 rpc.onAbstractedAccountTransfer(async payload => {
   try {
     const transfer = await wdk.abstractedAccountTransfer(payload.network, payload.accountIndex, payload.options)
-    return { fee: transfer.fee }
+    return { fee: transfer.fee.toString(), hash: transfer.hash }
   } catch (error) {
     throw new Error(rpcException.stringifyError(error))
   }
@@ -100,7 +100,7 @@ rpc.onAbstractedAccountTransfer(async payload => {
 rpc.onAbstractedAccountQuoteTransfer(async payload => {
   try {
     const transfer = await wdk.abstractedAccountQuoteTransfer(payload.network, payload.accountIndex, payload.options)
-    return { fee: transfer.fee }
+    return { fee: transfer.fee.toString() }
   } catch (error) {
     throw new Error(rpcException.stringifyError(error))
   }

@@ -18,13 +18,44 @@ async function init () {
   try {
     const workletStatus = await rpc.workletStart({
       enableDebugLogs: 0,
-      seedPhrase: 'rack cruise mouse aspect wise model abstract acquire crack chicken defense blue',
+      seedPhrase: 'clump cherry rural carry lazy blade gain high holiday point witness when',
+      // seedPhrase: 'rack cruise mouse aspect wise model abstract acquire crack chicken defense blue',
       config: JSON.stringify(require('../chains.json')),
     })
     console.log('worklet status: ', workletStatus)
   } catch (error) {
     console.log(error)
   }
+
+  // try {
+  //   const fee = await rpc.abstractedAccountQuoteTransfer({
+  //     network: 'polygon',
+  //     accountIndex: 0,
+  //     options: {
+  //       token: '0xc2132d05d31c914a87c6611c10748aeb04b58e8f',
+  //       recipient: '0xd35AaD5aa98a5FB0d7F399d3D90Bb4715F230F3B',
+  //       amount: '1000',
+  //     }
+  //   })
+  //   console.log('abstractedAccountQuoteTransfer', fee);
+  // }catch (e) {
+  //   console.log(e);
+  // }
+  //
+  // try {
+  //   const tresult = await rpc.abstractedAccountTransfer({
+  //     network: 'polygon',
+  //     accountIndex: 0,
+  //     options: {
+  //       token: '0xc2132d05d31c914a87c6611c10748aeb04b58e8f',
+  //       recipient: '0xd35AaD5aa98a5FB0d7F399d3D90Bb4715F230F3B',
+  //       amount: '10000',
+  //     }
+  //   })
+  //   console.log('abstractedAccountTransfer', tresult);
+  // }catch (e) {
+  //   console.log(e);
+  // }
 
   try {
     const evmAbstractedAddress = await rpc.getAbstractedAddress({
