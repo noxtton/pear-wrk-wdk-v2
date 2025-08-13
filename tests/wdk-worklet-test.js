@@ -57,35 +57,35 @@ async function init () {
   //   console.log(e);
   // }
 
-  try {
-    const evmAbstractedAddress = await rpc.getAbstractedAddress({
-      network: blockchainNetwork,
-      accountIndex: 0,
-    })
-    console.log(`${blockchainNetwork} Abstracted Address:`, evmAbstractedAddress)
-  } catch (error) {
-    console.log(error)
-  }
-  try {
-    const evmAbstractedBalance = await rpc.getAbstractedAddressBalance({
-      network: blockchainNetwork,
-      accountIndex: 0,
-    })
-    console.log(`${blockchainNetwork} Abstracted Balance:`, evmAbstractedBalance)
-  } catch (error) {
-    console.log(error)
-  }
-
-  try {
-    const evmAbstractedTokenBalance = await rpc.getAbstractedAddressTokenBalance({
-      network: blockchainNetwork,
-      accountIndex: 0,
-      tokenAddress: USDT_BALANCE_ADDRESSES[blockchainNetwork],
-    })
-    console.log(`${blockchainNetwork} Abstracted Token Balance:`, evmAbstractedTokenBalance)
-  } catch (e) {
-    console.log(e)
-  }
+  // try {
+  //   const evmAbstractedAddress = await rpc.getAbstractedAddress({
+  //     network: blockchainNetwork,
+  //     accountIndex: 0,
+  //   })
+  //   console.log(`${blockchainNetwork} Abstracted Address:`, evmAbstractedAddress)
+  // } catch (error) {
+  //   console.log(error)
+  // }
+  // try {
+  //   const evmAbstractedBalance = await rpc.getAbstractedAddressBalance({
+  //     network: blockchainNetwork,
+  //     accountIndex: 0,
+  //   })
+  //   console.log(`${blockchainNetwork} Abstracted Balance:`, evmAbstractedBalance)
+  // } catch (error) {
+  //   console.log(error)
+  // }
+  //
+  // try {
+  //   const evmAbstractedTokenBalance = await rpc.getAbstractedAddressTokenBalance({
+  //     network: blockchainNetwork,
+  //     accountIndex: 0,
+  //     tokenAddress: USDT_BALANCE_ADDRESSES[blockchainNetwork],
+  //   })
+  //   console.log(`${blockchainNetwork} Abstracted Token Balance:`, evmAbstractedTokenBalance)
+  // } catch (e) {
+  //   console.log(e)
+  // }
 
   // const evmAbstractedAddressTransfer = await rpc.abstractedAccountTransfer({
   //   network: blockchainNetwork,
