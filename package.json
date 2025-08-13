@@ -15,7 +15,7 @@
     "@wdk/wallet": "https://github.com/tetherto/wdk-wallet#bf07000b63945080343d5b9ae0968d202595d8e0",
     "@wdk/wallet-btc": "https://github.com/tetherto/wdk-wallet-btc#52cecd9f0c3ff409515fa58de7912da747bce4a3",
     "@wdk/wallet-evm": "https://github.com/tetherto/wdk-wallet-evm#bf6164ff683962799b9b548459b9a15ad004d04d",
-    "@wdk/wallet-evm-erc-4337": "https://github.com/tetherto/wdk-wallet-evm-erc-4337#7e61af438910cd53068aead38372db121a2264ea",
+    "@wdk/wallet-evm-erc-4337": "https://github.com/tetherto/wdk-wallet-evm-erc-4337#eb0f8299cd36ebfe28b6841cfb91b33c29039079",
     "@wdk/wallet-solana": "https://github.com/tetherto/wdk-wallet-solana#11b220b69f0d31a987c56a9c3ccfff07e75f5ae8",
     "@wdk/wallet-ton": "https://github.com/tetherto/wdk-wallet-ton#baadf63b0698312667259b588bcedc743b582601",
     "@wdk/wallet-ton-gasless": "https://github.com/tetherto/wdk-wallet-ton-gasless#b40f90f7251d5b4e7f6f2d9399804c2e9aaab49f",

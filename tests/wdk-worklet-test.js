@@ -27,20 +27,20 @@ async function init () {
     console.log(error)
   }
 
-  // try {
-  //   const fee = await rpc.abstractedAccountQuoteTransfer({
-  //     network: 'polygon',
-  //     accountIndex: 0,
-  //     options: {
-  //       token: '0xc2132d05d31c914a87c6611c10748aeb04b58e8f',
-  //       recipient: '0xd35AaD5aa98a5FB0d7F399d3D90Bb4715F230F3B',
-  //       amount: '1000',
-  //     }
-  //   })
-  //   console.log('abstractedAccountQuoteTransfer', fee);
-  // }catch (e) {
-  //   console.log(e);
-  // }
+  try {
+    const fee = await rpc.abstractedAccountQuoteTransfer({
+      network: 'polygon',
+      accountIndex: 0,
+      options: {
+        token: '0xc2132d05d31c914a87c6611c10748aeb04b58e8f',
+        recipient: '0xd35AaD5aa98a5FB0d7F399d3D90Bb4715F230F3B',
+        amount: '1000',
+      }
+    })
+    console.log('abstractedAccountQuoteTransfer', fee);
+  }catch (e) {
+    console.log(e);
+  }
   //
   // try {
   //   const tresult = await rpc.abstractedAccountTransfer({
