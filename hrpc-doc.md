@@ -74,13 +74,13 @@
 - `accountIndex`: `uint` _(v1)_
 - `options`: `object` _(v1)_
   - `to`: `string` _(v1)_
-  - `value`: `string` _(v1)_
+  - `value`: `uint` _(v1)_
 
 **Response:** `@wdk-core/quoteSendTransaction-response`
 
 **Fields:**
 
-- `fee`: `string` _(v1)_
+- `fee`: `uint` _(v1)_
 
 ---
 
@@ -114,7 +114,7 @@
 
 **Fields:**
 
-- `balance`: `string` _(v1)_
+- `balance`: `uint` _(v1)_
 
 ---
 
@@ -132,7 +132,7 @@
 
 **Fields:**
 
-- `balance`: `string` _(v1)_
+- `balance`: `uint` _(v1)_
 
 ---
 
@@ -147,14 +147,14 @@
 - `options`: `object` _(v1)_
   - `token`: `string` _(v1)_
   - `recipient`: `string` _(v1)_
-  - `amount`: `string` _(v1)_
+  - `amount`: `uint` _(v1)_
 
 **Response:** `@wdk-core/abstractedAccountTransfer-response`
 
 **Fields:**
 
 - `hash`: `string` _(v1)_
-- `fee`: `string` _(v1)_
+- `fee`: `uint` _(v1)_
 
 ---
 
@@ -169,13 +169,13 @@
 - `options`: `object` _(v1)_
   - `token`: `string` _(v1)_
   - `recipient`: `string` _(v1)_
-  - `amount`: `string` _(v1)_
+  - `amount`: `uint` _(v1)_
 
 **Response:** `@wdk-core/abstractedAccountQuoteTransfer-response`
 
 **Fields:**
 
-- `fee`: `string` _(v1)_
+- `fee`: `uint` _(v1)_
 
 ---
 

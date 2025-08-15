@@ -70,7 +70,7 @@ rpc.onGetAbstractedAddress(async payload => {
 rpc.onGetAbstractedAddressBalance(async payload => {
   try {
     const balance = await wdk.getAbstractedAddressBalance(payload.network, payload.accountIndex)
-    return { balance: balance.toString() }
+    return { balance: balance }
   } catch (error) {
     throw new Error(rpcException.stringifyError(error))
   }
@@ -80,7 +80,7 @@ rpc.onGetAbstractedAddressBalance(async payload => {
 rpc.onGetAbstractedAddressTokenBalance(async payload => {
   try {
     const balance = await wdk.getAbstractedAddressTokenBalance(payload.network, payload.accountIndex, payload.tokenAddress)
-    return { balance: balance.toString() }
+    return { balance: balance }
   } catch (error) {
     throw new Error(rpcException.stringifyError(error))
   }
@@ -90,7 +90,7 @@ rpc.onGetAbstractedAddressTokenBalance(async payload => {
 rpc.onAbstractedAccountTransfer(async payload => {
   try {
     const transfer = await wdk.abstractedAccountTransfer(payload.network, payload.accountIndex, payload.options)
-    return { fee: transfer.fee.toString(), hash: transfer.hash }
+    return { fee: transfer.fee, hash: transfer.hash }
   } catch (error) {
     throw new Error(rpcException.stringifyError(error))
   }
@@ -100,7 +100,7 @@ rpc.onAbstractedAccountTransfer(async payload => {
 rpc.onAbstractedAccountQuoteTransfer(async payload => {
   try {
     const transfer = await wdk.abstractedAccountQuoteTransfer(payload.network, payload.accountIndex, payload.options)
-    return { fee: transfer.fee.toString() }
+    return { fee: transfer.fee }
   } catch (error) {
     throw new Error(rpcException.stringifyError(error))
   }

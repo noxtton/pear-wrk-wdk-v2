@@ -190,15 +190,15 @@ const encoding7 = {
 const encoding8 = {
   preencode (state, m) {
     c.string.preencode(state, m.to)
-    c.string.preencode(state, m.value)
+    c.uint.preencode(state, m.value)
   },
   encode (state, m) {
     c.string.encode(state, m.to)
-    c.string.encode(state, m.value)
+    c.uint.encode(state, m.value)
   },
   decode (state) {
     const r0 = c.string.decode(state)
-    const r1 = c.string.decode(state)
+    const r1 = c.uint.decode(state)
 
     return {
       to: r0,
@@ -240,20 +240,20 @@ const encoding10 = {
   preencode (state, m) {
     state.end++ // max flag is 1 so always one byte
 
-    if (m.fee) c.string.preencode(state, m.fee)
+    if (m.fee) c.uint.preencode(state, m.fee)
   },
   encode (state, m) {
     const flags = m.fee ? 1 : 0
 
     c.uint.encode(state, flags)
 
-    if (m.fee) c.string.encode(state, m.fee)
+    if (m.fee) c.uint.encode(state, m.fee)
   },
   decode (state) {
     const flags = c.uint.decode(state)
 
     return {
-      fee: (flags & 1) !== 0 ? c.string.decode(state) : null
+      fee: (flags & 1) !== 0 ? c.uint.decode(state) : 0
     }
   }
 }
@@ -268,7 +268,27 @@ const encoding12 = encoding5
 const encoding13 = encoding4
 
 // @wdk-core/getAbstractedAddressBalance-response
-const encoding14 = encoding7
+const encoding14 = {
+  preencode (state, m) {
+    state.end++ // max flag is 1 so always one byte
+
+    if (m.balance) c.uint.preencode(state, m.balance)
+  },
+  encode (state, m) {
+    const flags = m.balance ? 1 : 0
+
+    c.uint.encode(state, flags)
+
+    if (m.balance) c.uint.encode(state, m.balance)
+  },
+  decode (state) {
+    const flags = c.uint.decode(state)
+
+    return {
+      balance: (flags & 1) !== 0 ? c.uint.decode(state) : 0
+    }
+  }
+}
 
 // @wdk-core/getAbstractedAddressTokenBalance-request
 const encoding15 = {
@@ -296,24 +316,24 @@ const encoding15 = {
 }
 
 // @wdk-core/getAbstractedAddressTokenBalance-response
-const encoding16 = encoding7
+const encoding16 = encoding14
 
 // @wdk-core/abstractedAccountTransfer-request-options
 const encoding17 = {
   preencode (state, m) {
     c.string.preencode(state, m.token)
     c.string.preencode(state, m.recipient)
-    c.string.preencode(state, m.amount)
+    c.uint.preencode(state, m.amount)
   },
   encode (state, m) {
     c.string.encode(state, m.token)
     c.string.encode(state, m.recipient)
-    c.string.encode(state, m.amount)
+    c.uint.encode(state, m.amount)
   },
   decode (state) {
     const r0 = c.string.decode(state)
     const r1 = c.string.decode(state)
-    const r2 = c.string.decode(state)
+    const r2 = c.uint.decode(state)
 
     return {
       token: r0,
@@ -357,7 +377,7 @@ const encoding19 = {
     state.end++ // max flag is 2 so always one byte
 
     if (m.hash) c.string.preencode(state, m.hash)
-    if (m.fee) c.string.preencode(state, m.fee)
+    if (m.fee) c.uint.preencode(state, m.fee)
   },
   encode (state, m) {
     const flags =
@@ -367,14 +387,14 @@ const encoding19 = {
     c.uint.encode(state, flags)
 
     if (m.hash) c.string.encode(state, m.hash)
-    if (m.fee) c.string.encode(state, m.fee)
+    if (m.fee) c.uint.encode(state, m.fee)
   },
   decode (state) {
     const flags = c.uint.decode(state)
 
     return {
       hash: (flags & 1) !== 0 ? c.string.decode(state) : null,
-      fee: (flags & 2) !== 0 ? c.string.decode(state) : null
+      fee: (flags & 2) !== 0 ? c.uint.decode(state) : 0
     }
   }
 }

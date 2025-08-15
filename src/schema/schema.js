@@ -85,7 +85,7 @@ schemaNs.register({
   name: 'quoteSendTransaction-request-options',
   fields: [
     { name: 'to', type: 'string', required: true },
-    { name: 'value', type: 'string', required: true }
+    { name: 'value', type: 'uint', required: true }
   ],
 })
 schemaNs.register({
@@ -100,7 +100,7 @@ schemaNs.register({
 schemaNs.register({
   name: 'quoteSendTransaction-response',
   fields: [
-    { name: 'fee', type: 'string' }
+    { name: 'fee', type: 'uint' }
   ],
 })
 
@@ -141,7 +141,7 @@ schemaNs.register({
 schemaNs.register({
   name: 'getAbstractedAddressBalance-response',
   fields: [
-    { name: 'balance', type: 'string' }
+    { name: 'balance', type: 'uint' }
   ],
 })
 
@@ -160,7 +160,7 @@ schemaNs.register({
 schemaNs.register({
   name: 'getAbstractedAddressTokenBalance-response',
   fields: [
-    { name: 'balance', type: 'string' }
+    { name: 'balance', type: 'uint' }
   ],
 })
 
@@ -172,7 +172,7 @@ schemaNs.register({
   fields: [
     { name: 'token', type: 'string', required: true },
     { name: 'recipient', type: 'string', required: true },
-    { name: 'amount', type: 'string', required: true },
+    { name: 'amount', type: 'uint', required: true },
   ],
 })
 schemaNs.register({
@@ -188,7 +188,7 @@ schemaNs.register({
   name: 'abstractedAccountTransfer-response',
   fields: [
     { name: 'hash', type: 'string' },
-    { name: 'fee', type: 'string' }
+    { name: 'fee', type: 'uint' }
   ],
 })
 
@@ -200,7 +200,7 @@ schemaNs.register({
   fields: [
     { name: 'token', type: 'string', required: true },
     { name: 'recipient', type: 'string', required: true },
-    { name: 'amount', type: 'string', required: true },
+    { name: 'amount', type: 'uint', required: true },
   ],
 })
 schemaNs.register({
@@ -215,7 +215,7 @@ schemaNs.register({
 schemaNs.register({
   name: 'abstractedAccountQuoteTransfer-response',
   fields: [
-    { name: 'fee', type: 'string' }
+    { name: 'fee', type: 'uint' }
   ],
 })
 
