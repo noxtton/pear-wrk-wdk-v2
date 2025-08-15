@@ -13,7 +13,6 @@
 // limitations under the License.
 'use strict'
 
-const bit39 = require('bip39')
 /** @typedef {import('@wdk/wallet').FeeRates} FeeRates */
 
 /** @typedef {import('@wdk/wallet').TransferOptions} TransferOptions */
