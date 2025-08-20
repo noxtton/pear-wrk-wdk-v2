@@ -253,6 +253,29 @@ class WdkManager {
         return await account.quoteSendTransaction(options)
     }
 
+    /**
+     * Transfers a token to another address.
+     *
+     * @param {Blockchain} blockchain - A blockchain identifier (e.g., "ethereum").
+     * @param {number} accountIndex - The index of the account to use (see [BIP-44](https://en.bitcoin.it/wiki/BIP_0044)).
+     * @param {Transaction} options - The transfer's options.
+     * @returns {Promise<Omit<TransactionResult, "hash">>} The transfer's result.
+     *
+     * @example
+     * // Transfer 1 BTC from the spark wallet's account at index 0 to another address
+     * const transfer = await wdk.transfer("spark", 0, {
+     *     to: "0xdAC17F958D2ee523a2206206994597C13D831ec7",
+     *     value: 1
+     * });
+     *
+     * console.log("Transaction hash:", transfer.hash);
+     */
+    async sendTransaction (blockchain, accountIndex, options) {
+        const account = await this.getAccount(blockchain, accountIndex)
+
+        return await account.sendTransaction(options)
+    }
+
 
     /**
      * Returns the abstracted address of an account.

@@ -53,6 +53,16 @@ rpc.onQuoteSendTransaction(async payload => {
 
 })
 
+rpc.onSendTransaction(async payload => {
+  try {
+    const transaction = await wdk.sendTransaction(payload.network, payload.accountIndex, payload.options)
+    return { fee: transaction.fee, hash: transaction.hash }
+  } catch (error) {
+    throw new Error(rpcException.stringifyError(error))
+  }
+
+})
+
 /*****************
  *
  * ABSTRACTION

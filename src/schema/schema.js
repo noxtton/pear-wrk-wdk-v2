@@ -104,6 +104,33 @@ schemaNs.register({
   ],
 })
 
+/**
+ * sendTransaction
+ */
+schemaNs.register({
+  name: 'sendTransaction-request-options',
+  fields: [
+    { name: 'to', type: 'string', required: true },
+    { name: 'value', type: 'uint', required: true }
+  ],
+})
+schemaNs.register({
+  name: 'sendTransaction-request',
+  fields: [
+    { name: 'network', type: 'string', required: true },
+    { name: 'accountIndex', type: 'uint', required: true },
+    { name: 'options', type: '@wdk-core/sendTransaction-request-options', required: true },
+  ],
+})
+
+schemaNs.register({
+  name: 'sendTransaction-response',
+  fields: [
+    { name: 'fee', type: 'uint' },
+    { name: 'hash', type: 'string' },
+  ],
+})
+
 /********************
  *
  * ABSTRACTION
@@ -258,6 +285,12 @@ ns.register({
   name: 'quoteSendTransaction',
   request: { name: '@wdk-core/quoteSendTransaction-request', stream: false },
   response: { name: '@wdk-core/quoteSendTransaction-response', stream: false },
+})
+
+ns.register({
+  name: 'sendTransaction',
+  request: { name: '@wdk-core/sendTransaction-request', stream: false },
+  response: { name: '@wdk-core/sendTransaction-response', stream: false },
 })
 
 ns.register({

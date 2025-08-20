@@ -26,7 +26,9 @@ const methods = new Map([
   ['@wdk-core/abstractedAccountQuoteTransfer', 9],
   [9, '@wdk-core/abstractedAccountQuoteTransfer'],
   ['@wdk-core/dispose', 10],
-  [10, '@wdk-core/dispose']
+  [10, '@wdk-core/dispose'],
+  ['@wdk-core/sendTransaction', 11],
+  [11, '@wdk-core/sendTransaction']
 ])
 
 class HRPC {
@@ -44,7 +46,8 @@ class HRPC {
       ['@wdk-core/getAbstractedAddressTokenBalance', getEncoding('@wdk-core/getAbstractedAddressTokenBalance-request')],
       ['@wdk-core/abstractedAccountTransfer', getEncoding('@wdk-core/abstractedAccountTransfer-request')],
       ['@wdk-core/abstractedAccountQuoteTransfer', getEncoding('@wdk-core/abstractedAccountQuoteTransfer-request')],
-      ['@wdk-core/dispose', getEncoding('@wdk-core/dispose-request')]
+      ['@wdk-core/dispose', getEncoding('@wdk-core/dispose-request')],
+      ['@wdk-core/sendTransaction', getEncoding('@wdk-core/sendTransaction-request')]
     ])
     this._responseEncodings = new Map([
       ['@wdk-core/workletStart', getEncoding('@wdk-core/workletStart-response')],
@@ -55,7 +58,8 @@ class HRPC {
       ['@wdk-core/getAbstractedAddressBalance', getEncoding('@wdk-core/getAbstractedAddressBalance-response')],
       ['@wdk-core/getAbstractedAddressTokenBalance', getEncoding('@wdk-core/getAbstractedAddressTokenBalance-response')],
       ['@wdk-core/abstractedAccountTransfer', getEncoding('@wdk-core/abstractedAccountTransfer-response')],
-      ['@wdk-core/abstractedAccountQuoteTransfer', getEncoding('@wdk-core/abstractedAccountQuoteTransfer-response')]
+      ['@wdk-core/abstractedAccountQuoteTransfer', getEncoding('@wdk-core/abstractedAccountQuoteTransfer-response')],
+      ['@wdk-core/sendTransaction', getEncoding('@wdk-core/sendTransaction-response')]
     ])
     this._rpc = new RPC(stream, async (req) => {
       const command = methods.get(req.command)
@@ -163,6 +167,10 @@ class HRPC {
     return this._callSync('@wdk-core/dispose', args)
   }
 
+  async sendTransaction (args) {
+    return this._call('@wdk-core/sendTransaction', args)
+  }
+
   onLog (responseFn) {
     this._handlers['@wdk-core/log'] = responseFn
   }
@@ -205,6 +213,10 @@ class HRPC {
 
   onDispose (responseFn) {
     this._handlers['@wdk-core/dispose'] = responseFn
+  }
+
+  onSendTransaction (responseFn) {
+    this._handlers['@wdk-core/sendTransaction'] = responseFn
   }
 
   _requestIsStream (command) {

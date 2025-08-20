@@ -189,3 +189,24 @@ _No fields defined_
 
 ---
 
+## sendTransaction
+
+**Request:** `@wdk-core/sendTransaction-request`
+
+**Fields:**
+
+- `network`: `string` _(v2)_
+- `accountIndex`: `uint` _(v2)_
+- `options`: `object` _(v2)_
+  - `to`: `string` _(v2)_
+  - `value`: `uint` _(v2)_
+
+**Response:** `@wdk-core/sendTransaction-response`
+
+**Fields:**
+
+- `fee`: `uint` _(v2)_
+- `hash`: `string` _(v2)_
+
+---
+

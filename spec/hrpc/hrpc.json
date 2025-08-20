@@ -1,5 +1,5 @@
 {
-  "version": 1,
+  "version": 2,
   "schema": [
     {
       "id": 0,
@@ -135,6 +135,19 @@
         "send": true
       },
       "version": 1
+    },
+    {
+      "id": 5,
+      "name": "@wdk-core/sendTransaction",
+      "request": {
+        "name": "@wdk-core/sendTransaction-request",
+        "stream": false
+      },
+      "response": {
+        "name": "@wdk-core/sendTransaction-response",
+        "stream": false
+      },
+      "version": 2
     }
   ]
 }
