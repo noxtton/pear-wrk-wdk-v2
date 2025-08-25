@@ -15,7 +15,7 @@ let wdk = null
 
 rpc.onWorkletStart(async init => {
   try {
-    if (wdk) wdk.dispose(); // cleanup existing;
+    if (wdk) wdk.dispose() // cleanup existing;
     wdk = new WdkManager(init.seedPhrase, JSON.parse(init.config))
     return { status: 'started' }
   } catch (error) {
@@ -115,6 +115,18 @@ rpc.onAbstractedAccountQuoteTransfer(async payload => {
     throw new Error(rpcException.stringifyError(error))
   }
 
+})
+
+rpc.onGetTransactionReceipt(async payload => {
+  try {
+    let receipt = await wdk.getTransactionReceipt(payload.network, payload.accountIndex, payload.hash)
+    if (receipt) {
+      return { receipt: JSON.stringify(receipt) }
+    }
+    return {}
+  } catch (error) {
+    throw new Error(rpcException.stringifyError(error))
+  }
 })
 rpc.onDispose(() => {
   try {

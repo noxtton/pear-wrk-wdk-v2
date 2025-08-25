@@ -247,6 +247,23 @@ schemaNs.register({
 })
 
 schemaNs.register({
+  name: 'getTransactionReceipt-request',
+  fields: [
+    { name: 'network', type: 'string', required: true },
+    { name: 'accountIndex', type: 'uint', required: true },
+    { name: 'hash', type: 'string', required: true },
+  ],
+})
+
+schemaNs.register({
+  name: 'getTransactionReceipt-response',
+  fields: [
+    { name: 'receipt', type: 'string' }
+  ],
+})
+
+
+schemaNs.register({
   name: 'dispose-request',
   fields: [],
 });
@@ -319,6 +336,11 @@ ns.register({
   name: 'abstractedAccountQuoteTransfer',
   request: { name: '@wdk-core/abstractedAccountQuoteTransfer-request', stream: false },
   response: { name: '@wdk-core/abstractedAccountQuoteTransfer-response', stream: false },
+})
+ns.register({
+  name: 'getTransactionReceipt',
+  request: { name: '@wdk-core/getTransactionReceipt-request', stream: false },
+  response: { name: '@wdk-core/getTransactionReceipt-response', stream: false },
 })
 ns.register({
   name: 'dispose',

@@ -15,20 +15,22 @@ const methods = new Map([
   [3, '@wdk-core/getAddressBalance'],
   ['@wdk-core/quoteSendTransaction', 4],
   [4, '@wdk-core/quoteSendTransaction'],
-  ['@wdk-core/getAbstractedAddress', 5],
-  [5, '@wdk-core/getAbstractedAddress'],
-  ['@wdk-core/getAbstractedAddressBalance', 6],
-  [6, '@wdk-core/getAbstractedAddressBalance'],
-  ['@wdk-core/getAbstractedAddressTokenBalance', 7],
-  [7, '@wdk-core/getAbstractedAddressTokenBalance'],
-  ['@wdk-core/abstractedAccountTransfer', 8],
-  [8, '@wdk-core/abstractedAccountTransfer'],
-  ['@wdk-core/abstractedAccountQuoteTransfer', 9],
-  [9, '@wdk-core/abstractedAccountQuoteTransfer'],
-  ['@wdk-core/dispose', 10],
-  [10, '@wdk-core/dispose'],
-  ['@wdk-core/sendTransaction', 11],
-  [11, '@wdk-core/sendTransaction']
+  ['@wdk-core/sendTransaction', 5],
+  [5, '@wdk-core/sendTransaction'],
+  ['@wdk-core/getAbstractedAddress', 6],
+  [6, '@wdk-core/getAbstractedAddress'],
+  ['@wdk-core/getAbstractedAddressBalance', 7],
+  [7, '@wdk-core/getAbstractedAddressBalance'],
+  ['@wdk-core/getAbstractedAddressTokenBalance', 8],
+  [8, '@wdk-core/getAbstractedAddressTokenBalance'],
+  ['@wdk-core/abstractedAccountTransfer', 9],
+  [9, '@wdk-core/abstractedAccountTransfer'],
+  ['@wdk-core/abstractedAccountQuoteTransfer', 10],
+  [10, '@wdk-core/abstractedAccountQuoteTransfer'],
+  ['@wdk-core/getTransactionReceipt', 11],
+  [11, '@wdk-core/getTransactionReceipt'],
+  ['@wdk-core/dispose', 12],
+  [12, '@wdk-core/dispose']
 ])
 
 class HRPC {
@@ -41,25 +43,27 @@ class HRPC {
       ['@wdk-core/getAddress', getEncoding('@wdk-core/getAddress-request')],
       ['@wdk-core/getAddressBalance', getEncoding('@wdk-core/getAddressBalance-request')],
       ['@wdk-core/quoteSendTransaction', getEncoding('@wdk-core/quoteSendTransaction-request')],
+      ['@wdk-core/sendTransaction', getEncoding('@wdk-core/sendTransaction-request')],
       ['@wdk-core/getAbstractedAddress', getEncoding('@wdk-core/getAbstractedAddress-request')],
       ['@wdk-core/getAbstractedAddressBalance', getEncoding('@wdk-core/getAbstractedAddressBalance-request')],
       ['@wdk-core/getAbstractedAddressTokenBalance', getEncoding('@wdk-core/getAbstractedAddressTokenBalance-request')],
       ['@wdk-core/abstractedAccountTransfer', getEncoding('@wdk-core/abstractedAccountTransfer-request')],
       ['@wdk-core/abstractedAccountQuoteTransfer', getEncoding('@wdk-core/abstractedAccountQuoteTransfer-request')],
-      ['@wdk-core/dispose', getEncoding('@wdk-core/dispose-request')],
-      ['@wdk-core/sendTransaction', getEncoding('@wdk-core/sendTransaction-request')]
+      ['@wdk-core/getTransactionReceipt', getEncoding('@wdk-core/getTransactionReceipt-request')],
+      ['@wdk-core/dispose', getEncoding('@wdk-core/dispose-request')]
     ])
     this._responseEncodings = new Map([
       ['@wdk-core/workletStart', getEncoding('@wdk-core/workletStart-response')],
       ['@wdk-core/getAddress', getEncoding('@wdk-core/getAddress-response')],
       ['@wdk-core/getAddressBalance', getEncoding('@wdk-core/getAddressBalance-response')],
       ['@wdk-core/quoteSendTransaction', getEncoding('@wdk-core/quoteSendTransaction-response')],
+      ['@wdk-core/sendTransaction', getEncoding('@wdk-core/sendTransaction-response')],
       ['@wdk-core/getAbstractedAddress', getEncoding('@wdk-core/getAbstractedAddress-response')],
       ['@wdk-core/getAbstractedAddressBalance', getEncoding('@wdk-core/getAbstractedAddressBalance-response')],
       ['@wdk-core/getAbstractedAddressTokenBalance', getEncoding('@wdk-core/getAbstractedAddressTokenBalance-response')],
       ['@wdk-core/abstractedAccountTransfer', getEncoding('@wdk-core/abstractedAccountTransfer-response')],
       ['@wdk-core/abstractedAccountQuoteTransfer', getEncoding('@wdk-core/abstractedAccountQuoteTransfer-response')],
-      ['@wdk-core/sendTransaction', getEncoding('@wdk-core/sendTransaction-response')]
+      ['@wdk-core/getTransactionReceipt', getEncoding('@wdk-core/getTransactionReceipt-response')]
     ])
     this._rpc = new RPC(stream, async (req) => {
       const command = methods.get(req.command)
@@ -143,6 +147,10 @@ class HRPC {
     return this._call('@wdk-core/quoteSendTransaction', args)
   }
 
+  async sendTransaction (args) {
+    return this._call('@wdk-core/sendTransaction', args)
+  }
+
   async getAbstractedAddress (args) {
     return this._call('@wdk-core/getAbstractedAddress', args)
   }
@@ -163,12 +171,12 @@ class HRPC {
     return this._call('@wdk-core/abstractedAccountQuoteTransfer', args)
   }
 
-  dispose (args) {
-    return this._callSync('@wdk-core/dispose', args)
+  async getTransactionReceipt (args) {
+    return this._call('@wdk-core/getTransactionReceipt', args)
   }
 
-  async sendTransaction (args) {
-    return this._call('@wdk-core/sendTransaction', args)
+  dispose (args) {
+    return this._callSync('@wdk-core/dispose', args)
   }
 
   onLog (responseFn) {
@@ -191,6 +199,10 @@ class HRPC {
     this._handlers['@wdk-core/quoteSendTransaction'] = responseFn
   }
 
+  onSendTransaction (responseFn) {
+    this._handlers['@wdk-core/sendTransaction'] = responseFn
+  }
+
   onGetAbstractedAddress (responseFn) {
     this._handlers['@wdk-core/getAbstractedAddress'] = responseFn
   }
@@ -211,12 +223,12 @@ class HRPC {
     this._handlers['@wdk-core/abstractedAccountQuoteTransfer'] = responseFn
   }
 
-  onDispose (responseFn) {
-    this._handlers['@wdk-core/dispose'] = responseFn
+  onGetTransactionReceipt (responseFn) {
+    this._handlers['@wdk-core/getTransactionReceipt'] = responseFn
   }
 
-  onSendTransaction (responseFn) {
-    this._handlers['@wdk-core/sendTransaction'] = responseFn
+  onDispose (responseFn) {
+    this._handlers['@wdk-core/dispose'] = responseFn
   }
 
   _requestIsStream (command) {

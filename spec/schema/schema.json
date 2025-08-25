@@ -1,5 +1,5 @@
 {
-  "version": 2,
+  "version": 1,
   "schema": [
     {
       "name": "log-type-enum",
@@ -204,6 +204,70 @@
         {
           "name": "fee",
           "type": "uint",
+          "version": 1
+        }
+      ]
+    },
+    {
+      "name": "sendTransaction-request-options",
+      "namespace": "wdk-core",
+      "compact": false,
+      "flagsPosition": -1,
+      "fields": [
+        {
+          "name": "to",
+          "required": true,
+          "type": "string",
+          "version": 1
+        },
+        {
+          "name": "value",
+          "required": true,
+          "type": "uint",
+          "version": 1
+        }
+      ]
+    },
+    {
+      "name": "sendTransaction-request",
+      "namespace": "wdk-core",
+      "compact": false,
+      "flagsPosition": -1,
+      "fields": [
+        {
+          "name": "network",
+          "required": true,
+          "type": "string",
+          "version": 1
+        },
+        {
+          "name": "accountIndex",
+          "required": true,
+          "type": "uint",
+          "version": 1
+        },
+        {
+          "name": "options",
+          "required": true,
+          "type": "@wdk-core/sendTransaction-request-options",
+          "version": 1
+        }
+      ]
+    },
+    {
+      "name": "sendTransaction-response",
+      "namespace": "wdk-core",
+      "compact": false,
+      "flagsPosition": 0,
+      "fields": [
+        {
+          "name": "fee",
+          "type": "uint",
+          "version": 1
+        },
+        {
+          "name": "hash",
+          "type": "string",
           "version": 1
         }
       ]
@@ -449,34 +513,7 @@
       ]
     },
     {
-      "name": "dispose-request",
-      "namespace": "wdk-core",
-      "compact": false,
-      "flagsPosition": -1,
-      "fields": []
-    },
-    {
-      "name": "sendTransaction-request-options",
-      "namespace": "wdk-core",
-      "compact": false,
-      "flagsPosition": -1,
-      "fields": [
-        {
-          "name": "to",
-          "required": true,
-          "type": "string",
-          "version": 2
-        },
-        {
-          "name": "value",
-          "required": true,
-          "type": "uint",
-          "version": 2
-        }
-      ]
-    },
-    {
-      "name": "sendTransaction-request",
+      "name": "getTransactionReceipt-request",
       "namespace": "wdk-core",
       "compact": false,
       "flagsPosition": -1,
@@ -485,39 +522,41 @@
           "name": "network",
           "required": true,
           "type": "string",
-          "version": 2
+          "version": 1
         },
         {
           "name": "accountIndex",
           "required": true,
           "type": "uint",
-          "version": 2
+          "version": 1
         },
         {
-          "name": "options",
+          "name": "hash",
           "required": true,
-          "type": "@wdk-core/sendTransaction-request-options",
-          "version": 2
+          "type": "string",
+          "version": 1
         }
       ]
     },
     {
-      "name": "sendTransaction-response",
+      "name": "getTransactionReceipt-response",
       "namespace": "wdk-core",
       "compact": false,
       "flagsPosition": 0,
       "fields": [
         {
-          "name": "fee",
-          "type": "uint",
-          "version": 2
-        },
-        {
-          "name": "hash",
+          "name": "receipt",
           "type": "string",
-          "version": 2
+          "version": 1
         }
       ]
+    },
+    {
+      "name": "dispose-request",
+      "namespace": "wdk-core",
+      "compact": false,
+      "flagsPosition": -1,
+      "fields": []
     }
   ]
 }

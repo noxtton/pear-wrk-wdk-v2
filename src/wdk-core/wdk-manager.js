@@ -276,6 +276,20 @@ class WdkManager {
         return await account.sendTransaction(options)
     }
 
+    /**
+     * Get transaction receipt if
+     *
+     * @param {Blockchain} blockchain - A blockchain identifier (e.g., "ethereum").
+     * @param {number} accountIndex - The index of the account to use (see [BIP-44](https://en.bitcoin.it/wiki/BIP_0044)).
+     * @param {string} hash - Transaction hash.
+     * @return {Promise<unknown | null>} - The receipt, or null if the transaction has not been included in a block yet.
+     */
+    async getTransactionReceipt (blockchain, accountIndex, hash) {
+        console.log(arguments)
+        const account = await this.getAccount(blockchain, accountIndex)
+        return await account.getTransactionReceipt(hash)
+    }
+
 
     /**
      * Returns the abstracted address of an account.

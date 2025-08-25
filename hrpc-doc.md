@@ -84,6 +84,27 @@
 
 ---
 
+## sendTransaction
+
+**Request:** `@wdk-core/sendTransaction-request`
+
+**Fields:**
+
+- `network`: `string` _(v1)_
+- `accountIndex`: `uint` _(v1)_
+- `options`: `object` _(v1)_
+  - `to`: `string` _(v1)_
+  - `value`: `uint` _(v1)_
+
+**Response:** `@wdk-core/sendTransaction-response`
+
+**Fields:**
+
+- `fee`: `uint` _(v1)_
+- `hash`: `string` _(v1)_
+
+---
+
 ## getAbstractedAddress
 
 **Request:** `@wdk-core/getAbstractedAddress-request`
@@ -179,6 +200,24 @@
 
 ---
 
+## getTransactionReceipt
+
+**Request:** `@wdk-core/getTransactionReceipt-request`
+
+**Fields:**
+
+- `network`: `string` _(v1)_
+- `accountIndex`: `uint` _(v1)_
+- `hash`: `string` _(v1)_
+
+**Response:** `@wdk-core/getTransactionReceipt-response`
+
+**Fields:**
+
+- `receipt`: `string` _(v1)_
+
+---
+
 ## dispose
 
 **Request:** `@wdk-core/dispose-request`
@@ -186,27 +225,6 @@
 **Fields:**
 
 _No fields defined_
-
----
-
-## sendTransaction
-
-**Request:** `@wdk-core/sendTransaction-request`
-
-**Fields:**
-
-- `network`: `string` _(v2)_
-- `accountIndex`: `uint` _(v2)_
-- `options`: `object` _(v2)_
-  - `to`: `string` _(v2)_
-  - `value`: `uint` _(v2)_
-
-**Response:** `@wdk-core/sendTransaction-response`
-
-**Fields:**
-
-- `fee`: `uint` _(v2)_
-- `hash`: `string` _(v2)_
 
 ---
 
