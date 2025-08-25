@@ -276,19 +276,6 @@ class WdkManager {
         return await account.sendTransaction(options)
     }
 
-    /**
-     * Get transaction receipt if
-     *
-     * @param {Blockchain} blockchain - A blockchain identifier (e.g., "ethereum").
-     * @param {number} accountIndex - The index of the account to use (see [BIP-44](https://en.bitcoin.it/wiki/BIP_0044)).
-     * @param {string} hash - Transaction hash.
-     * @return {Promise<unknown | null>} - The receipt, or null if the transaction has not been included in a block yet.
-     */
-    async getTransactionReceipt (blockchain, accountIndex, hash) {
-        const account = await this.getAccount(blockchain, accountIndex)
-        return await account.getTransactionReceipt(hash)
-    }
-
 
     /**
      * Returns the abstracted address of an account.
@@ -397,6 +384,19 @@ class WdkManager {
     async abstractedAccountQuoteTransfer (blockchain, accountIndex, options, config) {
         const account = await this.getAbstractedAccount(blockchain, accountIndex)
         return await account.quoteTransfer(options)
+    }
+
+    /**
+     * Get abstracted account transaction receipt.
+     *
+     * @param {Blockchain} blockchain - A blockchain identifier (e.g., "ethereum").
+     * @param {number} accountIndex - The index of the account to use (see [BIP-44](https://en.bitcoin.it/wiki/BIP_0044)).
+     * @param {string} hash - Transaction hash.
+     * @return {Promise<unknown | null>} - The receipt, or null if the transaction has not been included in a block yet.
+     */
+    async getTransactionReceipt (blockchain, accountIndex, hash) {
+        const account = await this.getAbstractedAccount(blockchain, accountIndex)
+        return await account.getTransactionReceipt(hash)
     }
 
     /** Disposes all the wallet accounts, erasing their private keys from the memory. */

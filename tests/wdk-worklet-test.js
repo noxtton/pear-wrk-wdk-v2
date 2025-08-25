@@ -114,12 +114,12 @@ async function init () {
   // } catch (error) {
   //   console.log(error)
   // }
-
+  //
   // try {
   //   const receipt = await rpc.getTransactionReceipt({
   //     network: 'polygon',
   //     accountIndex: 0,
-  //     hash: '0xafd9d7f2024ca6ece74a1bf7c593e9f914210f911207ecccd43eadabce7a8824'
+  //     hash: '0x457eeb1d52a549fa45f8e93b3677437992dfbcb8115289d7395a8ef10ba1ca98'
   //   })
   //   console.log(`receipt:`, receipt)
   // } catch (error) {
@@ -146,16 +146,6 @@ async function init () {
   // } catch (e) {
   //   console.log(e)
   // }
-
-  // const evmAbstractedAddressTransfer = await rpc.abstractedAccountTransfer({
-  //   network: blockchainNetwork,
-  //   accountIndex: 0,
-  //   options: {
-  //     token: 'test token',
-  //     recipient: 'test recipient',
-  //     amount: '0.10',
-  //   }
-  // })
 }
 
 init()
