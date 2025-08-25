@@ -285,7 +285,6 @@ class WdkManager {
      * @return {Promise<unknown | null>} - The receipt, or null if the transaction has not been included in a block yet.
      */
     async getTransactionReceipt (blockchain, accountIndex, hash) {
-        console.log(arguments)
         const account = await this.getAccount(blockchain, accountIndex)
         return await account.getTransactionReceipt(hash)
     }
