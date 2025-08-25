@@ -58,6 +58,54 @@ async function init () {
   // }
 
   // try {
+  //   const btcAddress = await rpc.getAddress({
+  //     network: 'bitcoin',
+  //     accountIndex: 0,
+  //   })
+  //   console.log(`bitcoin Address:`, btcAddress)
+  // } catch (error) {
+  //   console.log(error)
+  // }
+  //
+  // try {
+  //   const btcBalance = await rpc.getAddressBalance({
+  //     network: 'bitcoin',
+  //     accountIndex: 0,
+  //   })
+  //   console.log(`bitcoin balance:`, btcBalance)
+  // } catch (error) {
+  //   console.log(error)
+  // }
+  //
+  // try {
+  //   const fee = await rpc.quoteSendTransaction({
+  //     network: 'bitcoin',
+  //     accountIndex: 0,
+  //     options: {
+  //       to: 'bc1quadg5axzx85enul0sf2se2yplmkfglfkddzeut',
+  //       value: 1000,
+  //     }
+  //   })
+  //   console.log('abstractedAccountQuoteTransfer', fee);
+  // }catch (e) {
+  //   console.log(e);
+  // }
+
+  // try {
+  //   const btctx = await rpc.sendTransaction({
+  //     network: 'bitcoin',
+  //     accountIndex: 0,
+  //     options: {
+  //       to: 'bc1quadg5axzx85enul0sf2se2yplmkfglfkddzeut',
+  //       value: 1000,
+  //     }
+  //   })
+  //   console.log('transaction', btctx);
+  // }catch (e) {
+  //   console.log(e);
+  // }
+
+  // try {
   //   const evmAbstractedAddress = await rpc.getAbstractedAddress({
   //     network: 'polygon',
   //     accountIndex: 0,
@@ -67,16 +115,16 @@ async function init () {
   //   console.log(error)
   // }
 
-  try {
-    const receipt = await rpc.getTransactionReceipt({
-      network: 'polygon',
-      accountIndex: 0,
-      hash: '0xafd9d7f2024ca6ece74a1bf7c593e9f914210f911207ecccd43eadabce7a8824'
-    })
-    console.log(`receipt:`, receipt)
-  } catch (error) {
-    console.log(error)
-  }
+  // try {
+  //   const receipt = await rpc.getTransactionReceipt({
+  //     network: 'polygon',
+  //     accountIndex: 0,
+  //     hash: '0xafd9d7f2024ca6ece74a1bf7c593e9f914210f911207ecccd43eadabce7a8824'
+  //   })
+  //   console.log(`receipt:`, receipt)
+  // } catch (error) {
+  //   console.log(error)
+  // }
 
   // try {
   //   const evmAbstractedBalance = await rpc.getAbstractedAddressBalance({

@@ -36,7 +36,7 @@ rpc.onGetAddress(async payload => {
 rpc.onGetAddressBalance(async payload => {
   try {
     const balance = await wdk.getAddressBalance(payload.network, payload.accountIndex)
-    return { balance: balance.toString() }
+    return { balance: balance }
   } catch (error) {
     throw new Error(rpcException.stringifyError(error))
   }

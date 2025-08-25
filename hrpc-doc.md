@@ -60,7 +60,7 @@
 
 **Fields:**
 
-- `balance`: `string` _(v1)_
+- `balance`: `uint` _(v1)_
 
 ---
 
