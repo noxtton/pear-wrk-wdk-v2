@@ -107,6 +107,17 @@ rpc.onAbstractedAccountTransfer(async payload => {
 
 })
 
+rpc.onAbstractedSendTransaction(async payload => {
+  try {
+    if (!payload.options.data) delete payload.options.data
+    const transfer = await wdk.abstractedSendTransaction(payload.network, payload.accountIndex, payload.options, payload.config)
+    return { fee: transfer.fee, hash: transfer.hash }
+  } catch (error) {
+    throw new Error(rpcException.stringifyError(error))
+  }
+
+})
+
 rpc.onAbstractedAccountQuoteTransfer(async payload => {
   try {
     const transfer = await wdk.abstractedAccountQuoteTransfer(payload.network, payload.accountIndex, payload.options)

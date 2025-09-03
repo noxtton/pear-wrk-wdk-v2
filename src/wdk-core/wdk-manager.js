@@ -22,6 +22,7 @@
 /** @typedef {import('@wdk/wallet').IWalletAccount} IWalletAccount */
 
 /** @typedef {import('@wdk/wallet-evm').EvmWalletConfig} EvmWalletConfig */
+/** @typedef {import('@wdk/wallet-evm').EvmTransaction} EvmTransaction */
 /** @typedef {import('@wdk/wallet-evm-erc-4337').EvmErc4337WalletConfig} EvmErc4337WalletConfig */
 
 /** @typedef {import('@wdk/wallet-ton').TonWalletConfig} TonWalletConfig */
@@ -359,6 +360,22 @@ class WdkManager {
         const account = await this.getAbstractedAccount(blockchain, accountIndex)
 
         return await account.transfer(options, config)
+    }
+
+    /**
+     * Transfers a token to another address.
+     *
+     * @param {Blockchain} blockchain - A blockchain identifier (e.g., "ethereum").
+     * @param {number} accountIndex - The index of the account to use (see [BIP-44](https://en.bitcoin.it/wiki/BIP_0044)).
+     * @param {EvmTransaction} options - The transaction options.
+     * @param {TransferConfig} [config] - If set, overrides the 'transferMaxFee' and 'paymasterToken' options defined in the manager configuration.
+     * @returns {Promise<TransactionResult>} The transfer's result.
+     *
+     */
+    async abstractedSendTransaction (blockchain, accountIndex, options, config) {
+        const account = await this.getAbstractedAccount(blockchain, accountIndex)
+
+        return await account.sendTransaction(options, config)
     }
 
     /**

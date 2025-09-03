@@ -179,6 +179,30 @@
 
 ---
 
+## abstractedSendTransaction
+
+**Request:** `@wdk-core/abstractedSendTransaction-request`
+
+**Fields:**
+
+- `network`: `string` _(v1)_
+- `accountIndex`: `uint` _(v1)_
+- `options`: `object` _(v1)_
+  - `to`: `string` _(v1)_
+  - `value`: `uint` _(v1)_
+  - `data`: `string` _(v1)_
+- `config`: `object` _(optional)_ _(v1)_
+  - `paymasterToken`: `string` _(v1)_
+
+**Response:** `@wdk-core/abstractedSendTransaction-response`
+
+**Fields:**
+
+- `hash`: `string` _(v1)_
+- `fee`: `uint` _(v1)_
+
+---
+
 ## abstractedAccountQuoteTransfer
 
 **Request:** `@wdk-core/abstractedAccountQuoteTransfer-request`

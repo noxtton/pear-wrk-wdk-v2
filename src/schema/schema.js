@@ -220,6 +220,41 @@ schemaNs.register({
 })
 
 /**
+ * abstractedSendTransaction
+ */
+schemaNs.register({
+  name: 'abstractedSendTransaction-request-options',
+  fields: [
+    { name: 'to', type: 'string', required: true },
+    { name: 'value', type: 'uint', required: true },
+    { name: 'data', type: 'string', required: true },
+  ],
+})
+schemaNs.register({
+  name: 'abstractedSendTransaction-request-config',
+  fields: [
+    { name: 'paymasterToken', type: 'string', required: true },
+  ],
+})
+schemaNs.register({
+  name: 'abstractedSendTransaction-request',
+  fields: [
+    { name: 'network', type: 'string', required: true },
+    { name: 'accountIndex', type: 'uint', required: true },
+    { name: 'options', type: '@wdk-core/abstractedSendTransaction-request-options', required: true },
+    { name: 'config', type: '@wdk-core/abstractedSendTransaction-request-config', required: false },
+  ],
+})
+
+schemaNs.register({
+  name: 'abstractedSendTransaction-response',
+  fields: [
+    { name: 'hash', type: 'string' },
+    { name: 'fee', type: 'uint' }
+  ],
+})
+
+/**
  * abstractedAccountQuoteTransfer
  */
 schemaNs.register({
@@ -331,6 +366,11 @@ ns.register({
   name: 'abstractedAccountTransfer',
   request: { name: '@wdk-core/abstractedAccountTransfer-request', stream: false },
   response: { name: '@wdk-core/abstractedAccountTransfer-response', stream: false },
+})
+ns.register({
+  name: 'abstractedSendTransaction',
+  request: { name: '@wdk-core/abstractedSendTransaction-request', stream: false },
+  response: { name: '@wdk-core/abstractedSendTransaction-response', stream: false },
 })
 ns.register({
   name: 'abstractedAccountQuoteTransfer',

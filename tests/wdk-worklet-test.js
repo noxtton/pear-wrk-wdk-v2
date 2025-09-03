@@ -62,6 +62,23 @@ async function init () {
   // }
 
 
+
+  // try {
+  //   const polygonSendTransaction = await rpc.abstractedSendTransaction({
+  //     network: 'polygon',
+  //     accountIndex: 0,
+  //     options: {
+  //       to: '0xc2132d05d31c914a87c6611c10748aeb04b58e8f',
+  //       value: 0,
+  //       data: '0xa9059cbb0000000000000000000000002f878a4a33d30001010b324892a7542a6ef0fc600000000000000000000000000000000000000000000000000000000000007530'
+  //     },
+  //   })
+  //   console.log('abstractedSendTransaction', polygonSendTransaction);
+  // }catch (e) {
+  //   console.log(e);
+  // }
+
+
   // try {
   //   const fee = await rpc.abstractedAccountQuoteTransfer({
   //     network: 'ethereum',
@@ -80,12 +97,12 @@ async function init () {
   // //
   // try {
   //   const tresult = await rpc.abstractedAccountTransfer({
-  //     network: 'ton',
+  //     network: 'polygon',
   //     accountIndex: 0,
   //     options: {
-  //       token: 'EQCxE6mUtQJKFnGfaROTKOt1lZbDiiX1kCixRv7Nw2Id_sDs',
-  //       recipient: 'UQD3pGcepS4RffO1iktLhpucHEXWJhG-U_MjtmLgzB0z7rBw',
-  //       amount: 200000,
+  //       token: USDT_BALANCE_ADDRESSES['polygon'],
+  //       recipient: '0x2f878A4a33D30001010b324892A7542a6eF0fC60',
+  //       amount: 30000,
   //     }
   //   })
   //   console.log('abstractedAccountTransfer', tresult);
