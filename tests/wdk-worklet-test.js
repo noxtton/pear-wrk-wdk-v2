@@ -11,7 +11,12 @@ const USDT_BALANCE_ADDRESSES = {
   ton: 'EQCxE6mUtQJKFnGfaROTKOt1lZbDiiX1kCixRv7Nw2Id_sDs',
 }
 
-const blockchainNetwork = 'ton'
+const XAUT_BALANCE_ADDRESSES = {
+  ethereum: '0x68749665FF8D2d112Fa859AA293F07A622782F38',
+  polygon: '0xF1815bd50389c46847f0Bda824eC8da914045D14',
+  arbitrum: '0x40461291347e1eCbb09499F3371D3f17f10d7159',
+  ton: 'EQA1R_LuQCLHlMgOo1S4G7Y7W1cd0FrAkbA10Zq7rddKxi9k',
+}
 
 async function init () {
   console.log('init started')
@@ -29,11 +34,11 @@ async function init () {
 
   // try {
   //   const fee = await rpc.abstractedAccountQuoteTransfer({
-  //     network: 'polygon',
+  //     network: 'ton',
   //     accountIndex: 0,
   //     options: {
-  //       token: '0xc2132d05d31c914a87c6611c10748aeb04b58e8f',
-  //       recipient: '0xd35AaD5aa98a5FB0d7F399d3D90Bb4715F230F3B',
+  //       token: 'EQCxE6mUtQJKFnGfaROTKOt1lZbDiiX1kCixRv7Nw2Id_sDs',
+  //       recipient: 'UQD3pGcepS4RffO1iktLhpucHEXWJhG-U_MjtmLgzB0z7rBw',
   //       amount: 1000,
   //     }
   //   })
@@ -41,15 +46,46 @@ async function init () {
   // }catch (e) {
   //   console.log(e);
   // }
+
+  // try {
+  //   const fee = await rpc.quoteSendTransaction({
+  //     network: 'ton',
+  //     accountIndex: 0,
+  //     options: {
+  //       to: 'UQDucbdxXlbsgMvse4SStKOd4ZGBQ2Km_FCEgJqAnQEZrEVD',
+  //       value: 1000,
+  //     }
+  //   })
+  //   console.log('abstractedAccountQuoteTransfer', fee);
+  // }catch (e) {
+  //   console.log(e);
+  // }
+
+
+  // try {
+  //   const fee = await rpc.abstractedAccountQuoteTransfer({
+  //     network: 'ethereum',
+  //     accountIndex: 0,
+  //     options: {
+  //       token: '0x68749665FF8D2d112Fa859AA293F07A622782F38',
+  //       recipient: '0x6a5f608ae4b1abdd030E79d0f9a47c5443545E1E',
+  //       amount: 1000,
+  //     }
+  //   })
+  //   console.log('abstractedAccountQuoteTransfer', fee);
+  // }catch (e) {
+  //   console.log(e);
+  // }
+
   // //
   // try {
   //   const tresult = await rpc.abstractedAccountTransfer({
-  //     network: 'polygon',
+  //     network: 'ton',
   //     accountIndex: 0,
   //     options: {
-  //       token: '0xc2132d05d31c914a87c6611c10748aeb04b58e8f',
-  //       recipient: '0xd35AaD5aa98a5FB0d7F399d3D90Bb4715F230F3B',
-  //       amount: 10000,
+  //       token: 'EQCxE6mUtQJKFnGfaROTKOt1lZbDiiX1kCixRv7Nw2Id_sDs',
+  //       recipient: 'UQD3pGcepS4RffO1iktLhpucHEXWJhG-U_MjtmLgzB0z7rBw',
+  //       amount: 200000,
   //     }
   //   })
   //   console.log('abstractedAccountTransfer', tresult);
@@ -138,13 +174,82 @@ async function init () {
   //
   // try {
   //   const evmAbstractedTokenBalance = await rpc.getAbstractedAddressTokenBalance({
-  //     network: blockchainNetwork,
+  //     network: 'polygon',
   //     accountIndex: 0,
-  //     tokenAddress: USDT_BALANCE_ADDRESSES[blockchainNetwork],
+  //     tokenAddress: USDT_BALANCE_ADDRESSES['polygon'],
   //   })
-  //   console.log(`${blockchainNetwork} Abstracted Token Balance:`, evmAbstractedTokenBalance)
+  //   console.log(`polygon Abstracted Token Balance:`, evmAbstractedTokenBalance)
   // } catch (e) {
   //   console.log(e)
+  // }
+
+  // try {
+  //   const evmAbstractedTokenBalance = await rpc.getAbstractedAddressTokenBalance({
+  //     network: 'ethereum',
+  //     accountIndex: 0,
+  //     tokenAddress: XAUT_BALANCE_ADDRESSES['ethereum'],
+  //   })
+  //   console.log(`ethereum Abstracted Token Balance:`, evmAbstractedTokenBalance)
+  // } catch (e) {
+  //   console.log(e)
+  // }
+
+  // try {
+  //   const evmAbstractedTokenBalance = await rpc.getAbstractedAddressTokenBalance({
+  //     network: 'ethereum',
+  //     accountIndex: 0,
+  //     tokenAddress: XAUT_BALANCE_ADDRESSES['ethereum'],
+  //   })
+  //   console.log(`ethereum Abstracted Token Balance:`, evmAbstractedTokenBalance)
+  // } catch (e) {
+  //   console.log(e)
+  // }
+  //
+  // try {
+  //   const fee = await rpc.abstractedAccountQuoteTransfer({
+  //     network: 'ethereum',
+  //     accountIndex: 0,
+  //     options: {
+  //       token: '0x68749665FF8D2d112Fa859AA293F07A622782F38',
+  //       recipient: '0x6a5f608ae4b1abdd030E79d0f9a47c5443545E1E',
+  //       amount: 870,
+  //     }
+  //   })
+  //   console.log('abstractedAccountQuoteTransfer', fee);
+  // }catch (e) {
+  //   console.log(e);
+  // }
+
+
+  // try {
+  //   const tonAddress = await rpc.getAddress({
+  //     network: 'ton',
+  //     accountIndex: 0,
+  //   })
+  //   console.log(`ton Address:`, tonAddress)
+  // } catch (error) {
+  //   console.log(error)
+  // }
+
+  // try {
+  //   const tonAbstractedAddressBalance = await rpc.getAddressBalance({
+  //     network: 'ton',
+  //     accountIndex: 0,
+  //   })
+  //   console.log(`ton Abstracted Address balance:`, tonAbstractedAddressBalance)
+  // } catch (error) {
+  //   console.log(error)
+  // }
+
+  // try {
+  //   const tonBalance = await rpc.getAbstractedAddressTokenBalance({
+  //     network: 'ton',
+  //     accountIndex: 0,
+  //     tokenAddress: USDT_BALANCE_ADDRESSES['ton']
+  //   })
+  //   console.log(`ton balance:`, tonBalance)
+  // } catch (error) {
+  //   console.log(error)
   // }
 }
 
