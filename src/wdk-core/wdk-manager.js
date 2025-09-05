@@ -122,8 +122,8 @@ class WdkManager {
 
     //todo workaround to support ethers
     async initDefaultImports() {
-        const ethers = await import('@wdk/bare-ethers')
-        if (!this._imports['ethers']) this._imports['ethers'] = ethers;
+        const {default: Ethers} = await import('@wdk/bare-ethers')
+        if (!this._imports['ethers']) this._imports['ethers'] = Ethers;
     }
 
     /**
