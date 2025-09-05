@@ -21,6 +21,7 @@
     "@wdk/wallet-ton-gasless": "https://github.com/tetherto/wdk-wallet-ton-gasless#4b62e81488647158b2492e06c6cde176b69dd17d",
     "@wdk/wallet-tron": "https://github.com/tetherto/wdk-wallet-tron#ec076473a5b8340599e005ab5ece8c8d246b3965",
     "@wdk/wallet-tron-gasfree": "https://github.com/tetherto/wdk-wallet-tron-gasfree#fd57ed375801ae281e98c6882ea0f2ad4c2b30f5",
+    "@wdk/bare-ethers": "https://github.com/noxtton/wdk-bare-ethers-internal#07dfa4190f90aef6fcfca4abe60aa8ca07e78ba0",
     "bare-ipc": "1.1.1",
     "encoding": "npm:bare-encoding@1.0.0",
     "hrpc": "4.0.1",
