@@ -220,6 +220,27 @@ schemaNs.register({
 })
 
 /**
+ * getApproveTransaction
+ */
+schemaNs.register({
+  name: 'getApproveTransaction-request',
+  fields: [
+    { name: 'token', type: 'string', required: true },
+    { name: 'recipient', type: 'string', required: true },
+    { name: 'amount', type: 'uint', required: true },
+  ],
+})
+
+schemaNs.register({
+  name: 'getApproveTransaction-response',
+  fields: [
+    { name: 'to', type: 'string', required: true },
+    { name: 'value', type: 'uint', required: true },
+    { name: 'data', type: 'string', required: true },
+  ],
+})
+
+/**
  * abstractedSendTransaction
  */
 schemaNs.register({
@@ -241,7 +262,7 @@ schemaNs.register({
   fields: [
     { name: 'network', type: 'string', required: true },
     { name: 'accountIndex', type: 'uint', required: true },
-    { name: 'options', type: '@wdk-core/abstractedSendTransaction-request-options', required: true },
+    { name: 'options', type: 'string', required: true },
     { name: 'config', type: '@wdk-core/abstractedSendTransaction-request-config', required: false },
   ],
 })
@@ -366,6 +387,11 @@ ns.register({
   name: 'abstractedAccountTransfer',
   request: { name: '@wdk-core/abstractedAccountTransfer-request', stream: false },
   response: { name: '@wdk-core/abstractedAccountTransfer-response', stream: false },
+})
+ns.register({
+  name: 'getApproveTransaction',
+  request: { name: '@wdk-core/getApproveTransaction-request', stream: false },
+  response: { name: '@wdk-core/getApproveTransaction-response', stream: false },
 })
 ns.register({
   name: 'abstractedSendTransaction',

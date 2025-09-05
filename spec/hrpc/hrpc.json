@@ -129,6 +129,19 @@
     },
     {
       "id": 10,
+      "name": "@wdk-core/getApproveTransaction",
+      "request": {
+        "name": "@wdk-core/getApproveTransaction-request",
+        "stream": false
+      },
+      "response": {
+        "name": "@wdk-core/getApproveTransaction-response",
+        "stream": false
+      },
+      "version": 1
+    },
+    {
+      "id": 11,
       "name": "@wdk-core/abstractedSendTransaction",
       "request": {
         "name": "@wdk-core/abstractedSendTransaction-request",
@@ -141,7 +154,7 @@
       "version": 1
     },
     {
-      "id": 11,
+      "id": 12,
       "name": "@wdk-core/abstractedAccountQuoteTransfer",
       "request": {
         "name": "@wdk-core/abstractedAccountQuoteTransfer-request",
@@ -154,7 +167,7 @@
       "version": 1
     },
     {
-      "id": 12,
+      "id": 13,
       "name": "@wdk-core/getTransactionReceipt",
       "request": {
         "name": "@wdk-core/getTransactionReceipt-request",
@@ -167,7 +180,7 @@
       "version": 1
     },
     {
-      "id": 13,
+      "id": 14,
       "name": "@wdk-core/dispose",
       "request": {
         "name": "@wdk-core/dispose-request",

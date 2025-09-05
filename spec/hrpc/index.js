@@ -25,14 +25,16 @@ const methods = new Map([
   [8, '@wdk-core/getAbstractedAddressTokenBalance'],
   ['@wdk-core/abstractedAccountTransfer', 9],
   [9, '@wdk-core/abstractedAccountTransfer'],
-  ['@wdk-core/abstractedSendTransaction', 10],
-  [10, '@wdk-core/abstractedSendTransaction'],
-  ['@wdk-core/abstractedAccountQuoteTransfer', 11],
-  [11, '@wdk-core/abstractedAccountQuoteTransfer'],
-  ['@wdk-core/getTransactionReceipt', 12],
-  [12, '@wdk-core/getTransactionReceipt'],
-  ['@wdk-core/dispose', 13],
-  [13, '@wdk-core/dispose']
+  ['@wdk-core/getApproveTransaction', 10],
+  [10, '@wdk-core/getApproveTransaction'],
+  ['@wdk-core/abstractedSendTransaction', 11],
+  [11, '@wdk-core/abstractedSendTransaction'],
+  ['@wdk-core/abstractedAccountQuoteTransfer', 12],
+  [12, '@wdk-core/abstractedAccountQuoteTransfer'],
+  ['@wdk-core/getTransactionReceipt', 13],
+  [13, '@wdk-core/getTransactionReceipt'],
+  ['@wdk-core/dispose', 14],
+  [14, '@wdk-core/dispose']
 ])
 
 class HRPC {
@@ -50,6 +52,7 @@ class HRPC {
       ['@wdk-core/getAbstractedAddressBalance', getEncoding('@wdk-core/getAbstractedAddressBalance-request')],
       ['@wdk-core/getAbstractedAddressTokenBalance', getEncoding('@wdk-core/getAbstractedAddressTokenBalance-request')],
       ['@wdk-core/abstractedAccountTransfer', getEncoding('@wdk-core/abstractedAccountTransfer-request')],
+      ['@wdk-core/getApproveTransaction', getEncoding('@wdk-core/getApproveTransaction-request')],
       ['@wdk-core/abstractedSendTransaction', getEncoding('@wdk-core/abstractedSendTransaction-request')],
       ['@wdk-core/abstractedAccountQuoteTransfer', getEncoding('@wdk-core/abstractedAccountQuoteTransfer-request')],
       ['@wdk-core/getTransactionReceipt', getEncoding('@wdk-core/getTransactionReceipt-request')],
@@ -65,6 +68,7 @@ class HRPC {
       ['@wdk-core/getAbstractedAddressBalance', getEncoding('@wdk-core/getAbstractedAddressBalance-response')],
       ['@wdk-core/getAbstractedAddressTokenBalance', getEncoding('@wdk-core/getAbstractedAddressTokenBalance-response')],
       ['@wdk-core/abstractedAccountTransfer', getEncoding('@wdk-core/abstractedAccountTransfer-response')],
+      ['@wdk-core/getApproveTransaction', getEncoding('@wdk-core/getApproveTransaction-response')],
       ['@wdk-core/abstractedSendTransaction', getEncoding('@wdk-core/abstractedSendTransaction-response')],
       ['@wdk-core/abstractedAccountQuoteTransfer', getEncoding('@wdk-core/abstractedAccountQuoteTransfer-response')],
       ['@wdk-core/getTransactionReceipt', getEncoding('@wdk-core/getTransactionReceipt-response')]
@@ -171,6 +175,10 @@ class HRPC {
     return this._call('@wdk-core/abstractedAccountTransfer', args)
   }
 
+  async getApproveTransaction (args) {
+    return this._call('@wdk-core/getApproveTransaction', args)
+  }
+
   async abstractedSendTransaction (args) {
     return this._call('@wdk-core/abstractedSendTransaction', args)
   }
@@ -225,6 +233,10 @@ class HRPC {
 
   onAbstractedAccountTransfer (responseFn) {
     this._handlers['@wdk-core/abstractedAccountTransfer'] = responseFn
+  }
+
+  onGetApproveTransaction (responseFn) {
+    this._handlers['@wdk-core/getApproveTransaction'] = responseFn
   }
 
   onAbstractedSendTransaction (responseFn) {

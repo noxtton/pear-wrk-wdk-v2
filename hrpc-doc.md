@@ -252,3 +252,23 @@ _No fields defined_
 
 ---
 
+## getApproveTransaction
+
+**Request:** `@wdk-core/getApproveTransaction-request`
+
+**Fields:**
+
+- `token`: `string` _(v2)_
+- `recipient`: `string` _(v2)_
+- `amount`: `uint` _(v2)_
+
+**Response:** `@wdk-core/getApproveTransaction-response`
+
+**Fields:**
+
+- `to`: `string` _(v2)_
+- `value`: `uint` _(v2)_
+- `data`: `string` _(v2)_
+
+---
+

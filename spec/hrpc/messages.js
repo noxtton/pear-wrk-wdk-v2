@@ -438,8 +438,11 @@ const encoding22 = {
   }
 }
 
-// @wdk-core/abstractedSendTransaction-request-options
-const encoding23 = {
+// @wdk-core/getApproveTransaction-request
+const encoding23 = encoding20
+
+// @wdk-core/getApproveTransaction-response
+const encoding24 = {
   preencode (state, m) {
     c.string.preencode(state, m.to)
     c.uint.preencode(state, m.value)
@@ -463,8 +466,11 @@ const encoding23 = {
   }
 }
 
+// @wdk-core/abstractedSendTransaction-request-options
+const encoding25 = encoding24
+
 // @wdk-core/abstractedSendTransaction-request-config
-const encoding24 = {
+const encoding26 = {
   preencode (state, m) {
     c.string.preencode(state, m.paymasterToken)
   },
@@ -480,71 +486,69 @@ const encoding24 = {
   }
 }
 
-// @wdk-core/abstractedSendTransaction-request.options
-const encoding25_2 = c.frame(encoding23)
 // @wdk-core/abstractedSendTransaction-request.config
-const encoding25_3 = c.frame(encoding24)
+const encoding27_3 = c.frame(encoding26)
 
 // @wdk-core/abstractedSendTransaction-request
-const encoding25 = {
+const encoding27 = {
   preencode (state, m) {
     c.string.preencode(state, m.network)
     c.uint.preencode(state, m.accountIndex)
-    encoding25_2.preencode(state, m.options)
+    c.string.preencode(state, m.options)
     state.end++ // max flag is 1 so always one byte
 
-    if (m.config) encoding25_3.preencode(state, m.config)
+    if (m.config) encoding27_3.preencode(state, m.config)
   },
   encode (state, m) {
     const flags = m.config ? 1 : 0
 
     c.string.encode(state, m.network)
     c.uint.encode(state, m.accountIndex)
-    encoding25_2.encode(state, m.options)
+    c.string.encode(state, m.options)
     c.uint.encode(state, flags)
 
-    if (m.config) encoding25_3.encode(state, m.config)
+    if (m.config) encoding27_3.encode(state, m.config)
   },
   decode (state) {
     const r0 = c.string.decode(state)
     const r1 = c.uint.decode(state)
-    const r2 = encoding25_2.decode(state)
+    const r2 = c.string.decode(state)
     const flags = c.uint.decode(state)
 
     return {
       network: r0,
       accountIndex: r1,
       options: r2,
-      config: (flags & 1) !== 0 ? encoding25_3.decode(state) : null
+      config: (flags & 1) !== 0 ? encoding27_3.decode(state) : null
     }
   }
 }
 
 // @wdk-core/abstractedSendTransaction-response
-const encoding26 = encoding22
+const encoding28 = encoding22
 
 // @wdk-core/abstractedAccountQuoteTransfer-request-options
-const encoding27 = encoding20
+const encoding29 = encoding20
 
 // @wdk-core/abstractedAccountQuoteTransfer-request.options
-const encoding28_2 = c.frame(encoding27)
+const encoding30_2 = c.frame(encoding29)
 
 // @wdk-core/abstractedAccountQuoteTransfer-request
-const encoding28 = {
+const encoding30 = {
   preencode (state, m) {
     c.string.preencode(state, m.network)
     c.uint.preencode(state, m.accountIndex)
-    encoding28_2.preencode(state, m.options)
+    encoding30_2.preencode(state, m.options)
   },
   encode (state, m) {
     c.string.encode(state, m.network)
     c.uint.encode(state, m.accountIndex)
-    encoding28_2.encode(state, m.options)
+    encoding30_2.encode(state, m.options)
   },
   decode (state) {
     const r0 = c.string.decode(state)
     const r1 = c.uint.decode(state)
-    const r2 = encoding28_2.decode(state)
+    const r2 = encoding30_2.decode(state)
 
     return {
       network: r0,
@@ -555,10 +559,10 @@ const encoding28 = {
 }
 
 // @wdk-core/abstractedAccountQuoteTransfer-response
-const encoding29 = encoding10
+const encoding31 = encoding10
 
 // @wdk-core/getTransactionReceipt-request
-const encoding30 = {
+const encoding32 = {
   preencode (state, m) {
     c.string.preencode(state, m.network)
     c.uint.preencode(state, m.accountIndex)
@@ -583,7 +587,7 @@ const encoding30 = {
 }
 
 // @wdk-core/getTransactionReceipt-response
-const encoding31 = {
+const encoding33 = {
   preencode (state, m) {
     state.end++ // max flag is 1 so always one byte
 
@@ -606,7 +610,7 @@ const encoding31 = {
 }
 
 // @wdk-core/dispose-request
-const encoding32 = {
+const encoding34 = {
   preencode (state, m) {
 
   },
@@ -665,16 +669,18 @@ function getEncoding (name) {
     case '@wdk-core/abstractedAccountTransfer-request-options': return encoding20
     case '@wdk-core/abstractedAccountTransfer-request': return encoding21
     case '@wdk-core/abstractedAccountTransfer-response': return encoding22
-    case '@wdk-core/abstractedSendTransaction-request-options': return encoding23
-    case '@wdk-core/abstractedSendTransaction-request-config': return encoding24
-    case '@wdk-core/abstractedSendTransaction-request': return encoding25
-    case '@wdk-core/abstractedSendTransaction-response': return encoding26
-    case '@wdk-core/abstractedAccountQuoteTransfer-request-options': return encoding27
-    case '@wdk-core/abstractedAccountQuoteTransfer-request': return encoding28
-    case '@wdk-core/abstractedAccountQuoteTransfer-response': return encoding29
-    case '@wdk-core/getTransactionReceipt-request': return encoding30
-    case '@wdk-core/getTransactionReceipt-response': return encoding31
-    case '@wdk-core/dispose-request': return encoding32
+    case '@wdk-core/getApproveTransaction-request': return encoding23
+    case '@wdk-core/getApproveTransaction-response': return encoding24
+    case '@wdk-core/abstractedSendTransaction-request-options': return encoding25
+    case '@wdk-core/abstractedSendTransaction-request-config': return encoding26
+    case '@wdk-core/abstractedSendTransaction-request': return encoding27
+    case '@wdk-core/abstractedSendTransaction-response': return encoding28
+    case '@wdk-core/abstractedAccountQuoteTransfer-request-options': return encoding29
+    case '@wdk-core/abstractedAccountQuoteTransfer-request': return encoding30
+    case '@wdk-core/abstractedAccountQuoteTransfer-response': return encoding31
+    case '@wdk-core/getTransactionReceipt-request': return encoding32
+    case '@wdk-core/getTransactionReceipt-response': return encoding33
+    case '@wdk-core/dispose-request': return encoding34
     default: throw new Error('Encoder not found ' + name)
   }
 }

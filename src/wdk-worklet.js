@@ -1,4 +1,3 @@
-require('bare-wdk-runtime')
 const { IPC } = BareKit
 const HRPC = require('../spec/hrpc')
 const ERROR_CODES = require('./exceptions/error-codes')
@@ -109,8 +108,8 @@ rpc.onAbstractedAccountTransfer(async payload => {
 
 rpc.onAbstractedSendTransaction(async payload => {
   try {
-    if (!payload.options.data) delete payload.options.data
-    const transfer = await wdk.abstractedSendTransaction(payload.network, payload.accountIndex, payload.options, payload.config)
+    const options = JSON.parse(payload.options)
+    const transfer = await wdk.abstractedSendTransaction(payload.network, payload.accountIndex, options, payload.config)
     return { fee: transfer.fee, hash: transfer.hash }
   } catch (error) {
     throw new Error(rpcException.stringifyError(error))
@@ -139,6 +138,19 @@ rpc.onGetTransactionReceipt(async payload => {
     throw new Error(rpcException.stringifyError(error))
   }
 })
+
+rpc.onGetApproveTransaction(async payload => {
+  try {
+    let approveTx = await wdk.getApproveTransaction(payload)
+    if (approveTx) {
+      return approveTx
+    }
+    return {}
+  } catch (error) {
+    throw new Error(rpcException.stringifyError(error))
+  }
+})
+
 rpc.onDispose(() => {
   try {
     wdk.dispose()

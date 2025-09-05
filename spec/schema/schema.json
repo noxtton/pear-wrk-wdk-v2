@@ -448,6 +448,58 @@
       ]
     },
     {
+      "name": "getApproveTransaction-request",
+      "namespace": "wdk-core",
+      "compact": false,
+      "flagsPosition": -1,
+      "fields": [
+        {
+          "name": "token",
+          "required": true,
+          "type": "string",
+          "version": 1
+        },
+        {
+          "name": "recipient",
+          "required": true,
+          "type": "string",
+          "version": 1
+        },
+        {
+          "name": "amount",
+          "required": true,
+          "type": "uint",
+          "version": 1
+        }
+      ]
+    },
+    {
+      "name": "getApproveTransaction-response",
+      "namespace": "wdk-core",
+      "compact": false,
+      "flagsPosition": -1,
+      "fields": [
+        {
+          "name": "to",
+          "required": true,
+          "type": "string",
+          "version": 1
+        },
+        {
+          "name": "value",
+          "required": true,
+          "type": "uint",
+          "version": 1
+        },
+        {
+          "name": "data",
+          "required": true,
+          "type": "string",
+          "version": 1
+        }
+      ]
+    },
+    {
       "name": "abstractedSendTransaction-request-options",
       "namespace": "wdk-core",
       "compact": false,
@@ -508,7 +560,7 @@
         {
           "name": "options",
           "required": true,
-          "type": "@wdk-core/abstractedSendTransaction-request-options",
+          "type": "string",
           "version": 1
         },
         {

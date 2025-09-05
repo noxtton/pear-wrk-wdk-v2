@@ -12,7 +12,6 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 'use strict'
-
 /** @typedef {import('@wdk/wallet').FeeRates} FeeRates */
 
 /** @typedef {import('@wdk/wallet').TransferOptions} TransferOptions */
@@ -67,6 +66,13 @@
  */
 
 /**
+ * @typedef {Object} ApproveOptions
+ * @property {string} token
+ * @property {string} recipient
+ * @property {number} amount
+ */
+
+/**
  * Enumeration for all available blockchains.
  *
  * @enum {string}
@@ -107,6 +113,17 @@ class WdkManager {
 
         /** @private */
         this._account_abstraction_wallets = { }
+
+        /** @private */
+        this._imports = { }
+            this.initDefaultImports().then();
+
+    }
+
+    //todo workaround to support ethers
+    async initDefaultImports() {
+        const ethers = await import('../lib/bare/bare-ethers')
+        if (!this._imports['ethers']) this._imports['ethers'] = ethers;
     }
 
     /**
@@ -367,7 +384,7 @@ class WdkManager {
      *
      * @param {Blockchain} blockchain - A blockchain identifier (e.g., "ethereum").
      * @param {number} accountIndex - The index of the account to use (see [BIP-44](https://en.bitcoin.it/wiki/BIP_0044)).
-     * @param {EvmTransaction} options - The transaction options.
+     * @param {EvmTransaction[]} options - The transaction options.
      * @param {TransferConfig} [config] - If set, overrides the 'transferMaxFee' and 'paymasterToken' options defined in the manager configuration.
      * @returns {Promise<TransactionResult>} The transfer's result.
      *
@@ -414,6 +431,26 @@ class WdkManager {
     async getTransactionReceipt (blockchain, accountIndex, hash) {
         const account = await this.getAbstractedAccount(blockchain, accountIndex)
         return await account.getTransactionReceipt(hash)
+    }
+
+    /**
+     * Returns an evm transaction to approve the interaction transaction.
+     *
+     * @param {ApproveOptions} options - The approve options.
+     * @returns {Promise<EvmTransaction>} The evm transaction.
+     */
+     async getApproveTransaction (options) {
+        const { token, recipient, amount } = options
+
+        const erc20Abi = ["function approve(address spender, uint256 amount) external returns (bool)"];
+
+        const contract = new this._imports['ethers'].Contract(token, erc20Abi)
+
+        return {
+            to: token,
+            value: 0,
+            data: contract.interface.encodeFunctionData('approve', [recipient, amount])
+        }
     }
 
     /** Disposes all the wallet accounts, erasing their private keys from the memory. */
