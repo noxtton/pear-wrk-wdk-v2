@@ -89,7 +89,7 @@ rpc.onGetAbstractedAddressBalance(async payload => {
 rpc.onGetAbstractedAddressTokenBalance(async payload => {
   try {
     const balance = await wdk.getAbstractedAddressTokenBalance(payload.network, payload.accountIndex, payload.tokenAddress)
-    return { balance: balance }
+    return { balance: balance.toString() }
   } catch (error) {
     throw new Error(rpcException.stringifyError(error))
   }

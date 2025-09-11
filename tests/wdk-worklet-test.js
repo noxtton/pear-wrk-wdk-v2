@@ -60,17 +60,6 @@ async function init () {
   // }catch (e) {
   //   console.log(e);
   // }
-
-  try {
-    const approveTx = await rpc.getApproveTransaction({
-      token: USDT_BALANCE_ADDRESSES['polygon'],
-      recipient: '0x2f878A4a33D30001010b324892A7542a6eF0fC60',
-      amount: 30000,
-    })
-    console.log('approve transaction', approveTx)
-  } catch (e) {
-    console.log(e)
-  }
   //
   // try {
   //   const polygonSendTransaction = await rpc.abstractedSendTransaction({

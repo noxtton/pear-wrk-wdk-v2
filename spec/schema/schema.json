@@ -372,7 +372,7 @@
       "fields": [
         {
           "name": "balance",
-          "type": "uint",
+          "type": "string",
           "version": 1
         }
       ]

@@ -355,7 +355,27 @@ const encoding18 = {
 }
 
 // @wdk-core/getAbstractedAddressTokenBalance-response
-const encoding19 = encoding7
+const encoding19 = {
+  preencode (state, m) {
+    state.end++ // max flag is 1 so always one byte
+
+    if (m.balance) c.string.preencode(state, m.balance)
+  },
+  encode (state, m) {
+    const flags = m.balance ? 1 : 0
+
+    c.uint.encode(state, flags)
+
+    if (m.balance) c.string.encode(state, m.balance)
+  },
+  decode (state) {
+    const flags = c.uint.decode(state)
+
+    return {
+      balance: (flags & 1) !== 0 ? c.string.decode(state) : null
+    }
+  }
+}
 
 // @wdk-core/abstractedAccountTransfer-request-options
 const encoding20 = {

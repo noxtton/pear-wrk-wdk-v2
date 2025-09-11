@@ -23,7 +23,7 @@ async function init () {
   try {
     const workletStatus = await rpc.workletStart({
       enableDebugLogs: 0,
-      seedPhrase: 'ghost cruise utility travel soup calm road dinosaur claim barrel dash alley',
+      seedPhrase: 'clump cherry rural carry lazy blade gain high holiday point witness when',
       config: JSON.stringify(require('../chains.json')),
     })
     console.log('worklet status: ', workletStatus)
