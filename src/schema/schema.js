@@ -74,7 +74,7 @@ schemaNs.register({
 schemaNs.register({
   name: 'getAddressBalance-response',
   fields: [
-    { name: 'balance', type: 'uint' }
+    { name: 'balance', type: 'string' }
   ],
 })
 
@@ -168,7 +168,7 @@ schemaNs.register({
 schemaNs.register({
   name: 'getAbstractedAddressBalance-response',
   fields: [
-    { name: 'balance', type: 'uint' }
+    { name: 'balance', type: 'string' }
   ],
 })
 
