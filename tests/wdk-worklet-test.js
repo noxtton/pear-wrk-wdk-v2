@@ -133,10 +133,10 @@ async function init () {
   //     accountIndex: 0,
   //     options: {
   //       to: 'bc1quadg5axzx85enul0sf2se2yplmkfglfkddzeut',
-  //       value: 1000,
+  //       value: "1000",
   //     }
   //   })
-  //   console.log('abstractedAccountQuoteTransfer', fee);
+  //   console.log('quoteSendTransaction', fee);
   // }catch (e) {
   //   console.log(e);
   // }
@@ -221,12 +221,12 @@ async function init () {
   //
   // try {
   //   const fee = await rpc.abstractedAccountQuoteTransfer({
-  //     network: 'ethereum',
+  //     network: 'ton',
   //     accountIndex: 0,
   //     options: {
-  //       token: '0x68749665FF8D2d112Fa859AA293F07A622782F38',
-  //       recipient: '0x6a5f608ae4b1abdd030E79d0f9a47c5443545E1E',
-  //       amount: 870,
+  //       token: USDT_BALANCE_ADDRESSES['ton'],
+  //       recipient: 'UQD3pGcepS4RffO1iktLhpucHEXWJhG-U_MjtmLgzB0z7rBw',
+  //       amount: "100",
   //     }
   //   })
   //   console.log('abstractedAccountQuoteTransfer', fee);

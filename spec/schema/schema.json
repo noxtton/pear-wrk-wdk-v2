@@ -164,7 +164,7 @@
         {
           "name": "value",
           "required": true,
-          "type": "uint",
+          "type": "string",
           "version": 1
         }
       ]
@@ -203,7 +203,7 @@
       "fields": [
         {
           "name": "fee",
-          "type": "uint",
+          "type": "string",
           "version": 1
         }
       ]
@@ -223,7 +223,7 @@
         {
           "name": "value",
           "required": true,
-          "type": "uint",
+          "type": "string",
           "version": 1
         }
       ]
@@ -262,7 +262,7 @@
       "fields": [
         {
           "name": "fee",
-          "type": "uint",
+          "type": "string",
           "version": 1
         },
         {
@@ -398,7 +398,7 @@
         {
           "name": "amount",
           "required": true,
-          "type": "uint",
+          "type": "string",
           "version": 1
         }
       ]
@@ -442,7 +442,7 @@
         },
         {
           "name": "fee",
-          "type": "uint",
+          "type": "string",
           "version": 1
         }
       ]
@@ -468,7 +468,7 @@
         {
           "name": "amount",
           "required": true,
-          "type": "uint",
+          "type": "string",
           "version": 1
         }
       ]
@@ -488,33 +488,7 @@
         {
           "name": "value",
           "required": true,
-          "type": "uint",
-          "version": 1
-        },
-        {
-          "name": "data",
-          "required": true,
           "type": "string",
-          "version": 1
-        }
-      ]
-    },
-    {
-      "name": "abstractedSendTransaction-request-options",
-      "namespace": "wdk-core",
-      "compact": false,
-      "flagsPosition": -1,
-      "fields": [
-        {
-          "name": "to",
-          "required": true,
-          "type": "string",
-          "version": 1
-        },
-        {
-          "name": "value",
-          "required": true,
-          "type": "uint",
           "version": 1
         },
         {
@@ -584,7 +558,7 @@
         },
         {
           "name": "fee",
-          "type": "uint",
+          "type": "string",
           "version": 1
         }
       ]
@@ -610,7 +584,7 @@
         {
           "name": "amount",
           "required": true,
-          "type": "uint",
+          "type": "string",
           "version": 1
         }
       ]
@@ -649,7 +623,7 @@
       "fields": [
         {
           "name": "fee",
-          "type": "uint",
+          "type": "string",
           "version": 1
         }
       ]
