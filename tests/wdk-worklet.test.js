@@ -188,9 +188,9 @@ async function init () {
   //
   // try {
   //   const evmAbstractedTokenBalance = await rpc.getAbstractedAddressTokenBalance({
-  //     network: 'polygon',
+  //     network: 'ethereum',
   //     accountIndex: 0,
-  //     tokenAddress: USDT_BALANCE_ADDRESSES['polygon'],
+  //     tokenAddress: XAUT_BALANCE_ADDRESSES['ethereum'],
   //   })
   //   console.log(`polygon Abstracted Token Balance:`, evmAbstractedTokenBalance)
   // } catch (e) {
@@ -221,11 +221,11 @@ async function init () {
   //
   // try {
   //   const fee = await rpc.abstractedAccountQuoteTransfer({
-  //     network: 'ton',
+  //     network: 'ethereum',
   //     accountIndex: 0,
   //     options: {
-  //       token: USDT_BALANCE_ADDRESSES['ton'],
-  //       recipient: 'UQD3pGcepS4RffO1iktLhpucHEXWJhG-U_MjtmLgzB0z7rBw',
+  //       token: USDT_BALANCE_ADDRESSES['ethereum'],
+  //       recipient: '0x02ee5e3fAf01a02aec2fA1c6E8DEC7ba755bE2E9',
   //       amount: "100",
   //     }
   //   })

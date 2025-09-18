@@ -31,9 +31,6 @@ async function init () {
   } catch (error) {
     console.log(error)
   }
-
-  console.log(os.getEnvKeys())
-
   try {
     // const approveTx = await rpc.getApproveTransaction({
     //   token: USDT_BALANCE_ADDRESSES['polygon'],
