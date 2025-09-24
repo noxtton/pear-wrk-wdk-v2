@@ -203,11 +203,24 @@ schemaNs.register({
   ],
 })
 schemaNs.register({
+  name: 'abstractedAccountTransfer-request-config-paymasterToken',
+  fields: [
+    { name: 'address', type: 'string', required: true },
+  ],
+})
+schemaNs.register({
+  name: 'abstractedAccountTransfer-request-config',
+  fields: [
+    { name: 'paymasterToken', type: '@wdk-core/abstractedAccountTransfer-request-config-paymasterToken', required: false },
+  ],
+})
+schemaNs.register({
   name: 'abstractedAccountTransfer-request',
   fields: [
     { name: 'network', type: 'string', required: true },
     { name: 'accountIndex', type: 'uint', required: true },
     { name: 'options', type: '@wdk-core/abstractedAccountTransfer-request-options', required: true },
+    { name: 'config', type: '@wdk-core/abstractedAccountTransfer-request-config', required: false },
   ],
 })
 
@@ -244,9 +257,15 @@ schemaNs.register({
  * abstractedSendTransaction
  */
 schemaNs.register({
+  name: 'abstractedSendTransaction-request-config-paymasterToken',
+  fields: [
+    { name: 'address', type: 'string', required: true },
+  ],
+})
+schemaNs.register({
   name: 'abstractedSendTransaction-request-config',
   fields: [
-    { name: 'paymasterToken', type: 'string', required: true },
+    { name: 'paymasterToken', type: '@wdk-core/abstractedSendTransaction-request-config-paymasterToken', required: false },
   ],
 })
 schemaNs.register({
@@ -279,11 +298,24 @@ schemaNs.register({
   ],
 })
 schemaNs.register({
+  name: 'abstractedAccountQuoteTransfer-request-config-paymasterToken',
+  fields: [
+    { name: 'address', type: 'string', required: true },
+  ],
+})
+schemaNs.register({
+  name: 'abstractedAccountQuoteTransfer-request-config',
+  fields: [
+    { name: 'paymasterToken', type: '@wdk-core/abstractedAccountQuoteTransfer-request-config-paymasterToken', required: false },
+  ],
+})
+schemaNs.register({
   name: 'abstractedAccountQuoteTransfer-request',
   fields: [
     { name: 'network', type: 'string', required: true },
     { name: 'accountIndex', type: 'uint', required: true },
     { name: 'options', type: '@wdk-core/abstractedAccountQuoteTransfer-request-options', required: true },
+    { name: 'config', type: '@wdk-core/abstractedAccountQuoteTransfer-request-config', required: false },
   ],
 })
 

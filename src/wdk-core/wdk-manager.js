@@ -417,7 +417,7 @@ class WdkManager {
      */
     async abstractedAccountQuoteTransfer (blockchain, accountIndex, options, config) {
         const account = await this.getAbstractedAccount(blockchain, accountIndex)
-        return await account.quoteTransfer(options)
+        return await account.quoteTransfer(options, config)
     }
 
     /**
