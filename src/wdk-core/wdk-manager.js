@@ -85,7 +85,6 @@ const Blockchain = {
     Tron: 'tron',
     Bitcoin: 'bitcoin',
     Solana: 'solana',
-    Spark: 'spark'
 }
 
 const EVM_BLOCKCHAINS = [
@@ -94,7 +93,7 @@ const EVM_BLOCKCHAINS = [
     Blockchain.Polygon
 ]
 
-class WdkManager {
+export default class WdkManager {
     /**
      * Creates a new wallet development kit manager.
      *
@@ -507,11 +506,6 @@ class WdkManager {
 
                 this._wallets.solana = new WalletManagerSolana(seed, config.solana)
             }
-            else if (blockchain === 'spark') {
-                console.log('accessing spark')
-                // const sprk = import('@tetherto/wdk-wallet-spark')
-                // console.log(sprk)
-            }
         }
 
         return this._wallets[blockchain]
@@ -549,8 +543,4 @@ class WdkManager {
 
         return this._account_abstraction_wallets[blockchain]
     }
-}
-
-export {
-    WdkManager,Blockchain
 }

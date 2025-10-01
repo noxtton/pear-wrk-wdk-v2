@@ -1,5 +1,3 @@
-// const Hyperschema = require('hyperschema')
-// const HRPCBuilder = require('hrpc')
 import ESMHyperschema from 'hyperschema'
 import ESMHRPC from 'hrpc'
 

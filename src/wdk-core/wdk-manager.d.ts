@@ -85,7 +85,7 @@ export type TransferConfig = {
         address: string;
     };
 };
-export class WdkManager {
+export default class WdkManager {
     /**
      * Checks if a seed phrase is valid.
      *

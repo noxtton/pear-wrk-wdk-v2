@@ -2,7 +2,7 @@ const { IPC } = BareKit
 
 import HRPC from '../spec/hrpc'
 
-import { WdkManager } from './wdk-core/wdk-manager.js'
+import WdkManager from './wdk-core/wdk-manager.js'
 import { stringifyError } from '../src/exceptions/rpc-exception'
 
 const rpc = new HRPC(IPC)

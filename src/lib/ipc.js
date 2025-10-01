@@ -1,4 +1,3 @@
-// const IPC = require('bare-ipc');
 import IPC from 'bare-ipc';
 /**
  * bare-ipc: need for create bareKit link environment to use IPC with HRPC

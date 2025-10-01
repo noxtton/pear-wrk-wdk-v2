@@ -1,5 +1,4 @@
-// const ERROR_CODES = require('./error-codes')
-import * as ERROR_CODES from './error-codes'
+import ERROR_CODES from './error-codes'
 
 /**
  * @typedef {Object} rpcExceptionPayload

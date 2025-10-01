@@ -1,4 +1,4 @@
-// Copyright 2024 Tether Operations Limited
+// Copyright 2025 Tether Operations Limited
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -13,19 +13,7 @@
 // limitations under the License.
 'use strict'
 
-/** @typedef {import('@wdk/wallet').FeeRates} FeeRates */
-
-/** @typedef {import('@wdk/wallet').TransferOptions} TransferOptions */
-/** @typedef {import('@wdk/wallet').TransferResult} TransferResult */
-/** @typedef {import('@wdk/wallet').IWalletAccount} IWalletAccount */
-
-/** @typedef {import('./src/wdk-core/wdk-manager.js').Seed} Seed */
-/** @typedef {import('./src/wdk-core/wdk-manager.js').Seeds} Seeds */
-/** @typedef {import('./src/wdk-core/wdk-manager.js').WdkConfig} WdkConfig */
-
-/** @typedef {import('./src/wdk-core/wdk-manager.js').TransferConfig} TransferConfig */
-
-export { WdkManager, Blockchain } from './src/wdk-core/wdk-manager.js'
+export { default } from './src/wdk-core/wdk-manager.js'
 
 // Export spec/hrpc
 export { default as HRPC } from './spec/hrpc'
