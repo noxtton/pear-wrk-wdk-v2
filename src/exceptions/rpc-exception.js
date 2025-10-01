@@ -1,4 +1,5 @@
-const ERROR_CODES = require('./error-codes')
+// const ERROR_CODES = require('./error-codes')
+import * as ERROR_CODES from './error-codes'
 
 /**
  * @typedef {Object} rpcExceptionPayload
@@ -43,7 +44,7 @@ function rpcException (payload) {
   }
 }
 
-module.exports = {
+export {
   rpcException,
   stringifyError
 }

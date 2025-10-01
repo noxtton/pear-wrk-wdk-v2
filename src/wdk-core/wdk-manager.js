@@ -84,7 +84,8 @@ const Blockchain = {
     Ton: 'ton',
     Tron: 'tron',
     Bitcoin: 'bitcoin',
-    Solana: 'solana'
+    Solana: 'solana',
+    Spark: 'spark'
 }
 
 const EVM_BLOCKCHAINS = [
@@ -506,6 +507,11 @@ class WdkManager {
 
                 this._wallets.solana = new WalletManagerSolana(seed, config.solana)
             }
+            else if (blockchain === 'spark') {
+                console.log('accessing spark')
+                // const sprk = import('@tetherto/wdk-wallet-spark')
+                // console.log(sprk)
+            }
         }
 
         return this._wallets[blockchain]
@@ -545,6 +551,6 @@ class WdkManager {
     }
 }
 
-module.exports = {
+export {
     WdkManager,Blockchain
 }

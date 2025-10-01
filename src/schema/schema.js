@@ -1,11 +1,13 @@
-const Hyperschema = require('hyperschema')
-const HRPCBuilder = require('hrpc')
+// const Hyperschema = require('hyperschema')
+// const HRPCBuilder = require('hrpc')
+import ESMHyperschema from 'hyperschema'
+import ESMHRPC from 'hrpc'
 
 const SCHEMA_DIR = './spec/schema'
 const HRPC_DIR = './spec/hrpc'
 
 // register schema
-const schema = Hyperschema.from(SCHEMA_DIR)
+const schema = ESMHyperschema.from(SCHEMA_DIR)
 const schemaNs = schema.namespace('wdk-core')
 
 schemaNs.register({
@@ -348,10 +350,10 @@ schemaNs.register({
   fields: [],
 });
 
-Hyperschema.toDisk(schema)
+ESMHyperschema.toDisk(schema)
 
 // Load and build interface
-const builder = HRPCBuilder.from(SCHEMA_DIR, HRPC_DIR)
+const builder = ESMHRPC.from(SCHEMA_DIR, HRPC_DIR)
 const ns = builder.namespace('wdk-core')
 
 // Register commands
@@ -437,4 +439,4 @@ ns.register({
   request: { name: '@wdk-core/dispose-request', send: true },
 });
 // Save interface to disk
-HRPCBuilder.toDisk(builder)
+ESMHRPC.toDisk(builder)

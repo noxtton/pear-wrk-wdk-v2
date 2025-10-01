@@ -1,4 +1,5 @@
-const IPC = require('bare-ipc');
+// const IPC = require('bare-ipc');
+import IPC from 'bare-ipc';
 /**
  * bare-ipc: need for create bareKit link environment to use IPC with HRPC
  * bare-ipc gives us two pear of ports:
@@ -13,7 +14,7 @@ serverStream.ref();
 const clientStream = portB.connect();
 clientStream.ref();
 
-module.exports = {
+export {
   serverStream,
   clientStream,
 }

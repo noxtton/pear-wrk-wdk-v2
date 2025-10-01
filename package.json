@@ -2,15 +2,18 @@
   "name": "@wdk/bare",
   "version": "0.1.4",
   "main": "index.js",
+  "type": "module",
   "scripts": {
     "build:types": "rimraf *.d.ts **/*.d.ts; tsc",
     "lint": "standard",
     "lint:fix": "standard --fix",
     "gen:mobile-bundle": "npx bare-pack --target ios-arm64 --target ios-arm64-simulator --target ios-x64-simulator --target android-arm --target android-arm64 --target android-ia32 --target android-x64 --linked --imports ./pack.imports.json --out bundle/wdk-worklet.mobile.bundle.js src/wdk-worklet.js",
-    "gen:schema": "node src/schema/schema.js && node src/lib/hrpc-docs-builder.js",
-    "postinstall": "npm run gen:mobile-bundle"
+    "gen:bundle": "npx bare-pack --target ios-arm64 --target ios-arm64-simulator --target ios-x64-simulator --target android-arm --target android-arm64 --target android-ia32 --target android-x64 --linked --imports ./pack.imports.json --out bundle/wdk-worklet.bundle.mjs src/worklet.mjs",
+    "gen:schema": "node src/schema/schema.js",
+    "postinstall": "npm run gen:bundle"
   },
   "dependencies": {
+    "@wdk/bare-ethers": "https://github.com/noxtton/wdk-bare-ethers-internal#07dfa4190f90aef6fcfca4abe60aa8ca07e78ba0",
     "@wdk/wallet": "https://github.com/tetherto/wdk-wallet#ee0f6046b6128d0a096f18cc6ca7845ca4cedb12",
     "@wdk/wallet-btc": "https://github.com/tetherto/wdk-wallet-btc#ed35de0b49344bb07736fc296a28b8465a8e8a6e",
     "@wdk/wallet-evm": "https://github.com/tetherto/wdk-wallet-evm#74e281ea63f7df6e2590580bba988daeda021df6",
@@ -20,7 +23,6 @@
     "@wdk/wallet-ton-gasless": "https://github.com/tetherto/wdk-wallet-ton-gasless#4b62e81488647158b2492e06c6cde176b69dd17d",
     "@wdk/wallet-tron": "https://github.com/tetherto/wdk-wallet-tron#ec076473a5b8340599e005ab5ece8c8d246b3965",
     "@wdk/wallet-tron-gasfree": "https://github.com/tetherto/wdk-wallet-tron-gasfree#fd57ed375801ae281e98c6882ea0f2ad4c2b30f5",
-    "@wdk/bare-ethers": "https://github.com/noxtton/wdk-bare-ethers-internal#07dfa4190f90aef6fcfca4abe60aa8ca07e78ba0",
     "bare-ipc": "1.1.1",
     "encoding": "npm:bare-encoding@1.0.0",
     "hrpc": "4.0.1",
