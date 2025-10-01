@@ -1,5 +1,5 @@
-const fs = require('fs');
-const path = require('path');
+import fs from 'fs';
+import path from 'path';
 
 const HRPC_PATH = './spec/hrpc/hrpc.json';
 const SCHEMA_PATH = './spec/schema/schema.json';
@@ -18,6 +18,27 @@ for (const entry of schema.schema) {
     if (entry.namespace && entry.name) {
         schemaMap[`${entry.namespace}/${entry.name}`] = entry;
     }
+}
+
+// Helper function to get schema by key, handling '@' symbol
+function getSchemaByKey(key) {
+    // Try direct lookup first
+    if (schemaMap[key]) {
+        return schemaMap[key];
+    }
+
+    // If key starts with '@', try removing it
+    if (key.startsWith('@')) {
+        const parts = key.substring(1).split('/');
+        if (parts.length === 2) {
+            const namespace = parts[0];
+            const name = parts[1];
+            const newKey = `${namespace}/${name}`;
+            return schemaMap[newKey];
+        }
+    }
+
+    return null;
 }
 
 // Helper: format fields as Markdown list
@@ -72,27 +93,6 @@ for (const command of hrpc.schema) {
     const responseKey = command.response?.name;
 
     markdown += `## ${name}\n\n`;
-
-    // Helper function to get schema by key, handling '@' symbol
-    function getSchemaByKey(key) {
-        // Try direct lookup first
-        if (schemaMap[key]) {
-            return schemaMap[key];
-        }
-
-        // If key starts with '@', try removing it
-        if (key.startsWith('@')) {
-            const parts = key.substring(1).split('/');
-            if (parts.length === 2) {
-                const namespace = parts[0];
-                const name = parts[1];
-                const newKey = `${namespace}/${name}`;
-                return schemaMap[newKey];
-            }
-        }
-
-        return null;
-    }
 
     // Request
     if (requestKey) {
