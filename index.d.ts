@@ -1,11 +1,10 @@
-export type FeeRates = import("@wdk/wallet").FeeRates;
-export type TransferOptions = import("@wdk/wallet").TransferOptions;
-export type TransferResult = import("@wdk/wallet").TransferResult;
-export type IWalletAccount = any;
-export type Seed = any;
-export type Seeds = any;
-export type WdkConfig = any;
-export type TransferConfig = any;
+export { default } from './src/wdk-core/wdk-manager.js'
 
-export { default as HRPC } from './spec/hrpc';
-export * as schema from './spec/schema';
+// Export spec/hrpc
+export { default as HRPC } from './spec/hrpc'
+
+// Export spec/schema
+export * as schema from './spec/schema'
+
+//Export a react-native-bare-kit compatible bundle that generates on postinstall.
+export { default as bundle } from './bundle/worklet.bundle.mjs'
