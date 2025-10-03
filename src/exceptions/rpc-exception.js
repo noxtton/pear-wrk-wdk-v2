@@ -14,8 +14,6 @@ import ERROR_CODES from './error-codes'
  * @property {string} error - Original exception converted to string
  */
 
-
-
 function stringifyError (error) {
   if (error instanceof Error) {
     return `${error.message}: ${error.stack}`
