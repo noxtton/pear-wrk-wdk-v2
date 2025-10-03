@@ -2,9 +2,7 @@
   "include": [
     "index.js",
     "src/wdk-core/wdk-manager.js",
-    "spec/hrpc/index.js",
-    "spec/schema/index.js",
-    "bundle/worklet.bundle.mjs"
+    "spec/hrpc/index.js"
   ],
   "compilerOptions": {
     "target": "ES2015",
@@ -14,8 +12,6 @@
     "declaration": true,
     "emitDeclarationOnly": true,
     "skipLibCheck": true,
-    "typeRoots": [
-      "./node_modules/@wdk"
-    ]
+    "outDir": "./types"
   }
 }

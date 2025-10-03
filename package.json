@@ -43,6 +43,7 @@
       "default": "./package.json"
     }
   },
+  "files": ["bundle/worklet.bundle.d.mts"],
   "author": "Tether",
   "license": "Apache-2.0"
 }
