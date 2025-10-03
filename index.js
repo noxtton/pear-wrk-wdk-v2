@@ -12,14 +12,22 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 'use strict'
+/** @typedef {import('@wdk/wallet').FeeRates} FeeRates */
+
+/** @typedef {import('@wdk/wallet').TransferOptions} TransferOptions */
+/** @typedef {import('@wdk/wallet').TransferResult} TransferResult */
+/** @typedef {import('@wdk/wallet').IWalletAccount} IWalletAccount */
+
+/** @typedef {import('./src/wdk-core/wdk-manager.js').Seed} Seed */
+/** @typedef {import('./src/wdk-core/wdk-manager.js').Seeds} Seeds */
+/** @typedef {import('./src/wdk-core/wdk-manager.js').WdkConfig} WdkConfig */
+
+/** @typedef {import('./src/wdk-core/wdk-manager.js').TransferConfig} TransferConfig */
 
 export { default } from './src/wdk-core/wdk-manager.js'
 
 // Export spec/hrpc
-export { default as HRPC } from './spec/hrpc'
-
-// Export spec/schema
-export * as schema from './spec/schema'
+export { default as HRPC } from './spec/hrpc/index.js'
 
 // Export a react-native-bare-kit compatible bundle that generates on postinstall.
 export { default as bundle } from './bundle/worklet.bundle.mjs'

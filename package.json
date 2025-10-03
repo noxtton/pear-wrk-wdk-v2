@@ -3,8 +3,9 @@
   "version": "0.1.6",
   "main": "index.js",
   "type": "module",
+  "types": "./types",
   "scripts": {
-    "build:types": "rimraf *.d.ts **/*.d.ts; tsc",
+    "build:types": "rimraf *.d.ts src/**/*.d.ts; tsc",
     "lint": "standard",
     "lint:fix": "standard --fix",
     "gen:bundle": "npx bare-pack --target ios-arm64 --target ios-arm64-simulator --target ios-x64-simulator --target android-arm --target android-arm64 --target android-ia32 --target android-x64 --linked --imports ./pack.imports.json --out bundle/worklet.bundle.mjs src/worklet.mjs",
@@ -33,6 +34,16 @@
     "standard": "17.1.2",
     "typescript": "5.8.3"
   },
+  "exports": {
+    ".": {
+      "types": "./types/index.d.ts",
+      "default": "./index.js"
+    },
+    "./package": {
+      "default": "./package.json"
+    }
+  },
+  "files": ["bundle/worklet.bundle.d.mts"],
   "author": "Tether",
   "license": "Apache-2.0"
 }
