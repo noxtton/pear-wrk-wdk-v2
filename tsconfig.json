@@ -1,7 +1,10 @@
 {
   "include": [
     "index.js",
-    "src/wdk-core/wdk-manager.js"
+    "src/wdk-core/wdk-manager.js",
+    "spec/hrpc/index.js",
+    "spec/schema/index.js",
+    "bundle/worklet.bundle.mjs"
   ],
   "compilerOptions": {
     "target": "ES2015",

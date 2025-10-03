@@ -418,7 +418,6 @@ export default class WdkManager {
     const account = await this.getAbstractedAccount(blockchain, accountIndex)
     return await account.getTransactionReceipt(hash)
   }
-
   /**
      * Returns an evm transaction to approve the interaction transaction.
      *
