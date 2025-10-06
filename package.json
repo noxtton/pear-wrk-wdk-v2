@@ -1,0 +1,61 @@
+{
+  "name": "@tetherto/pear-wrk-wdk",
+  "version": "1.0.0-beta.1",
+  "main": "index.js",
+  "type": "module",
+  "types": "./types",
+  "scripts": {
+    "build:types": "tsc",
+    "lint": "standard",
+    "lint:fix": "standard --fix",
+    "gen:bundle": "npx bare-pack --target ios-arm64 --target ios-arm64-simulator --target ios-x64-simulator --target android-arm --target android-arm64 --target android-ia32 --target android-x64 --linked --imports ./pack.imports.json --out bundle/worklet.bundle.mjs src/worklet.mjs",
+    "gen:schema": "node src/schema/schema.js && node src/lib/hrpc-docs-builder.js",
+    "postinstall": "npm run gen:bundle",
+    "gen:test:runner": "brittle -r tests/.runner.mjs tests/unit/*.test.js",
+    "gen:test:runner:cov": "brittle --coverage --cov-dir ./coverage -r tests/.runner.cov.mjs tests/unit/*.test.js",
+    "test": "npm run -s gen:test:runner && bare tests/.runner.mjs",
+    "test:unit": "npm run -s gen:test:runner && bare tests/.runner.mjs",
+    "test:coverage": "npm run -s gen:test:runner:cov && bare tests/.runner.cov.mjs"
+  },
+  "dependencies": {
+    "@tetherto/wdk-wallet": "^1.0.0-beta.1",
+    "@tetherto/wdk-wallet-btc": "^1.0.0-beta.2",
+    "@tetherto/wdk-wallet-evm": "^1.0.0-beta.2",
+    "@tetherto/wdk-wallet-evm-erc-4337": "^1.0.0-beta.1",
+    "@tetherto/wdk-wallet-solana": "^1.0.0-beta.1",
+    "@tetherto/wdk-wallet-ton": "^1.0.0-beta.2",
+    "@tetherto/wdk-wallet-ton-gasless": "^1.0.0-beta.1",
+    "@tetherto/wdk-wallet-tron": "^1.0.0-beta.1",
+    "@tetherto/wdk-wallet-tron-gasfree": "^1.0.0-beta.1",
+    "bare-ipc": "1.1.1",
+    "bare-wdk-runtime": "2.0.1",
+    "encoding": "npm:bare-encoding@1.0.0",
+    "hrpc": "4.2.0",
+    "hyperschema": "1.16.0",
+    "ledger-bitcoin": "file:shims/ledger-bitcoin",
+    "os": "npm:bare-os@3.6.1"
+  },
+  "devDependencies": {
+    "brittle": "3.19.0",
+    "standard": "17.1.2",
+    "typescript": "5.9.3"
+  },
+  "publishConfig": {
+    "access": "restricted",
+    "registry": "https://registry.npmjs.org/"
+  },
+  "exports": {
+    ".": {
+      "types": "./types/index.d.ts",
+      "default": "./index.js"
+    },
+    "./package": {
+      "default": "./package.json"
+    }
+  },
+  "files": [
+    "bundle/worklet.bundle.d.mts"
+  ],
+  "author": "Tether",
+  "license": "Apache-2.0"
+}
