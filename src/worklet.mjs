@@ -122,7 +122,6 @@ rpc.onAbstractedSendTransaction(async payload => {
 rpc.onAbstractedAccountQuoteTransfer(async payload => {
   try {
     payload.options.amount = Number(payload.options.amount)
-    console.log(payload)
     const transfer = await wdk.abstractedAccountQuoteTransfer(payload.network, payload.accountIndex, payload.options, payload.config)
     return { fee: transfer.fee.toString() }
   } catch (error) {
