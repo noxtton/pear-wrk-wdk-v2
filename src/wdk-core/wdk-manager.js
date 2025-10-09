@@ -510,7 +510,7 @@ export default class WdkManager {
 
         this._account_abstraction_wallets[blockchain] = new WalletManagerEvmErc4337(seed, config[blockchain])
       } else if (blockchain === 'ton') {
-        const { default: WalletManagerTonGasless } = await import('@wdk/wallet-ton-gasless')
+        const { default: WalletManagerTonGasless } = await import('@tetherto/wdk-wallet-ton')
 
         this._account_abstraction_wallets.ton = new WalletManagerTonGasless(seed, config.ton)
       } else if (blockchain === 'tron') {
