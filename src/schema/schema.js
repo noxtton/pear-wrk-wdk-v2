@@ -1,11 +1,11 @@
-import ESMHyperschema from 'hyperschema'
-import ESMHRPC from 'hrpc'
+const Hyperschema = require('hyperschema')
+const HRPCBuilder = require('hrpc')
 
 const SCHEMA_DIR = './spec/schema'
 const HRPC_DIR = './spec/hrpc'
 
 // register schema
-const schema = ESMHyperschema.from(SCHEMA_DIR)
+const schema = Hyperschema.from(SCHEMA_DIR)
 const schemaNs = schema.namespace('wdk-core')
 
 schemaNs.register({
@@ -84,7 +84,7 @@ schemaNs.register({
   name: 'quoteSendTransaction-request-options',
   fields: [
     { name: 'to', type: 'string', required: true },
-    { name: 'value', type: 'string', required: true }
+    { name: 'value', type: 'uint', required: true }
   ]
 })
 schemaNs.register({
@@ -99,7 +99,7 @@ schemaNs.register({
 schemaNs.register({
   name: 'quoteSendTransaction-response',
   fields: [
-    { name: 'fee', type: 'string' }
+    { name: 'fee', type: 'uint' }
   ]
 })
 
@@ -110,7 +110,7 @@ schemaNs.register({
   name: 'sendTransaction-request-options',
   fields: [
     { name: 'to', type: 'string', required: true },
-    { name: 'value', type: 'string', required: true }
+    { name: 'value', type: 'uint', required: true }
   ]
 })
 schemaNs.register({
@@ -125,7 +125,7 @@ schemaNs.register({
 schemaNs.register({
   name: 'sendTransaction-response',
   fields: [
-    { name: 'fee', type: 'string' },
+    { name: 'fee', type: 'uint' },
     { name: 'hash', type: 'string' }
   ]
 })
@@ -198,19 +198,7 @@ schemaNs.register({
   fields: [
     { name: 'token', type: 'string', required: true },
     { name: 'recipient', type: 'string', required: true },
-    { name: 'amount', type: 'string', required: true }
-  ]
-})
-schemaNs.register({
-  name: 'abstractedAccountTransfer-request-config-paymasterToken',
-  fields: [
-    { name: 'address', type: 'string', required: true }
-  ]
-})
-schemaNs.register({
-  name: 'abstractedAccountTransfer-request-config',
-  fields: [
-    { name: 'paymasterToken', type: '@wdk-core/abstractedAccountTransfer-request-config-paymasterToken', required: false }
+    { name: 'amount', type: 'uint', required: true }
   ]
 })
 schemaNs.register({
@@ -218,8 +206,7 @@ schemaNs.register({
   fields: [
     { name: 'network', type: 'string', required: true },
     { name: 'accountIndex', type: 'uint', required: true },
-    { name: 'options', type: '@wdk-core/abstractedAccountTransfer-request-options', required: true },
-    { name: 'config', type: '@wdk-core/abstractedAccountTransfer-request-config', required: false }
+    { name: 'options', type: '@wdk-core/abstractedAccountTransfer-request-options', required: true }
   ]
 })
 
@@ -227,7 +214,7 @@ schemaNs.register({
   name: 'abstractedAccountTransfer-response',
   fields: [
     { name: 'hash', type: 'string' },
-    { name: 'fee', type: 'string' }
+    { name: 'fee', type: 'uint' }
   ]
 })
 
@@ -239,7 +226,7 @@ schemaNs.register({
   fields: [
     { name: 'token', type: 'string', required: true },
     { name: 'recipient', type: 'string', required: true },
-    { name: 'amount', type: 'string', required: true }
+    { name: 'amount', type: 'uint', required: true }
   ]
 })
 
@@ -247,7 +234,7 @@ schemaNs.register({
   name: 'getApproveTransaction-response',
   fields: [
     { name: 'to', type: 'string', required: true },
-    { name: 'value', type: 'string', required: true },
+    { name: 'value', type: 'uint', required: true },
     { name: 'data', type: 'string', required: true }
   ]
 })
@@ -256,15 +243,17 @@ schemaNs.register({
  * abstractedSendTransaction
  */
 schemaNs.register({
-  name: 'abstractedSendTransaction-request-config-paymasterToken',
+  name: 'abstractedSendTransaction-request-options',
   fields: [
-    { name: 'address', type: 'string', required: true }
+    { name: 'to', type: 'string', required: true },
+    { name: 'value', type: 'uint', required: true },
+    { name: 'data', type: 'string', required: true }
   ]
 })
 schemaNs.register({
   name: 'abstractedSendTransaction-request-config',
   fields: [
-    { name: 'paymasterToken', type: '@wdk-core/abstractedSendTransaction-request-config-paymasterToken', required: false }
+    { name: 'paymasterToken', type: 'string', required: true }
   ]
 })
 schemaNs.register({
@@ -281,7 +270,7 @@ schemaNs.register({
   name: 'abstractedSendTransaction-response',
   fields: [
     { name: 'hash', type: 'string' },
-    { name: 'fee', type: 'string' }
+    { name: 'fee', type: 'uint' }
   ]
 })
 
@@ -293,19 +282,7 @@ schemaNs.register({
   fields: [
     { name: 'token', type: 'string', required: true },
     { name: 'recipient', type: 'string', required: true },
-    { name: 'amount', type: 'string', required: true }
-  ]
-})
-schemaNs.register({
-  name: 'abstractedAccountQuoteTransfer-request-config-paymasterToken',
-  fields: [
-    { name: 'address', type: 'string', required: true }
-  ]
-})
-schemaNs.register({
-  name: 'abstractedAccountQuoteTransfer-request-config',
-  fields: [
-    { name: 'paymasterToken', type: '@wdk-core/abstractedAccountQuoteTransfer-request-config-paymasterToken', required: false }
+    { name: 'amount', type: 'uint', required: true }
   ]
 })
 schemaNs.register({
@@ -313,15 +290,14 @@ schemaNs.register({
   fields: [
     { name: 'network', type: 'string', required: true },
     { name: 'accountIndex', type: 'uint', required: true },
-    { name: 'options', type: '@wdk-core/abstractedAccountQuoteTransfer-request-options', required: true },
-    { name: 'config', type: '@wdk-core/abstractedAccountQuoteTransfer-request-config', required: false }
+    { name: 'options', type: '@wdk-core/abstractedAccountQuoteTransfer-request-options', required: true }
   ]
 })
 
 schemaNs.register({
   name: 'abstractedAccountQuoteTransfer-response',
   fields: [
-    { name: 'fee', type: 'string' }
+    { name: 'fee', type: 'uint' }
   ]
 })
 
@@ -346,10 +322,10 @@ schemaNs.register({
   fields: []
 })
 
-ESMHyperschema.toDisk(schema)
+Hyperschema.toDisk(schema)
 
 // Load and build interface
-const builder = ESMHRPC.from(SCHEMA_DIR, HRPC_DIR)
+const builder = HRPCBuilder.from(SCHEMA_DIR, HRPC_DIR)
 const ns = builder.namespace('wdk-core')
 
 // Register commands
@@ -435,4 +411,4 @@ ns.register({
   request: { name: '@wdk-core/dispose-request', send: true }
 })
 // Save interface to disk
-ESMHRPC.toDisk(builder)
+HRPCBuilder.toDisk(builder)

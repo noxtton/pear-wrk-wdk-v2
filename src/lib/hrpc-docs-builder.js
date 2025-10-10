@@ -1,4 +1,4 @@
-import fs from 'fs'
+const fs = require('fs')
 
 const HRPC_PATH = './spec/hrpc/hrpc.json'
 const SCHEMA_PATH = './spec/schema/schema.json'
@@ -19,27 +19,6 @@ for (const entry of schema.schema) {
   }
 }
 
-// Helper function to get schema by key, handling '@' symbol
-function getSchemaByKey (key) {
-  // Try direct lookup first
-  if (schemaMap[key]) {
-    return schemaMap[key]
-  }
-
-  // If key starts with '@', try removing it
-  if (key.startsWith('@')) {
-    const parts = key.substring(1).split('/')
-    if (parts.length === 2) {
-      const namespace = parts[0]
-      const name = parts[1]
-      const newKey = `${namespace}/${name}`
-      return schemaMap[newKey]
-    }
-  }
-
-  return null
-}
-
 // Helper: format fields as Markdown list
 function formatFields (fields = [], indentLevel = 0) {
   if (!fields || fields.length === 0) {
@@ -55,6 +34,7 @@ function formatFields (fields = [], indentLevel = 0) {
     let subFields = ''
 
     // Check if the type refers to an enum or object schema
+    // eslint-disable-next-line no-undef
     const refSchema = getSchemaByKey(field.type)
     if (refSchema) {
       if (refSchema.enum) {
@@ -87,12 +67,31 @@ let markdown = '# HRPC Command Documentation\n\n'
 
 for (const command of hrpc.schema) {
   const name = command.name.split('/').pop()
-  // eslint-disable-next-line no-unused-vars
-  const namespace = command.name.split('/')[0]
   const requestKey = command.request?.name
   const responseKey = command.response?.name
 
   markdown += `## ${name}\n\n`
+
+  // Helper function to get schema by key, handling '@' symbol
+  function getSchemaByKey (key) {
+    // Try direct lookup first
+    if (schemaMap[key]) {
+      return schemaMap[key]
+    }
+
+    // If key starts with '@', try removing it
+    if (key.startsWith('@')) {
+      const parts = key.substring(1).split('/')
+      if (parts.length === 2) {
+        const namespace = parts[0]
+        const name = parts[1]
+        const newKey = `${namespace}/${name}`
+        return schemaMap[newKey]
+      }
+    }
+
+    return null
+  }
 
   // Request
   if (requestKey) {

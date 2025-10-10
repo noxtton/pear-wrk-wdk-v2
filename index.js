@@ -1,4 +1,4 @@
-// Copyright 2025 Tether Operations Limited
+// Copyright 2024 Tether Operations Limited
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -12,25 +12,23 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 'use strict'
-/** @typedef {import('@tetherto/wdk-wallet').FeeRates} FeeRates */
 
-/** @typedef {import('@tetherto/wdk-wallet').TransferOptions} TransferOptions */
-/** @typedef {import('@tetherto/wdk-wallet').TransferResult} TransferResult */
-/** @typedef {import('@tetherto/wdk-wallet').IWalletAccount} IWalletAccount */
+/** @typedef {import('@wdk/wallet').FeeRates} FeeRates */
+
+/** @typedef {import('@wdk/wallet').TransferOptions} TransferOptions */
+/** @typedef {import('@wdk/wallet').TransferResult} TransferResult */
+/** @typedef {import('@wdk/wallet').IWalletAccount} IWalletAccount */
 
 /** @typedef {import('./src/wdk-core/wdk-manager.js').Seed} Seed */
 /** @typedef {import('./src/wdk-core/wdk-manager.js').Seeds} Seeds */
 /** @typedef {import('./src/wdk-core/wdk-manager.js').WdkConfig} WdkConfig */
 
 /** @typedef {import('./src/wdk-core/wdk-manager.js').TransferConfig} TransferConfig */
-import 'bare-wdk-runtime'
 
-/* eslint-disable */
-export { default } from './src/wdk-core/wdk-manager.js'
+export { WdkManager, Blockchain } from './src/wdk-core/wdk-manager.js'
 
 // Export spec/hrpc
-export { default as HRPC } from './spec/hrpc/index.js'
+export { default as HRPC } from './spec/hrpc'
 
-// Export a react-native-bare-kit compatible bundle that generates on postinstall.
-export { default as bundle } from './bundle/worklet.bundle.mjs'
-/* eslint-enable */
+// Export spec/schema
+export * as schema from './spec/schema'

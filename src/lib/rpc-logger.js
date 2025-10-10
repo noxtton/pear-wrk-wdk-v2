@@ -1,4 +1,4 @@
-import { getEnum } from '../../spec/schema'
+const { getEnum } = require('../../spec/schema')
 const logEnums = getEnum('@wdk-core/log-type-enum')
 let rpc = null
 /**

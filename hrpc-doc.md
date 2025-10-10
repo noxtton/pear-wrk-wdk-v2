@@ -60,7 +60,7 @@
 
 **Fields:**
 
-- `balance`: `string` _(v1)_
+- `balance`: `uint` _(v1)_
 
 ---
 
@@ -74,13 +74,13 @@
 - `accountIndex`: `uint` _(v1)_
 - `options`: `object` _(v1)_
   - `to`: `string` _(v1)_
-  - `value`: `string` _(v1)_
+  - `value`: `uint` _(v1)_
 
 **Response:** `@wdk-core/quoteSendTransaction-response`
 
 **Fields:**
 
-- `fee`: `string` _(v1)_
+- `fee`: `uint` _(v1)_
 
 ---
 
@@ -94,13 +94,13 @@
 - `accountIndex`: `uint` _(v1)_
 - `options`: `object` _(v1)_
   - `to`: `string` _(v1)_
-  - `value`: `string` _(v1)_
+  - `value`: `uint` _(v1)_
 
 **Response:** `@wdk-core/sendTransaction-response`
 
 **Fields:**
 
-- `fee`: `string` _(v1)_
+- `fee`: `uint` _(v1)_
 - `hash`: `string` _(v1)_
 
 ---
@@ -135,7 +135,7 @@
 
 **Fields:**
 
-- `balance`: `string` _(v1)_
+- `balance`: `uint` _(v1)_
 
 ---
 
@@ -153,7 +153,7 @@
 
 **Fields:**
 
-- `balance`: `string` _(v1)_
+- `balance`: `uint` _(v1)_
 
 ---
 
@@ -168,37 +168,14 @@
 - `options`: `object` _(v1)_
   - `token`: `string` _(v1)_
   - `recipient`: `string` _(v1)_
-  - `amount`: `string` _(v1)_
-- `config`: `object` _(optional)_ _(v1)_
-  - `paymasterToken`: `object` _(optional)_ _(v1)_
-    - `address`: `string` _(v1)_
+  - `amount`: `uint` _(v1)_
 
 **Response:** `@wdk-core/abstractedAccountTransfer-response`
 
 **Fields:**
 
 - `hash`: `string` _(v1)_
-- `fee`: `string` _(v1)_
-
----
-
-## getApproveTransaction
-
-**Request:** `@wdk-core/getApproveTransaction-request`
-
-**Fields:**
-
-- `token`: `string` _(v1)_
-- `recipient`: `string` _(v1)_
-- `amount`: `string` _(v1)_
-
-**Response:** `@wdk-core/getApproveTransaction-response`
-
-**Fields:**
-
-- `to`: `string` _(v1)_
-- `value`: `string` _(v1)_
-- `data`: `string` _(v1)_
+- `fee`: `uint` _(v1)_
 
 ---
 
@@ -210,17 +187,19 @@
 
 - `network`: `string` _(v1)_
 - `accountIndex`: `uint` _(v1)_
-- `options`: `string` _(v1)_
+- `options`: `object` _(v1)_
+  - `to`: `string` _(v1)_
+  - `value`: `uint` _(v1)_
+  - `data`: `string` _(v1)_
 - `config`: `object` _(optional)_ _(v1)_
-  - `paymasterToken`: `object` _(optional)_ _(v1)_
-    - `address`: `string` _(v1)_
+  - `paymasterToken`: `string` _(v1)_
 
 **Response:** `@wdk-core/abstractedSendTransaction-response`
 
 **Fields:**
 
 - `hash`: `string` _(v1)_
-- `fee`: `string` _(v1)_
+- `fee`: `uint` _(v1)_
 
 ---
 
@@ -235,16 +214,13 @@
 - `options`: `object` _(v1)_
   - `token`: `string` _(v1)_
   - `recipient`: `string` _(v1)_
-  - `amount`: `string` _(v1)_
-- `config`: `object` _(optional)_ _(v1)_
-  - `paymasterToken`: `object` _(optional)_ _(v1)_
-    - `address`: `string` _(v1)_
+  - `amount`: `uint` _(v1)_
 
 **Response:** `@wdk-core/abstractedAccountQuoteTransfer-response`
 
 **Fields:**
 
-- `fee`: `string` _(v1)_
+- `fee`: `uint` _(v1)_
 
 ---
 
@@ -273,6 +249,26 @@
 **Fields:**
 
 _No fields defined_
+
+---
+
+## getApproveTransaction
+
+**Request:** `@wdk-core/getApproveTransaction-request`
+
+**Fields:**
+
+- `token`: `string` _(v2)_
+- `recipient`: `string` _(v2)_
+- `amount`: `uint` _(v2)_
+
+**Response:** `@wdk-core/getApproveTransaction-response`
+
+**Fields:**
+
+- `to`: `string` _(v2)_
+- `value`: `uint` _(v2)_
+- `data`: `string` _(v2)_
 
 ---
 

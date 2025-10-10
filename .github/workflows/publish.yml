@@ -28,7 +28,6 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: "22.19.0"
-          cache: "npm"
           registry-url: "https://registry.npmjs.org"
 
       - name: Install dependencies
@@ -43,9 +42,6 @@ jobs:
 
       - run: npm run gen:schema
       - run: npm run gen:bundle
-
-      - name: Run unit tests
-        run: npm test
 
       - name: Upload bundle artifact
         uses: actions/upload-artifact@v4

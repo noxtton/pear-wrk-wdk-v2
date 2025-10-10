@@ -164,7 +164,7 @@
         {
           "name": "value",
           "required": true,
-          "type": "string",
+          "type": "uint",
           "version": 1
         }
       ]
@@ -203,7 +203,7 @@
       "fields": [
         {
           "name": "fee",
-          "type": "string",
+          "type": "uint",
           "version": 1
         }
       ]
@@ -223,7 +223,7 @@
         {
           "name": "value",
           "required": true,
-          "type": "string",
+          "type": "uint",
           "version": 1
         }
       ]
@@ -262,7 +262,7 @@
       "fields": [
         {
           "name": "fee",
-          "type": "string",
+          "type": "uint",
           "version": 1
         },
         {
@@ -398,35 +398,7 @@
         {
           "name": "amount",
           "required": true,
-          "type": "string",
-          "version": 1
-        }
-      ]
-    },
-    {
-      "name": "abstractedAccountTransfer-request-config-paymasterToken",
-      "namespace": "wdk-core",
-      "compact": false,
-      "flagsPosition": -1,
-      "fields": [
-        {
-          "name": "address",
-          "required": true,
-          "type": "string",
-          "version": 1
-        }
-      ]
-    },
-    {
-      "name": "abstractedAccountTransfer-request-config",
-      "namespace": "wdk-core",
-      "compact": false,
-      "flagsPosition": 0,
-      "fields": [
-        {
-          "name": "paymasterToken",
-          "required": false,
-          "type": "@wdk-core/abstractedAccountTransfer-request-config-paymasterToken",
+          "type": "uint",
           "version": 1
         }
       ]
@@ -435,7 +407,7 @@
       "name": "abstractedAccountTransfer-request",
       "namespace": "wdk-core",
       "compact": false,
-      "flagsPosition": 3,
+      "flagsPosition": -1,
       "fields": [
         {
           "name": "network",
@@ -454,12 +426,6 @@
           "required": true,
           "type": "@wdk-core/abstractedAccountTransfer-request-options",
           "version": 1
-        },
-        {
-          "name": "config",
-          "required": false,
-          "type": "@wdk-core/abstractedAccountTransfer-request-config",
-          "version": 1
         }
       ]
     },
@@ -476,7 +442,7 @@
         },
         {
           "name": "fee",
-          "type": "string",
+          "type": "uint",
           "version": 1
         }
       ]
@@ -502,7 +468,7 @@
         {
           "name": "amount",
           "required": true,
-          "type": "string",
+          "type": "uint",
           "version": 1
         }
       ]
@@ -522,7 +488,7 @@
         {
           "name": "value",
           "required": true,
-          "type": "string",
+          "type": "uint",
           "version": 1
         },
         {
@@ -534,13 +500,25 @@
       ]
     },
     {
-      "name": "abstractedSendTransaction-request-config-paymasterToken",
+      "name": "abstractedSendTransaction-request-options",
       "namespace": "wdk-core",
       "compact": false,
       "flagsPosition": -1,
       "fields": [
         {
-          "name": "address",
+          "name": "to",
+          "required": true,
+          "type": "string",
+          "version": 1
+        },
+        {
+          "name": "value",
+          "required": true,
+          "type": "uint",
+          "version": 1
+        },
+        {
+          "name": "data",
           "required": true,
           "type": "string",
           "version": 1
@@ -551,12 +529,12 @@
       "name": "abstractedSendTransaction-request-config",
       "namespace": "wdk-core",
       "compact": false,
-      "flagsPosition": 0,
+      "flagsPosition": -1,
       "fields": [
         {
           "name": "paymasterToken",
-          "required": false,
-          "type": "@wdk-core/abstractedSendTransaction-request-config-paymasterToken",
+          "required": true,
+          "type": "string",
           "version": 1
         }
       ]
@@ -606,7 +584,7 @@
         },
         {
           "name": "fee",
-          "type": "string",
+          "type": "uint",
           "version": 1
         }
       ]
@@ -632,35 +610,7 @@
         {
           "name": "amount",
           "required": true,
-          "type": "string",
-          "version": 1
-        }
-      ]
-    },
-    {
-      "name": "abstractedAccountQuoteTransfer-request-config-paymasterToken",
-      "namespace": "wdk-core",
-      "compact": false,
-      "flagsPosition": -1,
-      "fields": [
-        {
-          "name": "address",
-          "required": true,
-          "type": "string",
-          "version": 1
-        }
-      ]
-    },
-    {
-      "name": "abstractedAccountQuoteTransfer-request-config",
-      "namespace": "wdk-core",
-      "compact": false,
-      "flagsPosition": 0,
-      "fields": [
-        {
-          "name": "paymasterToken",
-          "required": false,
-          "type": "@wdk-core/abstractedAccountQuoteTransfer-request-config-paymasterToken",
+          "type": "uint",
           "version": 1
         }
       ]
@@ -669,7 +619,7 @@
       "name": "abstractedAccountQuoteTransfer-request",
       "namespace": "wdk-core",
       "compact": false,
-      "flagsPosition": 3,
+      "flagsPosition": -1,
       "fields": [
         {
           "name": "network",
@@ -688,12 +638,6 @@
           "required": true,
           "type": "@wdk-core/abstractedAccountQuoteTransfer-request-options",
           "version": 1
-        },
-        {
-          "name": "config",
-          "required": false,
-          "type": "@wdk-core/abstractedAccountQuoteTransfer-request-config",
-          "version": 1
         }
       ]
     },
@@ -705,7 +649,7 @@
       "fields": [
         {
           "name": "fee",
-          "type": "string",
+          "type": "uint",
           "version": 1
         }
       ]
