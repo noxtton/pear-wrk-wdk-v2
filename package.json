@@ -41,7 +41,7 @@
     "typescript": "5.9.3"
   },
   "publishConfig": {
-    "access": "restricted",
+    "access": "public",
     "registry": "https://registry.npmjs.org/"
   },
   "exports": {
@@ -53,9 +53,6 @@
       "default": "./package.json"
     }
   },
-  "files": [
-    "bundle/worklet.bundle.d.mts"
-  ],
   "author": "Tether",
   "license": "Apache-2.0"
 }

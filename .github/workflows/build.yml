@@ -2,7 +2,7 @@ name: build
 
 on:
   push:
-    branches: [main, develop]
+    branches: [main, develop, workflow-fix]
   pull_request:
     branches: [main, develop]
 
@@ -23,6 +23,9 @@ jobs:
         run: npm clean-install
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+
+      - name: Install bare
+        run: npm install -g bare
 
       - name: Lint code with standard
         run: npm run lint

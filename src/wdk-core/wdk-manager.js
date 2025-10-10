@@ -116,7 +116,6 @@ export default class WdkManager {
 
     /** @private */
     this._imports = { }
-    this.initDefaultImports().then()
   }
 
   /**
