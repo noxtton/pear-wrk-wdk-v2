@@ -361,7 +361,6 @@ export default class WdkManager {
      */
   async abstractedAccountTransfer (blockchain, accountIndex, options, config) {
     const account = await this.getAbstractedAccount(blockchain, accountIndex)
-    console.log(account);
     return await account.transfer(options, config)
   }
 
