@@ -1,6 +1,6 @@
 {
-  "name": "@wdk/bare",
-  "version": "0.1.7",
+  "name": "@tetherto/pear-wrk-wdk",
+  "version": "0.1.8",
   "main": "index.js",
   "type": "module",
   "types": "./types",
