@@ -116,14 +116,14 @@ export default class WdkManager {
 
     /** @private */
     this._imports = { }
-    // this.initDefaultImports().then()
+    this.initDefaultImports().then()
   }
 
   // todo workaround to support ethers
-  // async initDefaultImports () {
-  //   const { default: Ethers } = await import('@wdk/bare-ethers')
-  //   if (!this._imports.ethers) this._imports.ethers = Ethers
-  // }
+  async initDefaultImports () {
+    const { default: Ethers } = await import('@wdk/bare-ethers')
+    if (!this._imports.ethers) this._imports.ethers = Ethers
+  }
 
   /**
      * Returns the wallet account for a specific blockchain and index (see [BIP-44](https://github.com/bitcoin/bips/blob/master/bip-0044.mediawiki)).
