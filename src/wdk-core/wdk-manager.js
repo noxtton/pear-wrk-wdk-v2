@@ -415,15 +415,16 @@ export default class WdkManager {
      */
   async getTransactionReceipt (blockchain, accountIndex, hash) {
     const account = await this.getAbstractedAccount(blockchain, accountIndex)
-    const receipt = await account.getTransactionReceipt(hash);
-    if (!receipt) return null;
+    const receipt = await account.getTransactionReceipt(hash)
+    if (!receipt) return null
     if (blockchain === Blockchain.Ton) {
       return {
         hash: receipt.hash().toString('hex')
       }
     }
-    return receipt;
+    return receipt
   }
+
   /**
      * Returns an evm transaction to approve the interaction transaction.
      *
