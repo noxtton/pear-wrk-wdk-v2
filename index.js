@@ -12,6 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 'use strict'
+
 /** @typedef {import('@wdk/wallet').FeeRates} FeeRates */
 
 /** @typedef {import('@wdk/wallet').TransferOptions} TransferOptions */
