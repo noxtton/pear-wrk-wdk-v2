@@ -2,6 +2,7 @@ import HRPC from '../spec/hrpc'
 
 import WdkManager from './wdk-core/wdk-manager.js'
 import { stringifyError } from './exceptions/rpc-exception.js'
+import { getSeedBuffer } from './lib/seed-buffer.js'
 import b4a from 'b4a'
 
 // eslint-disable-next-line no-undef
@@ -17,8 +18,7 @@ let wdk = null
 rpc.onWorkletStart(async init => {
   try {
     if (wdk) wdk.dispose() // cleanup existing;
-    const seedBuffer = b4a.from(init.seedBuffer, 'hex')
-    wdk = new WdkManager(seedBuffer, JSON.parse(init.config))
+    wdk = new WdkManager(await getSeedBuffer(init.seedBuffer, init.seedPhrase), JSON.parse(init.config))
     return { status: 'started' }
   } catch (error) {
     throw new Error(stringifyError(error))
