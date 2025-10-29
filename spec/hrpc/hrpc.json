@@ -187,6 +187,45 @@
         "send": true
       },
       "version": 1
+    },
+    {
+      "id": 15,
+      "name": "@wdk-core/generateAndEncrypt",
+      "request": {
+        "name": "@wdk-core/generateAndEncrypt-request",
+        "stream": false
+      },
+      "response": {
+        "name": "@wdk-core/generateAndEncrypt-response",
+        "stream": false
+      },
+      "version": 1
+    },
+    {
+      "id": 16,
+      "name": "@wdk-core/decrypt",
+      "request": {
+        "name": "@wdk-core/decrypt-request",
+        "stream": false
+      },
+      "response": {
+        "name": "@wdk-core/decrypt-response",
+        "stream": false
+      },
+      "version": 1
+    },
+    {
+      "id": 17,
+      "name": "@wdk-core/generateSeed",
+      "request": {
+        "name": "@wdk-core/generateSeed-request",
+        "stream": false
+      },
+      "response": {
+        "name": "@wdk-core/generateSeed-response",
+        "stream": false
+      },
+      "version": 1
     }
   ]
 }

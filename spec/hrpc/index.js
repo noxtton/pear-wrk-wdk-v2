@@ -34,7 +34,13 @@ const methods = new Map([
   ['@wdk-core/getTransactionReceipt', 13],
   [13, '@wdk-core/getTransactionReceipt'],
   ['@wdk-core/dispose', 14],
-  [14, '@wdk-core/dispose']
+  [14, '@wdk-core/dispose'],
+  ['@wdk-core/generateAndEncrypt', 15],
+  [15, '@wdk-core/generateAndEncrypt'],
+  ['@wdk-core/decrypt', 16],
+  [16, '@wdk-core/decrypt'],
+  ['@wdk-core/generateSeed', 17],
+  [17, '@wdk-core/generateSeed']
 ])
 
 class HRPC {
@@ -56,7 +62,10 @@ class HRPC {
       ['@wdk-core/abstractedSendTransaction', getEncoding('@wdk-core/abstractedSendTransaction-request')],
       ['@wdk-core/abstractedAccountQuoteTransfer', getEncoding('@wdk-core/abstractedAccountQuoteTransfer-request')],
       ['@wdk-core/getTransactionReceipt', getEncoding('@wdk-core/getTransactionReceipt-request')],
-      ['@wdk-core/dispose', getEncoding('@wdk-core/dispose-request')]
+      ['@wdk-core/dispose', getEncoding('@wdk-core/dispose-request')],
+      ['@wdk-core/generateAndEncrypt', getEncoding('@wdk-core/generateAndEncrypt-request')],
+      ['@wdk-core/decrypt', getEncoding('@wdk-core/decrypt-request')],
+      ['@wdk-core/generateSeed', getEncoding('@wdk-core/generateSeed-request')]
     ])
     this._responseEncodings = new Map([
       ['@wdk-core/workletStart', getEncoding('@wdk-core/workletStart-response')],
@@ -71,7 +80,10 @@ class HRPC {
       ['@wdk-core/getApproveTransaction', getEncoding('@wdk-core/getApproveTransaction-response')],
       ['@wdk-core/abstractedSendTransaction', getEncoding('@wdk-core/abstractedSendTransaction-response')],
       ['@wdk-core/abstractedAccountQuoteTransfer', getEncoding('@wdk-core/abstractedAccountQuoteTransfer-response')],
-      ['@wdk-core/getTransactionReceipt', getEncoding('@wdk-core/getTransactionReceipt-response')]
+      ['@wdk-core/getTransactionReceipt', getEncoding('@wdk-core/getTransactionReceipt-response')],
+      ['@wdk-core/generateAndEncrypt', getEncoding('@wdk-core/generateAndEncrypt-response')],
+      ['@wdk-core/decrypt', getEncoding('@wdk-core/decrypt-response')],
+      ['@wdk-core/generateSeed', getEncoding('@wdk-core/generateSeed-response')]
     ])
     this._rpc = new RPC(stream, async (req) => {
       const command = methods.get(req.command)
@@ -195,6 +207,18 @@ class HRPC {
     return this._callSync('@wdk-core/dispose', args)
   }
 
+  async generateAndEncrypt (args) {
+    return this._call('@wdk-core/generateAndEncrypt', args)
+  }
+
+  async decrypt (args) {
+    return this._call('@wdk-core/decrypt', args)
+  }
+
+  async generateSeed (args) {
+    return this._call('@wdk-core/generateSeed', args)
+  }
+
   onLog (responseFn) {
     this._handlers['@wdk-core/log'] = responseFn
   }
@@ -253,6 +277,18 @@ class HRPC {
 
   onDispose (responseFn) {
     this._handlers['@wdk-core/dispose'] = responseFn
+  }
+
+  onGenerateAndEncrypt (responseFn) {
+    this._handlers['@wdk-core/generateAndEncrypt'] = responseFn
+  }
+
+  onDecrypt (responseFn) {
+    this._handlers['@wdk-core/decrypt'] = responseFn
+  }
+
+  onGenerateSeed (responseFn) {
+    this._handlers['@wdk-core/generateSeed'] = responseFn
   }
 
   _requestIsStream (command) {

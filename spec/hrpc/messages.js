@@ -66,6 +66,9 @@ const encoding2 = {
     if (m.enableDebugLogs) c.uint.preencode(state, m.enableDebugLogs)
     if (m.seedPhrase) c.string.preencode(state, m.seedPhrase)
     if (m.seedBuffer) c.string.preencode(state, m.seedBuffer)
+    c.string.preencode(state, m.encryptedSeed)
+    c.string.preencode(state, m.salt)
+    c.string.preencode(state, m.prf)
     c.string.preencode(state, m.config)
   },
   encode (state, m) {
@@ -79,6 +82,9 @@ const encoding2 = {
     if (m.enableDebugLogs) c.uint.encode(state, m.enableDebugLogs)
     if (m.seedPhrase) c.string.encode(state, m.seedPhrase)
     if (m.seedBuffer) c.string.encode(state, m.seedBuffer)
+    c.string.encode(state, m.encryptedSeed)
+    c.string.encode(state, m.salt)
+    c.string.encode(state, m.prf)
     c.string.encode(state, m.config)
   },
   decode (state) {
@@ -88,6 +94,9 @@ const encoding2 = {
       enableDebugLogs: (flags & 1) !== 0 ? c.uint.decode(state) : 0,
       seedPhrase: (flags & 2) !== 0 ? c.string.decode(state) : null,
       seedBuffer: (flags & 4) !== 0 ? c.string.decode(state) : null,
+      encryptedSeed: c.string.decode(state),
+      salt: c.string.decode(state),
+      prf: c.string.decode(state),
       config: c.string.decode(state)
     }
   }
@@ -714,8 +723,131 @@ const encoding37 = {
   }
 }
 
-// @wdk-core/dispose-request
+// @wdk-core/generateAndEncrypt-request
 const encoding38 = {
+  preencode (state, m) {
+    state.end++ // max flag is 8 so always one byte
+
+    if (m.passkey) c.string.preencode(state, m.passkey)
+    if (m.salt) c.string.preencode(state, m.salt)
+    if (m.seedPhrase) c.string.preencode(state, m.seedPhrase)
+    if (m.derivedKey) c.string.preencode(state, m.derivedKey)
+  },
+  encode (state, m) {
+    const flags =
+      (m.passkey ? 1 : 0) |
+      (m.salt ? 2 : 0) |
+      (m.seedPhrase ? 4 : 0) |
+      (m.derivedKey ? 8 : 0)
+
+    c.uint.encode(state, flags)
+
+    if (m.passkey) c.string.encode(state, m.passkey)
+    if (m.salt) c.string.encode(state, m.salt)
+    if (m.seedPhrase) c.string.encode(state, m.seedPhrase)
+    if (m.derivedKey) c.string.encode(state, m.derivedKey)
+  },
+  decode (state) {
+    const flags = c.uint.decode(state)
+
+    return {
+      passkey: (flags & 1) !== 0 ? c.string.decode(state) : null,
+      salt: (flags & 2) !== 0 ? c.string.decode(state) : null,
+      seedPhrase: (flags & 4) !== 0 ? c.string.decode(state) : null,
+      derivedKey: (flags & 8) !== 0 ? c.string.decode(state) : null
+    }
+  }
+}
+
+// @wdk-core/generateAndEncrypt-response
+const encoding39 = {
+  preencode (state, m) {
+    state.end++ // max flag is 2 so always one byte
+
+    if (m.encryptedEntropy) c.string.preencode(state, m.encryptedEntropy)
+    if (m.encryptedSeed) c.string.preencode(state, m.encryptedSeed)
+  },
+  encode (state, m) {
+    const flags =
+      (m.encryptedEntropy ? 1 : 0) |
+      (m.encryptedSeed ? 2 : 0)
+
+    c.uint.encode(state, flags)
+
+    if (m.encryptedEntropy) c.string.encode(state, m.encryptedEntropy)
+    if (m.encryptedSeed) c.string.encode(state, m.encryptedSeed)
+  },
+  decode (state) {
+    const flags = c.uint.decode(state)
+
+    return {
+      encryptedEntropy: (flags & 1) !== 0 ? c.string.decode(state) : null,
+      encryptedSeed: (flags & 2) !== 0 ? c.string.decode(state) : null
+    }
+  }
+}
+
+// @wdk-core/decrypt-request
+const encoding40 = {
+  preencode (state, m) {
+    state.end++ // max flag is 8 so always one byte
+
+    if (m.passkey) c.string.preencode(state, m.passkey)
+    if (m.salt) c.string.preencode(state, m.salt)
+    if (m.encryptedData) c.string.preencode(state, m.encryptedData)
+    if (m.derivedKey) c.string.preencode(state, m.derivedKey)
+  },
+  encode (state, m) {
+    const flags =
+      (m.passkey ? 1 : 0) |
+      (m.salt ? 2 : 0) |
+      (m.encryptedData ? 4 : 0) |
+      (m.derivedKey ? 8 : 0)
+
+    c.uint.encode(state, flags)
+
+    if (m.passkey) c.string.encode(state, m.passkey)
+    if (m.salt) c.string.encode(state, m.salt)
+    if (m.encryptedData) c.string.encode(state, m.encryptedData)
+    if (m.derivedKey) c.string.encode(state, m.derivedKey)
+  },
+  decode (state) {
+    const flags = c.uint.decode(state)
+
+    return {
+      passkey: (flags & 1) !== 0 ? c.string.decode(state) : null,
+      salt: (flags & 2) !== 0 ? c.string.decode(state) : null,
+      encryptedData: (flags & 4) !== 0 ? c.string.decode(state) : null,
+      derivedKey: (flags & 8) !== 0 ? c.string.decode(state) : null
+    }
+  }
+}
+
+// @wdk-core/decrypt-response
+const encoding41 = {
+  preencode (state, m) {
+    state.end++ // max flag is 1 so always one byte
+
+    if (m.result) c.string.preencode(state, m.result)
+  },
+  encode (state, m) {
+    const flags = m.result ? 1 : 0
+
+    c.uint.encode(state, flags)
+
+    if (m.result) c.string.encode(state, m.result)
+  },
+  decode (state) {
+    const flags = c.uint.decode(state)
+
+    return {
+      result: (flags & 1) !== 0 ? c.string.decode(state) : null
+    }
+  }
+}
+
+// @wdk-core/generateSeed-request
+const encoding42 = {
   preencode (state, m) {
 
   },
@@ -727,6 +859,32 @@ const encoding38 = {
     }
   }
 }
+
+// @wdk-core/generateSeed-response
+const encoding43 = {
+  preencode (state, m) {
+    state.end++ // max flag is 1 so always one byte
+
+    if (m.mnemonic) c.string.preencode(state, m.mnemonic)
+  },
+  encode (state, m) {
+    const flags = m.mnemonic ? 1 : 0
+
+    c.uint.encode(state, flags)
+
+    if (m.mnemonic) c.string.encode(state, m.mnemonic)
+  },
+  decode (state) {
+    const flags = c.uint.decode(state)
+
+    return {
+      mnemonic: (flags & 1) !== 0 ? c.string.decode(state) : null
+    }
+  }
+}
+
+// @wdk-core/dispose-request
+const encoding44 = encoding42
 
 function setVersion (v) {
   version = v
@@ -789,7 +947,13 @@ function getEncoding (name) {
     case '@wdk-core/abstractedAccountQuoteTransfer-response': return encoding35
     case '@wdk-core/getTransactionReceipt-request': return encoding36
     case '@wdk-core/getTransactionReceipt-response': return encoding37
-    case '@wdk-core/dispose-request': return encoding38
+    case '@wdk-core/generateAndEncrypt-request': return encoding38
+    case '@wdk-core/generateAndEncrypt-response': return encoding39
+    case '@wdk-core/decrypt-request': return encoding40
+    case '@wdk-core/decrypt-response': return encoding41
+    case '@wdk-core/generateSeed-request': return encoding42
+    case '@wdk-core/generateSeed-response': return encoding43
+    case '@wdk-core/dispose-request': return encoding44
     default: throw new Error('Encoder not found ' + name)
   }
 }

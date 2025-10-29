@@ -20,6 +20,9 @@
 - `enableDebugLogs`: `uint` _(optional)_ _(v1)_
 - `seedPhrase`: `string` _(optional)_ _(v1)_
 - `seedBuffer`: `string` _(optional)_ _(v1)_
+- `encryptedSeed`: `string` _(v1)_
+- `salt`: `string` _(v1)_
+- `prf`: `string` _(v1)_
 - `config`: `string` _(v1)_
 
 **Response:** `@wdk-core/workletStart-response`
@@ -273,6 +276,61 @@
 **Fields:**
 
 _No fields defined_
+
+---
+
+## generateAndEncrypt
+
+**Request:** `@wdk-core/generateAndEncrypt-request`
+
+**Fields:**
+
+- `passkey`: `string` _(v1)_
+- `salt`: `string` _(v1)_
+- `seedPhrase`: `string` _(optional)_ _(v1)_
+- `derivedKey`: `string` _(optional)_ _(v1)_
+
+**Response:** `@wdk-core/generateAndEncrypt-response`
+
+**Fields:**
+
+- `encryptedEntropy`: `string` _(v1)_
+- `encryptedSeed`: `string` _(v1)_
+
+---
+
+## decrypt
+
+**Request:** `@wdk-core/decrypt-request`
+
+**Fields:**
+
+- `passkey`: `string` _(v1)_
+- `salt`: `string` _(v1)_
+- `encryptedData`: `string` _(v1)_
+- `derivedKey`: `string` _(optional)_ _(v1)_
+
+**Response:** `@wdk-core/decrypt-response`
+
+**Fields:**
+
+- `result`: `string` _(v1)_
+
+---
+
+## generateSeed
+
+**Request:** `@wdk-core/generateSeed-request`
+
+**Fields:**
+
+_No fields defined_
+
+**Response:** `@wdk-core/generateSeed-response`
+
+**Fields:**
+
+- `mnemonic`: `string` _(v1)_
 
 ---
 
