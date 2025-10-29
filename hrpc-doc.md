@@ -20,12 +20,32 @@
 - `enableDebugLogs`: `uint` _(optional)_ _(v1)_
 - `seedPhrase`: `string` _(optional)_ _(v1)_
 - `seedBuffer`: `string` _(optional)_ _(v1)_
-- `encryptedSeed`: `string` _(v1)_
-- `salt`: `string` _(v1)_
-- `prf`: `string` _(v1)_
 - `config`: `string` _(v1)_
 
 **Response:** `@wdk-core/workletStart-response`
+
+**Fields:**
+
+- `status`: `string` _(v1)_
+
+---
+
+## wdkInit
+
+**Request:** `@wdk-core/wdkInit-request`
+
+**Fields:**
+
+- `enableDebugLogs`: `uint` _(optional)_ _(v1)_
+- `seedPhrase`: `string` _(optional)_ _(v1)_
+- `seedBuffer`: `string` _(optional)_ _(v1)_
+- `encryptedSeed`: `object` _(optional)_ _(v1)_
+  - `seedBuffer`: `string` _(v1)_
+  - `salt`: `string` _(v1)_
+  - `prf`: `string` _(v1)_
+- `config`: `string` _(v1)_
+
+**Response:** `@wdk-core/wdkInit-response`
 
 **Fields:**
 

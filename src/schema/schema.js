@@ -30,15 +30,41 @@ schemaNs.register({
     { name: 'enableDebugLogs', type: 'uint', required: false },
     { name: 'seedPhrase', type: 'string', required: false },
     { name: 'seedBuffer', type: 'string', required: false },
-    { name: 'encryptedSeed', type: 'string', required: true },
-    { name: 'salt', type: 'string', required: true },
-    { name: 'prf', type: 'string', required: true },
     { name: 'config', type: 'string', required: true }
   ]
 })
 
 schemaNs.register({
   name: 'workletStart-response',
+  fields: [
+    { name: 'status', type: 'string' }
+  ]
+})
+
+/**
+ * wdk init
+ */
+schemaNs.register({
+  name: 'wdkInit-request-encrypted-seed',
+  fields: [
+    { name: 'seedBuffer', type: 'string', required: true },
+    { name: 'salt', type: 'string', required: true },
+    { name: 'prf', type: 'string', required: true },
+  ]
+})
+schemaNs.register({
+  name: 'wdkInit-request',
+  fields: [
+    { name: 'enableDebugLogs', type: 'uint', required: false },
+    { name: 'seedPhrase', type: 'string', required: false },
+    { name: 'seedBuffer', type: 'string', required: false },
+    { name: 'encryptedSeed', type: '@wdk-core/wdkInit-request-encrypted-seed', required: false },
+    { name: 'config', type: 'string', required: true }
+  ]
+})
+
+schemaNs.register({
+  name: 'wdkInit-response',
   fields: [
     { name: 'status', type: 'string' }
   ]
@@ -428,6 +454,12 @@ ns.register({
   name: 'workletStart',
   request: { name: '@wdk-core/workletStart-request', stream: false },
   response: { name: '@wdk-core/workletStart-response', stream: false }
+})
+
+ns.register({
+  name: 'wdkInit',
+  request: { name: '@wdk-core/wdkInit-request', stream: false },
+  response: { name: '@wdk-core/wdkInit-response', stream: false }
 })
 
 ns.register({

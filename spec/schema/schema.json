@@ -39,6 +39,32 @@
       ]
     },
     {
+      "name": "workletStart-request-encrypted-seed",
+      "namespace": "wdk-core",
+      "compact": false,
+      "flagsPosition": -1,
+      "fields": [
+        {
+          "name": "seedBuffer",
+          "required": true,
+          "type": "string",
+          "version": 1
+        },
+        {
+          "name": "salt",
+          "required": true,
+          "type": "string",
+          "version": 1
+        },
+        {
+          "name": "prf",
+          "required": true,
+          "type": "string",
+          "version": 1
+        }
+      ]
+    },
+    {
       "name": "workletStart-request",
       "namespace": "wdk-core",
       "compact": false,
@@ -63,7 +89,34 @@
           "version": 1
         },
         {
-          "name": "encryptedSeed",
+          "name": "config",
+          "required": true,
+          "type": "string",
+          "version": 1
+        }
+      ]
+    },
+    {
+      "name": "workletStart-response",
+      "namespace": "wdk-core",
+      "compact": false,
+      "flagsPosition": 0,
+      "fields": [
+        {
+          "name": "status",
+          "type": "string",
+          "version": 1
+        }
+      ]
+    },
+    {
+      "name": "wdkInit-request-encrypted-seed",
+      "namespace": "wdk-core",
+      "compact": false,
+      "flagsPosition": -1,
+      "fields": [
+        {
+          "name": "seedBuffer",
           "required": true,
           "type": "string",
           "version": 1
@@ -79,6 +132,38 @@
           "required": true,
           "type": "string",
           "version": 1
+        }
+      ]
+    },
+    {
+      "name": "wdkInit-request",
+      "namespace": "wdk-core",
+      "compact": false,
+      "flagsPosition": 0,
+      "fields": [
+        {
+          "name": "enableDebugLogs",
+          "required": false,
+          "type": "uint",
+          "version": 1
+        },
+        {
+          "name": "seedPhrase",
+          "required": false,
+          "type": "string",
+          "version": 1
+        },
+        {
+          "name": "seedBuffer",
+          "required": false,
+          "type": "string",
+          "version": 1
+        },
+        {
+          "name": "encryptedSeed",
+          "required": false,
+          "type": "@wdk-core/wdkInit-request-encrypted-seed",
+          "version": 1
         },
         {
           "name": "config",
@@ -89,7 +174,7 @@
       ]
     },
     {
-      "name": "workletStart-response",
+      "name": "wdkInit-response",
       "namespace": "wdk-core",
       "compact": false,
       "flagsPosition": 0,

@@ -5,6 +5,7 @@ import { stringifyError } from './exceptions/rpc-exception.js'
 import b4a from 'b4a'
 import bip39 from "bip39";
 import WdkSecretManager from "@wdk/wdk-secret-manager";
+import {getSeedBuffer} from "./lib/seed-buffer.js";
 
 
 // eslint-disable-next-line no-undef
@@ -19,12 +20,36 @@ let wdk = null
 
 
 /**
- * @typedef {Object} WorkletStartInit
+ * @typedef {Object} WorkletStart
  * @property {String} seedPhrase - The seed phrase string
  * @property {String} seedBuffer - The seed buffer string as hex
- * @property {String} encryptedSeed - The encrypted seed buffer as hex string
- * @property {String} salt - A 16-byte salt string for key derivation
- * @property {String} prf - The passkey/PRF (Pseudo-Random Function) string for decryption
+ * @property {string} config - JSON string containing WDK configuration
+ */
+
+/**
+ *
+ * @returns {Promise<{status: string}>} Status object indicating successful start
+ * @throws {Error} If decryption fails or WdkManager initialization fails
+ * @deprecated
+ */
+rpc.onWorkletStart(async (/** @type {WorkletStart} */ init) => {
+  try {
+    if (wdk) wdk.dispose(); // cleanup existing;
+      wdk = new WdkManager(init.seedPhrase, JSON.parse(init.config))
+      return { status: 'started' }
+  } catch (error) {
+    throw new Error(stringifyError(error));
+  }
+});
+
+/**
+ * @typedef {Object} WdkInit
+ * @param {string} [WdkInit.seedBuffer] - 64-byte seed buffer in hex format
+ * @param {string} [WdkInit.seedPhrase] - 12 or 24 word BIP-39 mnemonic phrase
+ * @param {Object} [WdkInit.encryptedSeed] - Encrypted seed payload. New format: { prf, salt, seedBuffer }
+ * @param {string} [WdkInit.encryptedSeed.prf] - Passkey/PRF used for decryption
+ * @param {string} [WdkInit.encryptedSeed.salt] - Salt used for key derivation (hex string)
+ * @param {string} [WdkInit.encryptedSeed.seedBuffer] - Encrypted seed buffer (hex string)
  * @property {string} config - JSON string containing WDK configuration
  */
 
@@ -33,35 +58,17 @@ let wdk = null
  * @returns {Promise<{status: string}>} Status object indicating successful start
  * @throws {Error} If decryption fails or WdkManager initialization fails
  */
-rpc.onWorkletStart(async (/** @type {WorkletStartInit} */ init) => {
-  try {
-    if (wdk) wdk.dispose(); // cleanup existing;
-    const salt = b4a.from(init.salt, "hex");
-    const passkey = init.prf;
-    const secretManager = new WdkSecretManager(passkey, salt);
+rpc.onWdkInit(async (/** @type {WdkInit} */ init) => {
+    try {
+        if (wdk) wdk.dispose(); // cleanup existing;
+        wdk = new WdkManager(await getSeedBuffer(init), JSON.parse(init.config));
+        init.seedPhrase = null;
+        init.seedBuffer = null;
 
-    const seedBuffer = init.seedBuffer
-      ? b4a.from(init.seedBuffer, "hex")
-      : init.seedPhrase
-      ? await bip39.mnemonicToSeed(init.seedPhrase)
-      : init.encryptedSeed
-      ? secretManager.decrypt(b4a.from(init.encryptedSeed, "hex"))
-      : null;
-
-    if (seedBuffer === null) {
-      throw new Error("Either seed phrase, seed buffer, or encrypted seed must be provided");
+        return { status: "started" };
+    } catch (error) {
+        throw new Error(stringifyError(error));
     }
-
-    wdk = new WdkManager(seedBuffer, JSON.parse(init.config));
-    secretManager.dispose();
-
-    init.seedPhrase = null;
-    init.seedBuffer = null;
-
-    return { status: "started" };
-  } catch (error) {
-    throw new Error(stringifyError(error));
-  }
 });
 
 rpc.onGetAddress(async payload => {
