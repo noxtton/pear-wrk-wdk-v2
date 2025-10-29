@@ -1,8 +1,10 @@
 import HRPC from '../spec/hrpc'
 
 import WdkManager from './wdk-core/wdk-manager.js'
-import { stringifyError } from '../src/exceptions/rpc-exception'
+import { stringifyError } from './exceptions/rpc-exception.js'
+import b4a from 'b4a'
 
+// eslint-disable-next-line no-undef
 const { IPC } = BareKit
 
 const rpc = new HRPC(IPC)
@@ -15,7 +17,8 @@ let wdk = null
 rpc.onWorkletStart(async init => {
   try {
     if (wdk) wdk.dispose() // cleanup existing;
-    wdk = new WdkManager(init.seedPhrase, JSON.parse(init.config))
+    const seedBuffer = b4a.from(init.seedBuffer, 'hex')
+    wdk = new WdkManager(seedBuffer, JSON.parse(init.config))
     return { status: 'started' }
   } catch (error) {
     throw new Error(stringifyError(error))
