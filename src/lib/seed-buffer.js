@@ -5,7 +5,7 @@ import bip39 from 'bip39'
  *
  * @param {string} seedBufferHex - 64 bytes seed buffer in hex format
  * @param {string} seedPhrase - 12 or 24 words mnemonic seed phrase
- * @return {*|(function(*, *, number=, number=, *=): (number|*))|Uint8Array<ArrayBufferLike>}
+ * @return {Uint8Array<ArrayBufferLike>}
  */
 export async function getSeedBuffer (seedBufferHex = null, seedPhrase = null) {
   if (seedBufferHex) {

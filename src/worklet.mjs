@@ -19,6 +19,8 @@ rpc.onWorkletStart(async init => {
   try {
     if (wdk) wdk.dispose() // cleanup existing;
     wdk = new WdkManager(await getSeedBuffer(init.seedBuffer, init.seedPhrase), JSON.parse(init.config))
+    init.seedPhrase = null
+    init.seedBuffer = null
     return { status: 'started' }
   } catch (error) {
     throw new Error(stringifyError(error))
