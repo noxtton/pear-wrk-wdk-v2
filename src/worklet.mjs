@@ -64,7 +64,6 @@ rpc.onWdkInit(async (/** @type {WdkInit} */ init) => {
         if (wdk) wdk.dispose(); // cleanup existing;
         wdk = new WdkManager(await getSeedBuffer(init), JSON.parse(init.config));
         disposeWdkInitParams(init);
-        console.log('innittt params ---->', init);
         return { status: "started" };
     } catch (error) {
         throw new Error(stringifyError(error));
