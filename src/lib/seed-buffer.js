@@ -37,3 +37,18 @@ export async function getSeedBuffer(options = {}) {
   if (seedBuffer) return seedBuffer;
   throw new Error('One of the following parameters must be provided: seedBuffer, seedPhrase, or encryptedSeed');
 }
+
+export function disposeWdkInitParams(options = {}) {
+  if (!options) return;
+
+  for (const key of Object.keys(options)) {
+    if (key === 'config' || key === 'enableDebugLogs') continue
+    if (Object.prototype.toString.call(options[key]) === '[object Object]') {
+      for (const subKey of Object.keys(options[key])) {
+        options[key][subKey] = undefined;
+      }
+    } else {
+      options[key] = undefined;
+    }
+  }
+}
