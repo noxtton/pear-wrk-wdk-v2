@@ -1,6 +1,6 @@
 import b4a from 'b4a'
 import bip39 from 'bip39'
-import WdkSecretManager from "@wdk/wdk-secret-manager";
+import WdkSecretManager from "@tetherto/wdk-secret-manager";
 
 /**
  * Get a seed buffer from one of the provided sources.

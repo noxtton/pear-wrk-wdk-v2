@@ -13,6 +13,7 @@
     "postinstall": "npm run gen:bundle"
   },
   "dependencies": {
+    "@tetherto/wdk-secret-manager": "1.0.0-beta.3",
     "@tetherto/wdk-wallet": "1.0.0-beta.4",
     "@tetherto/wdk-wallet-btc": "1.0.0-beta.3",
     "@tetherto/wdk-wallet-evm": "1.0.0-beta.3",
@@ -23,12 +24,11 @@
     "@tetherto/wdk-wallet-tron": "1.0.0-beta.2",
     "@tetherto/wdk-wallet-tron-gasfree": "1.0.0-beta.2",
     "@wdk/bare-ethers": "https://github.com/noxtton/wdk-bare-ethers-internal#a4027a713f1226f5b5faa191f5a73580e247abf4",
-    "@wdk/wdk-secret-manager": "https://github.com/noxtton/wdk-secret-manager#73e8aa19c418f28b4a4a38933c5468a82a3567dc",
     "b4a": "^1.7.3",
     "bare-ipc": "1.1.1",
     "bip39": "^3.1.0",
-    "encoding": "npm:bare-encoding@1.0.0",
     "crypto": "npm:bare-crypto@1.12.0",
+    "encoding": "npm:bare-encoding@1.0.0",
     "hrpc": "4.0.1",
     "hyperschema": "1.12.4",
     "os": "npm:bare-os@3.6.1"

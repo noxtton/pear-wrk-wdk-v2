@@ -4,7 +4,7 @@ import WdkManager from './wdk-core/wdk-manager.js'
 import { stringifyError } from './exceptions/rpc-exception.js'
 import b4a from 'b4a'
 import bip39 from "bip39";
-import WdkSecretManager from "@wdk/wdk-secret-manager";
+import {WdkSecretManager} from "@tetherto/wdk-secret-manager";
 import {disposeWdkInitParams, getSeedBuffer} from "./lib/seed-buffer.js";
 
 
@@ -164,10 +164,8 @@ rpc.onDecrypt(async (payload) => {
 
 rpc.onGenerateSeed(async () => {
   try {
-    const entropy = WdkSecretManager.generateRandomBuffer();
-    const mnemonic = bip39.entropyToMnemonic(entropy);
     return {
-      mnemonic,
+      mnemonic: bip39.generateMnemonic(),
     };
   } catch (e) {
     throw new Error(`${e.message}: ${e.stack}`);
