@@ -116,13 +116,6 @@ export default class WdkManager {
 
     /** @private */
     this._imports = { }
-    this.initDefaultImports().then()
-  }
-
-  // todo workaround to support ethers
-  async initDefaultImports () {
-    const { default: Ethers } = await import('@wdk/bare-ethers')
-    if (!this._imports.ethers) this._imports.ethers = Ethers
   }
 
   /**
@@ -423,26 +416,6 @@ export default class WdkManager {
       }
     }
     return receipt
-  }
-
-  /**
-     * Returns an evm transaction to approve the interaction transaction.
-     *
-     * @param {ApproveOptions} options - The approve options.
-     * @returns {Promise<EvmTransaction>} The evm transaction.
-     */
-  async getApproveTransaction (options) {
-    const { token, recipient, amount } = options
-
-    const erc20Abi = ['function approve(address spender, uint256 amount) external returns (bool)']
-
-    const contract = new this._imports.ethers.Contract(token, erc20Abi)
-
-    return {
-      to: token,
-      value: 0,
-      data: contract.interface.encodeFunctionData('approve', [recipient, amount])
-    }
   }
 
   /** Disposes all the wallet accounts, erasing their private keys from the memory. */

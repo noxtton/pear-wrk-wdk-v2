@@ -245,20 +245,6 @@ rpc.onGetTransactionReceipt(async payload => {
   }
 })
 
-rpc.onGetApproveTransaction(async payload => {
-  try {
-    payload.amount = Number(payload.amount)
-    const approveTx = await wdk.getApproveTransaction(payload)
-    if (approveTx) {
-      approveTx.value = approveTx.value.toString()
-      return approveTx
-    }
-    return {}
-  } catch (error) {
-    throw new Error(stringifyError(error))
-  }
-})
-
 rpc.onDispose(() => {
   try {
     wdk.dispose()
