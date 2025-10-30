@@ -42,6 +42,35 @@ schemaNs.register({
 })
 
 /**
+ * wdk init
+ */
+schemaNs.register({
+  name: 'wdkInit-request-encrypted-seed',
+  fields: [
+    { name: 'seedBuffer', type: 'string', required: true },
+    { name: 'salt', type: 'string', required: true },
+    { name: 'prf', type: 'string', required: true },
+  ]
+})
+schemaNs.register({
+  name: 'wdkInit-request',
+  fields: [
+    { name: 'enableDebugLogs', type: 'uint', required: false },
+    { name: 'seedPhrase', type: 'string', required: false },
+    { name: 'seedBuffer', type: 'string', required: false },
+    { name: 'encryptedSeed', type: '@wdk-core/wdkInit-request-encrypted-seed', required: false },
+    { name: 'config', type: 'string', required: true }
+  ]
+})
+
+schemaNs.register({
+  name: 'wdkInit-response',
+  fields: [
+    { name: 'status', type: 'string' }
+  ]
+})
+
+/**
  * Get address based on network
  */
 schemaNs.register({
@@ -341,6 +370,69 @@ schemaNs.register({
   ]
 })
 
+
+
+/**
+ * GenerateAndEncrypt
+ */
+
+schemaNs.register({
+	name: 'generateAndEncrypt-request',
+	fields: [
+		{ name: 'passkey', type: 'string' },
+		{ name: 'salt', type: 'string' },
+		{ name: 'seedPhrase', type: 'string', required: false },
+		{ name: 'derivedKey', type: 'string', required: false },
+	],
+});
+
+schemaNs.register({
+	name: 'generateAndEncrypt-response',
+	fields: [
+		{ name: 'encryptedEntropy', type: 'string' },
+		{ name: 'encryptedSeed', type: 'string' },
+	],
+});
+
+
+/**
+ * Decrypt
+ */
+
+schemaNs.register({
+	name: 'decrypt-request',
+	fields: [
+		{ name: 'passkey', type: 'string' },
+		{ name: 'salt', type: 'string' },
+		{ name: 'encryptedData', type: 'string' },
+		{ name: 'derivedKey', type: 'string', required: false },
+	],
+});
+
+schemaNs.register({
+	name: 'decrypt-response',
+	fields: [{ name: 'result', type: 'string' }],
+});
+
+
+/**
+ * Generate Seed
+ */
+
+schemaNs.register({
+	name: 'generateSeed-request',
+	fields: [],
+});
+
+schemaNs.register({
+	name: 'generateSeed-response',
+	fields: [{ name: 'mnemonic', type: 'string' }],
+});
+
+/**
+ * Dispose
+ */
+
 schemaNs.register({
   name: 'dispose-request',
   fields: []
@@ -362,6 +454,12 @@ ns.register({
   name: 'workletStart',
   request: { name: '@wdk-core/workletStart-request', stream: false },
   response: { name: '@wdk-core/workletStart-response', stream: false }
+})
+
+ns.register({
+  name: 'wdkInit',
+  request: { name: '@wdk-core/wdkInit-request', stream: false },
+  response: { name: '@wdk-core/wdkInit-response', stream: false }
 })
 
 ns.register({
@@ -434,5 +532,23 @@ ns.register({
   name: 'dispose',
   request: { name: '@wdk-core/dispose-request', send: true }
 })
+
+ns.register({
+	name: 'generateAndEncrypt',
+	request: { name: '@wdk-core/generateAndEncrypt-request', stream: false },
+	response: { name: '@wdk-core/generateAndEncrypt-response', stream: false },
+});
+
+ns.register({
+	name: 'decrypt',
+	request: { name: '@wdk-core/decrypt-request', stream: false },
+	response: { name: '@wdk-core/decrypt-response', stream: false },
+});
+
+ns.register({
+	name: 'generateSeed',
+	request: { name: '@wdk-core/generateSeed-request', stream: false },
+	response: { name: '@wdk-core/generateSeed-response', stream: false },
+});
 // Save interface to disk
 ESMHRPC.toDisk(builder)

@@ -39,6 +39,32 @@
       ]
     },
     {
+      "name": "workletStart-request-encrypted-seed",
+      "namespace": "wdk-core",
+      "compact": false,
+      "flagsPosition": -1,
+      "fields": [
+        {
+          "name": "seedBuffer",
+          "required": true,
+          "type": "string",
+          "version": 1
+        },
+        {
+          "name": "salt",
+          "required": true,
+          "type": "string",
+          "version": 1
+        },
+        {
+          "name": "prf",
+          "required": true,
+          "type": "string",
+          "version": 1
+        }
+      ]
+    },
+    {
       "name": "workletStart-request",
       "namespace": "wdk-core",
       "compact": false,
@@ -72,6 +98,83 @@
     },
     {
       "name": "workletStart-response",
+      "namespace": "wdk-core",
+      "compact": false,
+      "flagsPosition": 0,
+      "fields": [
+        {
+          "name": "status",
+          "type": "string",
+          "version": 1
+        }
+      ]
+    },
+    {
+      "name": "wdkInit-request-encrypted-seed",
+      "namespace": "wdk-core",
+      "compact": false,
+      "flagsPosition": -1,
+      "fields": [
+        {
+          "name": "seedBuffer",
+          "required": true,
+          "type": "string",
+          "version": 1
+        },
+        {
+          "name": "salt",
+          "required": true,
+          "type": "string",
+          "version": 1
+        },
+        {
+          "name": "prf",
+          "required": true,
+          "type": "string",
+          "version": 1
+        }
+      ]
+    },
+    {
+      "name": "wdkInit-request",
+      "namespace": "wdk-core",
+      "compact": false,
+      "flagsPosition": 0,
+      "fields": [
+        {
+          "name": "enableDebugLogs",
+          "required": false,
+          "type": "uint",
+          "version": 1
+        },
+        {
+          "name": "seedPhrase",
+          "required": false,
+          "type": "string",
+          "version": 1
+        },
+        {
+          "name": "seedBuffer",
+          "required": false,
+          "type": "string",
+          "version": 1
+        },
+        {
+          "name": "encryptedSeed",
+          "required": false,
+          "type": "@wdk-core/wdkInit-request-encrypted-seed",
+          "version": 1
+        },
+        {
+          "name": "config",
+          "required": true,
+          "type": "string",
+          "version": 1
+        }
+      ]
+    },
+    {
+      "name": "wdkInit-response",
       "namespace": "wdk-core",
       "compact": false,
       "flagsPosition": 0,
@@ -744,6 +847,116 @@
       "fields": [
         {
           "name": "receipt",
+          "type": "string",
+          "version": 1
+        }
+      ]
+    },
+    {
+      "name": "generateAndEncrypt-request",
+      "namespace": "wdk-core",
+      "compact": false,
+      "flagsPosition": 0,
+      "fields": [
+        {
+          "name": "passkey",
+          "type": "string",
+          "version": 1
+        },
+        {
+          "name": "salt",
+          "type": "string",
+          "version": 1
+        },
+        {
+          "name": "seedPhrase",
+          "required": false,
+          "type": "string",
+          "version": 1
+        },
+        {
+          "name": "derivedKey",
+          "required": false,
+          "type": "string",
+          "version": 1
+        }
+      ]
+    },
+    {
+      "name": "generateAndEncrypt-response",
+      "namespace": "wdk-core",
+      "compact": false,
+      "flagsPosition": 0,
+      "fields": [
+        {
+          "name": "encryptedEntropy",
+          "type": "string",
+          "version": 1
+        },
+        {
+          "name": "encryptedSeed",
+          "type": "string",
+          "version": 1
+        }
+      ]
+    },
+    {
+      "name": "decrypt-request",
+      "namespace": "wdk-core",
+      "compact": false,
+      "flagsPosition": 0,
+      "fields": [
+        {
+          "name": "passkey",
+          "type": "string",
+          "version": 1
+        },
+        {
+          "name": "salt",
+          "type": "string",
+          "version": 1
+        },
+        {
+          "name": "encryptedData",
+          "type": "string",
+          "version": 1
+        },
+        {
+          "name": "derivedKey",
+          "required": false,
+          "type": "string",
+          "version": 1
+        }
+      ]
+    },
+    {
+      "name": "decrypt-response",
+      "namespace": "wdk-core",
+      "compact": false,
+      "flagsPosition": 0,
+      "fields": [
+        {
+          "name": "result",
+          "type": "string",
+          "version": 1
+        }
+      ]
+    },
+    {
+      "name": "generateSeed-request",
+      "namespace": "wdk-core",
+      "compact": false,
+      "flagsPosition": -1,
+      "fields": []
+    },
+    {
+      "name": "generateSeed-response",
+      "namespace": "wdk-core",
+      "compact": false,
+      "flagsPosition": 0,
+      "fields": [
+        {
+          "name": "mnemonic",
           "type": "string",
           "version": 1
         }

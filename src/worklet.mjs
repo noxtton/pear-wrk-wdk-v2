@@ -1,8 +1,14 @@
 import HRPC from '../spec/hrpc'
 
 import WdkManager from './wdk-core/wdk-manager.js'
-import { stringifyError } from '../src/exceptions/rpc-exception'
+import { stringifyError } from './exceptions/rpc-exception.js'
+import b4a from 'b4a'
+import bip39 from "bip39";
+import {WdkSecretManager} from "@tetherto/wdk-secret-manager";
+import {disposeWdkInitParams, getSeedBuffer} from "./lib/seed-buffer.js";
 
+
+// eslint-disable-next-line no-undef
 const { IPC } = BareKit
 
 const rpc = new HRPC(IPC)
@@ -12,15 +18,58 @@ const rpc = new HRPC(IPC)
  */
 let wdk = null
 
-rpc.onWorkletStart(async init => {
+
+/**
+ * @typedef {Object} WorkletStart
+ * @property {String} seedPhrase - The seed phrase string
+ * @property {String} seedBuffer - The seed buffer string as hex
+ * @property {string} config - JSON string containing WDK configuration
+ */
+
+/**
+ *
+ * @returns {Promise<{status: string}>} Status object indicating successful start
+ * @throws {Error} If decryption fails or WdkManager initialization fails
+ * @deprecated
+ */
+rpc.onWorkletStart(async (/** @type {WorkletStart} */ init) => {
   try {
-    if (wdk) wdk.dispose() // cleanup existing;
-    wdk = new WdkManager(init.seedPhrase, JSON.parse(init.config))
-    return { status: 'started' }
+    if (wdk) wdk.dispose(); // cleanup existing;
+      wdk = new WdkManager(init.seedPhrase, JSON.parse(init.config))
+      disposeWdkInitParams(init)
+      return { status: 'started' }
   } catch (error) {
-    throw new Error(stringifyError(error))
+    throw new Error(stringifyError(error));
   }
-})
+});
+
+/**
+ * @typedef {Object} WdkInit
+ * @param {string} [WdkInit.seedBuffer] - 64-byte seed buffer in hex format
+ * @param {string} [WdkInit.seedPhrase] - 12 or 24 word BIP-39 mnemonic phrase
+ * @param {Object} [WdkInit.encryptedSeed] - Encrypted seed payload. New format: { prf, salt, seedBuffer }
+ * @param {string} [WdkInit.encryptedSeed.prf] - Passkey/PRF used for decryption
+ * @param {string} [WdkInit.encryptedSeed.salt] - Salt used for key derivation (hex string)
+ * @param {string} [WdkInit.encryptedSeed.seedBuffer] - Encrypted seed buffer (hex string)
+ * @property {string} config - JSON string containing WDK configuration
+ */
+
+/**
+ *
+ * @returns {Promise<{status: string}>} Status object indicating successful start
+ * @throws {Error} If decryption fails or WdkManager initialization fails
+ */
+rpc.onWdkInit(async (/** @type {WdkInit} */ init) => {
+    try {
+        if (wdk) wdk.dispose(); // cleanup existing;
+        wdk = new WdkManager(await getSeedBuffer(init), JSON.parse(init.config));
+        disposeWdkInitParams(init);
+        return { status: "started" };
+    } catch (error) {
+        throw new Error(stringifyError(error));
+    }
+});
+
 rpc.onGetAddress(async payload => {
   try {
     return { address: await wdk.getAddress(payload.network, payload.accountIndex) }
@@ -58,6 +107,70 @@ rpc.onSendTransaction(async payload => {
     throw new Error(stringifyError(error))
   }
 })
+
+/*****************
+ *
+ * Secret Manager
+ *
+ *****************/
+
+rpc.onGenerateAndEncrypt(async (payload) => {
+  try {
+    if (payload.derivedKey) {
+      payload.derivedKey = b4a.from(payload.derivedKey, "hex");
+    }
+    payload.salt = b4a.from(payload.salt, "hex");
+    const manager = new WdkSecretManager(payload.passkey, payload.salt);
+    const entropy = payload.seedPhrase
+      ? manager.mnemonicToEntropy(payload.seedPhrase)
+      : null;
+    const { encryptedSeed, encryptedEntropy } =
+      await manager.generateAndEncrypt(entropy, payload.derivedKey);
+    manager.dispose();
+    return {
+      encryptedSeed: b4a.toString(encryptedSeed, "hex"),
+      encryptedEntropy: b4a.toString(encryptedEntropy, "hex"),
+    };
+  } catch (e) {
+    throw new Error(`${e.message}: ${e.stack}`);
+  }
+});
+
+rpc.onDecrypt(async (payload) => {
+  try {
+    if (payload.derivedKey) {
+      payload.derivedKey = b4a.from(payload.derivedKey, "hex");
+    }
+    payload.salt = b4a.from(payload.salt, "hex");
+    const manager = new WdkSecretManager(
+      payload.passkey,
+      b4a.from(payload.salt, "hex")
+    );
+    const decryptedData = manager.decrypt(
+      b4a.from(payload.encryptedData, "hex"),
+      payload.derivedKey
+    );
+    manager.dispose();
+    return {
+      result: b4a.toString(decryptedData, "hex"),
+    };
+  } catch (e) {
+    console.error(e.message);
+    return {
+      result: null,
+    };
+  }
+});
+
+rpc.onGenerateSeed(async () => {
+  try {
+    return {
+      mnemonic: bip39.generateMnemonic(),
+    };
+  } catch (e) {
+    throw new Error(`${e.message}: ${e.stack}`);
+  }
+});
 
 /*****************
  *
