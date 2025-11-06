@@ -38,11 +38,11 @@
 
 - `enableDebugLogs`: `uint` _(optional)_ _(v1)_
 - `seedPhrase`: `string` _(optional)_ _(v1)_
-- `seedBuffer`: `string` _(optional)_ _(v1)_
+- `seedBuffer`: `buffer` _(optional)_ _(v1)_
 - `encryptedSeed`: `object` _(optional)_ _(v1)_
-  - `seedBuffer`: `string` _(v1)_
-  - `salt`: `string` _(v1)_
-  - `prf`: `string` _(v1)_
+  - `seedBuffer`: `buffer` _(v1)_
+  - `salt`: `buffer` _(v1)_
+  - `passkey`: `buffer` _(v1)_
 - `config`: `string` _(v1)_
 
 **Response:** `@wdk-core/wdkInit-response`
@@ -305,17 +305,17 @@ _No fields defined_
 
 **Fields:**
 
-- `passkey`: `string` _(v1)_
-- `salt`: `string` _(v1)_
-- `seedPhrase`: `string` _(optional)_ _(v1)_
-- `derivedKey`: `string` _(optional)_ _(v1)_
+- `passkey`: `buffer` _(v1)_
+- `salt`: `buffer` _(v1)_
+- `seedEntropy`: `buffer` _(optional)_ _(v1)_
+- `derivedKey`: `buffer` _(optional)_ _(v1)_
 
 **Response:** `@wdk-core/generateAndEncrypt-response`
 
 **Fields:**
 
-- `encryptedEntropy`: `string` _(v1)_
-- `encryptedSeed`: `string` _(v1)_
+- `encryptedEntropy`: `buffer` _(v1)_
+- `encryptedSeed`: `buffer` _(v1)_
 
 ---
 
@@ -325,16 +325,16 @@ _No fields defined_
 
 **Fields:**
 
-- `passkey`: `string` _(v1)_
-- `salt`: `string` _(v1)_
-- `encryptedData`: `string` _(v1)_
-- `derivedKey`: `string` _(optional)_ _(v1)_
+- `passkey`: `buffer` _(v1)_
+- `salt`: `buffer` _(v1)_
+- `encryptedData`: `buffer` _(v1)_
+- `derivedKey`: `buffer` _(optional)_ _(v1)_
 
 **Response:** `@wdk-core/decrypt-response`
 
 **Fields:**
 
-- `result`: `string` _(v1)_
+- `result`: `buffer` _(v1)_
 
 ---
 

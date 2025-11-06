@@ -58,33 +58,8 @@ const encoding1 = {
   }
 }
 
-// @wdk-core/workletStart-request-encrypted-seed
-const encoding2 = {
-  preencode (state, m) {
-    c.string.preencode(state, m.seedBuffer)
-    c.string.preencode(state, m.salt)
-    c.string.preencode(state, m.prf)
-  },
-  encode (state, m) {
-    c.string.encode(state, m.seedBuffer)
-    c.string.encode(state, m.salt)
-    c.string.encode(state, m.prf)
-  },
-  decode (state) {
-    const r0 = c.string.decode(state)
-    const r1 = c.string.decode(state)
-    const r2 = c.string.decode(state)
-
-    return {
-      seedBuffer: r0,
-      salt: r1,
-      prf: r2
-    }
-  }
-}
-
 // @wdk-core/workletStart-request
-const encoding3 = {
+const encoding2 = {
   preencode (state, m) {
     state.end++ // max flag is 4 so always one byte
 
@@ -119,7 +94,7 @@ const encoding3 = {
 }
 
 // @wdk-core/workletStart-response
-const encoding4 = {
+const encoding3 = {
   preencode (state, m) {
     state.end++ // max flag is 1 so always one byte
 
@@ -142,20 +117,42 @@ const encoding4 = {
 }
 
 // @wdk-core/wdkInit-request-encrypted-seed
-const encoding5 = encoding2
+const encoding4 = {
+  preencode (state, m) {
+    c.buffer.preencode(state, m.seedBuffer)
+    c.buffer.preencode(state, m.salt)
+    c.buffer.preencode(state, m.passkey)
+  },
+  encode (state, m) {
+    c.buffer.encode(state, m.seedBuffer)
+    c.buffer.encode(state, m.salt)
+    c.buffer.encode(state, m.passkey)
+  },
+  decode (state) {
+    const r0 = c.buffer.decode(state)
+    const r1 = c.buffer.decode(state)
+    const r2 = c.buffer.decode(state)
+
+    return {
+      seedBuffer: r0,
+      salt: r1,
+      passkey: r2
+    }
+  }
+}
 
 // @wdk-core/wdkInit-request.encryptedSeed
-const encoding6_3 = c.frame(encoding5)
+const encoding5_3 = c.frame(encoding4)
 
 // @wdk-core/wdkInit-request
-const encoding6 = {
+const encoding5 = {
   preencode (state, m) {
     state.end++ // max flag is 8 so always one byte
 
     if (m.enableDebugLogs) c.uint.preencode(state, m.enableDebugLogs)
     if (m.seedPhrase) c.string.preencode(state, m.seedPhrase)
-    if (m.seedBuffer) c.string.preencode(state, m.seedBuffer)
-    if (m.encryptedSeed) encoding6_3.preencode(state, m.encryptedSeed)
+    if (m.seedBuffer) c.buffer.preencode(state, m.seedBuffer)
+    if (m.encryptedSeed) encoding5_3.preencode(state, m.encryptedSeed)
     c.string.preencode(state, m.config)
   },
   encode (state, m) {
@@ -169,8 +166,8 @@ const encoding6 = {
 
     if (m.enableDebugLogs) c.uint.encode(state, m.enableDebugLogs)
     if (m.seedPhrase) c.string.encode(state, m.seedPhrase)
-    if (m.seedBuffer) c.string.encode(state, m.seedBuffer)
-    if (m.encryptedSeed) encoding6_3.encode(state, m.encryptedSeed)
+    if (m.seedBuffer) c.buffer.encode(state, m.seedBuffer)
+    if (m.encryptedSeed) encoding5_3.encode(state, m.encryptedSeed)
     c.string.encode(state, m.config)
   },
   decode (state) {
@@ -179,18 +176,18 @@ const encoding6 = {
     return {
       enableDebugLogs: (flags & 1) !== 0 ? c.uint.decode(state) : 0,
       seedPhrase: (flags & 2) !== 0 ? c.string.decode(state) : null,
-      seedBuffer: (flags & 4) !== 0 ? c.string.decode(state) : null,
-      encryptedSeed: (flags & 8) !== 0 ? encoding6_3.decode(state) : null,
+      seedBuffer: (flags & 4) !== 0 ? c.buffer.decode(state) : null,
+      encryptedSeed: (flags & 8) !== 0 ? encoding5_3.decode(state) : null,
       config: c.string.decode(state)
     }
   }
 }
 
 // @wdk-core/wdkInit-response
-const encoding7 = encoding4
+const encoding6 = encoding3
 
 // @wdk-core/getAddress-request
-const encoding8 = {
+const encoding7 = {
   preencode (state, m) {
     c.string.preencode(state, m.network)
     c.uint.preencode(state, m.accountIndex)
@@ -211,7 +208,7 @@ const encoding8 = {
 }
 
 // @wdk-core/getAddress-response
-const encoding9 = {
+const encoding8 = {
   preencode (state, m) {
     state.end++ // max flag is 1 so always one byte
 
@@ -234,10 +231,10 @@ const encoding9 = {
 }
 
 // @wdk-core/getAddressBalance-request
-const encoding10 = encoding8
+const encoding9 = encoding7
 
 // @wdk-core/getAddressBalance-response
-const encoding11 = {
+const encoding10 = {
   preencode (state, m) {
     state.end++ // max flag is 1 so always one byte
 
@@ -260,7 +257,7 @@ const encoding11 = {
 }
 
 // @wdk-core/quoteSendTransaction-request-options
-const encoding12 = {
+const encoding11 = {
   preencode (state, m) {
     c.string.preencode(state, m.to)
     c.string.preencode(state, m.value)
@@ -281,24 +278,24 @@ const encoding12 = {
 }
 
 // @wdk-core/quoteSendTransaction-request.options
-const encoding13_2 = c.frame(encoding12)
+const encoding12_2 = c.frame(encoding11)
 
 // @wdk-core/quoteSendTransaction-request
-const encoding13 = {
+const encoding12 = {
   preencode (state, m) {
     c.string.preencode(state, m.network)
     c.uint.preencode(state, m.accountIndex)
-    encoding13_2.preencode(state, m.options)
+    encoding12_2.preencode(state, m.options)
   },
   encode (state, m) {
     c.string.encode(state, m.network)
     c.uint.encode(state, m.accountIndex)
-    encoding13_2.encode(state, m.options)
+    encoding12_2.encode(state, m.options)
   },
   decode (state) {
     const r0 = c.string.decode(state)
     const r1 = c.uint.decode(state)
-    const r2 = encoding13_2.decode(state)
+    const r2 = encoding12_2.decode(state)
 
     return {
       network: r0,
@@ -309,7 +306,7 @@ const encoding13 = {
 }
 
 // @wdk-core/quoteSendTransaction-response
-const encoding14 = {
+const encoding13 = {
   preencode (state, m) {
     state.end++ // max flag is 1 so always one byte
 
@@ -332,27 +329,27 @@ const encoding14 = {
 }
 
 // @wdk-core/sendTransaction-request-options
-const encoding15 = encoding12
+const encoding14 = encoding11
 
 // @wdk-core/sendTransaction-request.options
-const encoding16_2 = c.frame(encoding15)
+const encoding15_2 = c.frame(encoding14)
 
 // @wdk-core/sendTransaction-request
-const encoding16 = {
+const encoding15 = {
   preencode (state, m) {
     c.string.preencode(state, m.network)
     c.uint.preencode(state, m.accountIndex)
-    encoding16_2.preencode(state, m.options)
+    encoding15_2.preencode(state, m.options)
   },
   encode (state, m) {
     c.string.encode(state, m.network)
     c.uint.encode(state, m.accountIndex)
-    encoding16_2.encode(state, m.options)
+    encoding15_2.encode(state, m.options)
   },
   decode (state) {
     const r0 = c.string.decode(state)
     const r1 = c.uint.decode(state)
-    const r2 = encoding16_2.decode(state)
+    const r2 = encoding15_2.decode(state)
 
     return {
       network: r0,
@@ -363,7 +360,7 @@ const encoding16 = {
 }
 
 // @wdk-core/sendTransaction-response
-const encoding17 = {
+const encoding16 = {
   preencode (state, m) {
     state.end++ // max flag is 2 so always one byte
 
@@ -391,19 +388,19 @@ const encoding17 = {
 }
 
 // @wdk-core/getAbstractedAddress-request
-const encoding18 = encoding8
+const encoding17 = encoding7
 
 // @wdk-core/getAbstractedAddress-response
-const encoding19 = encoding9
+const encoding18 = encoding8
 
 // @wdk-core/getAbstractedAddressBalance-request
-const encoding20 = encoding8
+const encoding19 = encoding7
 
 // @wdk-core/getAbstractedAddressBalance-response
-const encoding21 = encoding11
+const encoding20 = encoding10
 
 // @wdk-core/getAbstractedAddressTokenBalance-request
-const encoding22 = {
+const encoding21 = {
   preencode (state, m) {
     c.string.preencode(state, m.network)
     c.uint.preencode(state, m.accountIndex)
@@ -428,10 +425,10 @@ const encoding22 = {
 }
 
 // @wdk-core/getAbstractedAddressTokenBalance-response
-const encoding23 = encoding11
+const encoding22 = encoding10
 
 // @wdk-core/abstractedAccountTransfer-request-options
-const encoding24 = {
+const encoding23 = {
   preencode (state, m) {
     c.string.preencode(state, m.token)
     c.string.preencode(state, m.recipient)
@@ -456,7 +453,7 @@ const encoding24 = {
 }
 
 // @wdk-core/abstractedAccountTransfer-request-config-paymasterToken
-const encoding25 = {
+const encoding24 = {
   preencode (state, m) {
     c.string.preencode(state, m.address)
   },
@@ -473,73 +470,73 @@ const encoding25 = {
 }
 
 // @wdk-core/abstractedAccountTransfer-request-config.paymasterToken
-const encoding26_0 = c.frame(encoding25)
+const encoding25_0 = c.frame(encoding24)
 
 // @wdk-core/abstractedAccountTransfer-request-config
-const encoding26 = {
+const encoding25 = {
   preencode (state, m) {
     state.end++ // max flag is 1 so always one byte
 
-    if (m.paymasterToken) encoding26_0.preencode(state, m.paymasterToken)
+    if (m.paymasterToken) encoding25_0.preencode(state, m.paymasterToken)
   },
   encode (state, m) {
     const flags = m.paymasterToken ? 1 : 0
 
     c.uint.encode(state, flags)
 
-    if (m.paymasterToken) encoding26_0.encode(state, m.paymasterToken)
+    if (m.paymasterToken) encoding25_0.encode(state, m.paymasterToken)
   },
   decode (state) {
     const flags = c.uint.decode(state)
 
     return {
-      paymasterToken: (flags & 1) !== 0 ? encoding26_0.decode(state) : null
+      paymasterToken: (flags & 1) !== 0 ? encoding25_0.decode(state) : null
     }
   }
 }
 
 // @wdk-core/abstractedAccountTransfer-request.options
-const encoding27_2 = c.frame(encoding24)
+const encoding26_2 = c.frame(encoding23)
 // @wdk-core/abstractedAccountTransfer-request.config
-const encoding27_3 = c.frame(encoding26)
+const encoding26_3 = c.frame(encoding25)
 
 // @wdk-core/abstractedAccountTransfer-request
-const encoding27 = {
+const encoding26 = {
   preencode (state, m) {
     c.string.preencode(state, m.network)
     c.uint.preencode(state, m.accountIndex)
-    encoding27_2.preencode(state, m.options)
+    encoding26_2.preencode(state, m.options)
     state.end++ // max flag is 1 so always one byte
 
-    if (m.config) encoding27_3.preencode(state, m.config)
+    if (m.config) encoding26_3.preencode(state, m.config)
   },
   encode (state, m) {
     const flags = m.config ? 1 : 0
 
     c.string.encode(state, m.network)
     c.uint.encode(state, m.accountIndex)
-    encoding27_2.encode(state, m.options)
+    encoding26_2.encode(state, m.options)
     c.uint.encode(state, flags)
 
-    if (m.config) encoding27_3.encode(state, m.config)
+    if (m.config) encoding26_3.encode(state, m.config)
   },
   decode (state) {
     const r0 = c.string.decode(state)
     const r1 = c.uint.decode(state)
-    const r2 = encoding27_2.decode(state)
+    const r2 = encoding26_2.decode(state)
     const flags = c.uint.decode(state)
 
     return {
       network: r0,
       accountIndex: r1,
       options: r2,
-      config: (flags & 1) !== 0 ? encoding27_3.decode(state) : null
+      config: (flags & 1) !== 0 ? encoding26_3.decode(state) : null
     }
   }
 }
 
 // @wdk-core/abstractedAccountTransfer-response
-const encoding28 = {
+const encoding27 = {
   preencode (state, m) {
     state.end++ // max flag is 2 so always one byte
 
@@ -567,10 +564,10 @@ const encoding28 = {
 }
 
 // @wdk-core/getApproveTransaction-request
-const encoding29 = encoding24
+const encoding28 = encoding23
 
 // @wdk-core/getApproveTransaction-response
-const encoding30 = {
+const encoding29 = {
   preencode (state, m) {
     c.string.preencode(state, m.to)
     c.string.preencode(state, m.value)
@@ -595,46 +592,46 @@ const encoding30 = {
 }
 
 // @wdk-core/abstractedSendTransaction-request-config-paymasterToken
-const encoding31 = encoding25
+const encoding30 = encoding24
 
 // @wdk-core/abstractedSendTransaction-request-config.paymasterToken
-const encoding32_0 = c.frame(encoding31)
+const encoding31_0 = c.frame(encoding30)
 
 // @wdk-core/abstractedSendTransaction-request-config
-const encoding32 = {
+const encoding31 = {
   preencode (state, m) {
     state.end++ // max flag is 1 so always one byte
 
-    if (m.paymasterToken) encoding32_0.preencode(state, m.paymasterToken)
+    if (m.paymasterToken) encoding31_0.preencode(state, m.paymasterToken)
   },
   encode (state, m) {
     const flags = m.paymasterToken ? 1 : 0
 
     c.uint.encode(state, flags)
 
-    if (m.paymasterToken) encoding32_0.encode(state, m.paymasterToken)
+    if (m.paymasterToken) encoding31_0.encode(state, m.paymasterToken)
   },
   decode (state) {
     const flags = c.uint.decode(state)
 
     return {
-      paymasterToken: (flags & 1) !== 0 ? encoding32_0.decode(state) : null
+      paymasterToken: (flags & 1) !== 0 ? encoding31_0.decode(state) : null
     }
   }
 }
 
 // @wdk-core/abstractedSendTransaction-request.config
-const encoding33_3 = c.frame(encoding32)
+const encoding32_3 = c.frame(encoding31)
 
 // @wdk-core/abstractedSendTransaction-request
-const encoding33 = {
+const encoding32 = {
   preencode (state, m) {
     c.string.preencode(state, m.network)
     c.uint.preencode(state, m.accountIndex)
     c.string.preencode(state, m.options)
     state.end++ // max flag is 1 so always one byte
 
-    if (m.config) encoding33_3.preencode(state, m.config)
+    if (m.config) encoding32_3.preencode(state, m.config)
   },
   encode (state, m) {
     const flags = m.config ? 1 : 0
@@ -644,7 +641,7 @@ const encoding33 = {
     c.string.encode(state, m.options)
     c.uint.encode(state, flags)
 
-    if (m.config) encoding33_3.encode(state, m.config)
+    if (m.config) encoding32_3.encode(state, m.config)
   },
   decode (state) {
     const r0 = c.string.decode(state)
@@ -656,91 +653,91 @@ const encoding33 = {
       network: r0,
       accountIndex: r1,
       options: r2,
-      config: (flags & 1) !== 0 ? encoding33_3.decode(state) : null
+      config: (flags & 1) !== 0 ? encoding32_3.decode(state) : null
     }
   }
 }
 
 // @wdk-core/abstractedSendTransaction-response
-const encoding34 = encoding28
+const encoding33 = encoding27
 
 // @wdk-core/abstractedAccountQuoteTransfer-request-options
-const encoding35 = encoding24
+const encoding34 = encoding23
 
 // @wdk-core/abstractedAccountQuoteTransfer-request-config-paymasterToken
-const encoding36 = encoding25
+const encoding35 = encoding24
 
 // @wdk-core/abstractedAccountQuoteTransfer-request-config.paymasterToken
-const encoding37_0 = c.frame(encoding36)
+const encoding36_0 = c.frame(encoding35)
 
 // @wdk-core/abstractedAccountQuoteTransfer-request-config
-const encoding37 = {
+const encoding36 = {
   preencode (state, m) {
     state.end++ // max flag is 1 so always one byte
 
-    if (m.paymasterToken) encoding37_0.preencode(state, m.paymasterToken)
+    if (m.paymasterToken) encoding36_0.preencode(state, m.paymasterToken)
   },
   encode (state, m) {
     const flags = m.paymasterToken ? 1 : 0
 
     c.uint.encode(state, flags)
 
-    if (m.paymasterToken) encoding37_0.encode(state, m.paymasterToken)
+    if (m.paymasterToken) encoding36_0.encode(state, m.paymasterToken)
   },
   decode (state) {
     const flags = c.uint.decode(state)
 
     return {
-      paymasterToken: (flags & 1) !== 0 ? encoding37_0.decode(state) : null
+      paymasterToken: (flags & 1) !== 0 ? encoding36_0.decode(state) : null
     }
   }
 }
 
 // @wdk-core/abstractedAccountQuoteTransfer-request.options
-const encoding38_2 = c.frame(encoding35)
+const encoding37_2 = c.frame(encoding34)
 // @wdk-core/abstractedAccountQuoteTransfer-request.config
-const encoding38_3 = c.frame(encoding37)
+const encoding37_3 = c.frame(encoding36)
 
 // @wdk-core/abstractedAccountQuoteTransfer-request
-const encoding38 = {
+const encoding37 = {
   preencode (state, m) {
     c.string.preencode(state, m.network)
     c.uint.preencode(state, m.accountIndex)
-    encoding38_2.preencode(state, m.options)
+    encoding37_2.preencode(state, m.options)
     state.end++ // max flag is 1 so always one byte
 
-    if (m.config) encoding38_3.preencode(state, m.config)
+    if (m.config) encoding37_3.preencode(state, m.config)
   },
   encode (state, m) {
     const flags = m.config ? 1 : 0
 
     c.string.encode(state, m.network)
     c.uint.encode(state, m.accountIndex)
-    encoding38_2.encode(state, m.options)
+    encoding37_2.encode(state, m.options)
     c.uint.encode(state, flags)
 
-    if (m.config) encoding38_3.encode(state, m.config)
+    if (m.config) encoding37_3.encode(state, m.config)
   },
   decode (state) {
     const r0 = c.string.decode(state)
     const r1 = c.uint.decode(state)
-    const r2 = encoding38_2.decode(state)
+    const r2 = encoding37_2.decode(state)
     const flags = c.uint.decode(state)
 
     return {
       network: r0,
       accountIndex: r1,
       options: r2,
-      config: (flags & 1) !== 0 ? encoding38_3.decode(state) : null
+      config: (flags & 1) !== 0 ? encoding37_3.decode(state) : null
     }
   }
 }
 
 // @wdk-core/abstractedAccountQuoteTransfer-response
-const encoding39 = encoding14
+const encoding38 = encoding13
 
 // @wdk-core/getTransactionReceipt-request
-const encoding40 = {
+const encoding39 = {
   preencode (state, m) {
     c.string.preencode(state, m.network)
     c.uint.preencode(state, m.accountIndex)
@@ -765,7 +762,7 @@ const encoding40 = {
 }
 
 // @wdk-core/getTransactionReceipt-response
-const encoding41 = {
+const encoding40 = {
   preencode (state, m) {
     state.end++ // max flag is 1 so always one byte
 
@@ -788,48 +785,48 @@ const encoding41 = {
 }
 
 // @wdk-core/generateAndEncrypt-request
-const encoding42 = {
+const encoding41 = {
   preencode (state, m) {
     state.end++ // max flag is 8 so always one byte
 
-    if (m.passkey) c.string.preencode(state, m.passkey)
-    if (m.salt) c.string.preencode(state, m.salt)
-    if (m.seedPhrase) c.string.preencode(state, m.seedPhrase)
-    if (m.derivedKey) c.string.preencode(state, m.derivedKey)
+    if (m.passkey) c.buffer.preencode(state, m.passkey)
+    if (m.salt) c.buffer.preencode(state, m.salt)
+    if (m.seedEntropy) c.buffer.preencode(state, m.seedEntropy)
+    if (m.derivedKey) c.buffer.preencode(state, m.derivedKey)
   },
   encode (state, m) {
     const flags =
       (m.passkey ? 1 : 0) |
       (m.salt ? 2 : 0) |
-      (m.seedPhrase ? 4 : 0) |
+      (m.seedEntropy ? 4 : 0) |
       (m.derivedKey ? 8 : 0)
 
     c.uint.encode(state, flags)
 
-    if (m.passkey) c.string.encode(state, m.passkey)
-    if (m.salt) c.string.encode(state, m.salt)
-    if (m.seedPhrase) c.string.encode(state, m.seedPhrase)
-    if (m.derivedKey) c.string.encode(state, m.derivedKey)
+    if (m.passkey) c.buffer.encode(state, m.passkey)
+    if (m.salt) c.buffer.encode(state, m.salt)
+    if (m.seedEntropy) c.buffer.encode(state, m.seedEntropy)
+    if (m.derivedKey) c.buffer.encode(state, m.derivedKey)
   },
   decode (state) {
     const flags = c.uint.decode(state)
 
     return {
-      passkey: (flags & 1) !== 0 ? c.string.decode(state) : null,
-      salt: (flags & 2) !== 0 ? c.string.decode(state) : null,
-      seedPhrase: (flags & 4) !== 0 ? c.string.decode(state) : null,
-      derivedKey: (flags & 8) !== 0 ? c.string.decode(state) : null
+      passkey: (flags & 1) !== 0 ? c.buffer.decode(state) : null,
+      salt: (flags & 2) !== 0 ? c.buffer.decode(state) : null,
+      seedEntropy: (flags & 4) !== 0 ? c.buffer.decode(state) : null,
+      derivedKey: (flags & 8) !== 0 ? c.buffer.decode(state) : null
     }
   }
 }
 
 // @wdk-core/generateAndEncrypt-response
-const encoding43 = {
+const encoding42 = {
   preencode (state, m) {
     state.end++ // max flag is 2 so always one byte
 
-    if (m.encryptedEntropy) c.string.preencode(state, m.encryptedEntropy)
-    if (m.encryptedSeed) c.string.preencode(state, m.encryptedSeed)
+    if (m.encryptedEntropy) c.buffer.preencode(state, m.encryptedEntropy)
+    if (m.encryptedSeed) c.buffer.preencode(state, m.encryptedSeed)
   },
   encode (state, m) {
     const flags =
@@ -838,28 +835,28 @@ const encoding43 = {
 
     c.uint.encode(state, flags)
 
-    if (m.encryptedEntropy) c.string.encode(state, m.encryptedEntropy)
-    if (m.encryptedSeed) c.string.encode(state, m.encryptedSeed)
+    if (m.encryptedEntropy) c.buffer.encode(state, m.encryptedEntropy)
+    if (m.encryptedSeed) c.buffer.encode(state, m.encryptedSeed)
   },
   decode (state) {
     const flags = c.uint.decode(state)
 
     return {
-      encryptedEntropy: (flags & 1) !== 0 ? c.string.decode(state) : null,
-      encryptedSeed: (flags & 2) !== 0 ? c.string.decode(state) : null
+      encryptedEntropy: (flags & 1) !== 0 ? c.buffer.decode(state) : null,
+      encryptedSeed: (flags & 2) !== 0 ? c.buffer.decode(state) : null
     }
   }
 }
 
 // @wdk-core/decrypt-request
-const encoding44 = {
+const encoding43 = {
   preencode (state, m) {
     state.end++ // max flag is 8 so always one byte
 
-    if (m.passkey) c.string.preencode(state, m.passkey)
-    if (m.salt) c.string.preencode(state, m.salt)
-    if (m.encryptedData) c.string.preencode(state, m.encryptedData)
-    if (m.derivedKey) c.string.preencode(state, m.derivedKey)
+    if (m.passkey) c.buffer.preencode(state, m.passkey)
+    if (m.salt) c.buffer.preencode(state, m.salt)
+    if (m.encryptedData) c.buffer.preencode(state, m.encryptedData)
+    if (m.derivedKey) c.buffer.preencode(state, m.derivedKey)
   },
   encode (state, m) {
     const flags =
@@ -870,48 +867,48 @@ const encoding44 = {
 
     c.uint.encode(state, flags)
 
-    if (m.passkey) c.string.encode(state, m.passkey)
-    if (m.salt) c.string.encode(state, m.salt)
-    if (m.encryptedData) c.string.encode(state, m.encryptedData)
-    if (m.derivedKey) c.string.encode(state, m.derivedKey)
+    if (m.passkey) c.buffer.encode(state, m.passkey)
+    if (m.salt) c.buffer.encode(state, m.salt)
+    if (m.encryptedData) c.buffer.encode(state, m.encryptedData)
+    if (m.derivedKey) c.buffer.encode(state, m.derivedKey)
   },
   decode (state) {
     const flags = c.uint.decode(state)
 
     return {
-      passkey: (flags & 1) !== 0 ? c.string.decode(state) : null,
-      salt: (flags & 2) !== 0 ? c.string.decode(state) : null,
-      encryptedData: (flags & 4) !== 0 ? c.string.decode(state) : null,
-      derivedKey: (flags & 8) !== 0 ? c.string.decode(state) : null
+      passkey: (flags & 1) !== 0 ? c.buffer.decode(state) : null,
+      salt: (flags & 2) !== 0 ? c.buffer.decode(state) : null,
+      encryptedData: (flags & 4) !== 0 ? c.buffer.decode(state) : null,
+      derivedKey: (flags & 8) !== 0 ? c.buffer.decode(state) : null
     }
   }
 }
 
 // @wdk-core/decrypt-response
-const encoding45 = {
+const encoding44 = {
   preencode (state, m) {
     state.end++ // max flag is 1 so always one byte
 
-    if (m.result) c.string.preencode(state, m.result)
+    if (m.result) c.buffer.preencode(state, m.result)
   },
   encode (state, m) {
     const flags = m.result ? 1 : 0
 
     c.uint.encode(state, flags)
 
-    if (m.result) c.string.encode(state, m.result)
+    if (m.result) c.buffer.encode(state, m.result)
   },
   decode (state) {
     const flags = c.uint.decode(state)
 
     return {
-      result: (flags & 1) !== 0 ? c.string.decode(state) : null
+      result: (flags & 1) !== 0 ? c.buffer.decode(state) : null
     }
   }
 }
 
 // @wdk-core/generateSeed-request
-const encoding46 = {
+const encoding45 = {
   preencode (state, m) {
 
   },
@@ -925,7 +922,7 @@ const encoding46 = {
 }
 
 // @wdk-core/generateSeed-response
-const encoding47 = {
+const encoding46 = {
   preencode (state, m) {
     state.end++ // max flag is 1 so always one byte
 
@@ -948,7 +945,7 @@ const encoding47 = {
 }
 
 // @wdk-core/dispose-request
-const encoding48 = encoding46
+const encoding47 = encoding45
 
 function setVersion (v) {
   version = v
@@ -975,53 +972,52 @@ function getEncoding (name) {
   switch (name) {
     case '@wdk-core/log-type-enum': return encoding0
     case '@wdk-core/log-request': return encoding1
-    case '@wdk-core/workletStart-request-encrypted-seed': return encoding2
-    case '@wdk-core/workletStart-request': return encoding3
-    case '@wdk-core/workletStart-response': return encoding4
-    case '@wdk-core/wdkInit-request-encrypted-seed': return encoding5
-    case '@wdk-core/wdkInit-request': return encoding6
-    case '@wdk-core/wdkInit-response': return encoding7
-    case '@wdk-core/getAddress-request': return encoding8
-    case '@wdk-core/getAddress-response': return encoding9
-    case '@wdk-core/getAddressBalance-request': return encoding10
-    case '@wdk-core/getAddressBalance-response': return encoding11
-    case '@wdk-core/quoteSendTransaction-request-options': return encoding12
-    case '@wdk-core/quoteSendTransaction-request': return encoding13
-    case '@wdk-core/quoteSendTransaction-response': return encoding14
-    case '@wdk-core/sendTransaction-request-options': return encoding15
-    case '@wdk-core/sendTransaction-request': return encoding16
-    case '@wdk-core/sendTransaction-response': return encoding17
-    case '@wdk-core/getAbstractedAddress-request': return encoding18
-    case '@wdk-core/getAbstractedAddress-response': return encoding19
-    case '@wdk-core/getAbstractedAddressBalance-request': return encoding20
-    case '@wdk-core/getAbstractedAddressBalance-response': return encoding21
-    case '@wdk-core/getAbstractedAddressTokenBalance-request': return encoding22
-    case '@wdk-core/getAbstractedAddressTokenBalance-response': return encoding23
-    case '@wdk-core/abstractedAccountTransfer-request-options': return encoding24
-    case '@wdk-core/abstractedAccountTransfer-request-config-paymasterToken': return encoding25
-    case '@wdk-core/abstractedAccountTransfer-request-config': return encoding26
-    case '@wdk-core/abstractedAccountTransfer-request': return encoding27
-    case '@wdk-core/abstractedAccountTransfer-response': return encoding28
-    case '@wdk-core/getApproveTransaction-request': return encoding29
-    case '@wdk-core/getApproveTransaction-response': return encoding30
-    case '@wdk-core/abstractedSendTransaction-request-config-paymasterToken': return encoding31
-    case '@wdk-core/abstractedSendTransaction-request-config': return encoding32
-    case '@wdk-core/abstractedSendTransaction-request': return encoding33
-    case '@wdk-core/abstractedSendTransaction-response': return encoding34
-    case '@wdk-core/abstractedAccountQuoteTransfer-request-options': return encoding35
-    case '@wdk-core/abstractedAccountQuoteTransfer-request-config-paymasterToken': return encoding36
-    case '@wdk-core/abstractedAccountQuoteTransfer-request-config': return encoding37
-    case '@wdk-core/abstractedAccountQuoteTransfer-request': return encoding38
-    case '@wdk-core/abstractedAccountQuoteTransfer-response': return encoding39
-    case '@wdk-core/getTransactionReceipt-request': return encoding40
-    case '@wdk-core/getTransactionReceipt-response': return encoding41
-    case '@wdk-core/generateAndEncrypt-request': return encoding42
-    case '@wdk-core/generateAndEncrypt-response': return encoding43
-    case '@wdk-core/decrypt-request': return encoding44
-    case '@wdk-core/decrypt-response': return encoding45
-    case '@wdk-core/generateSeed-request': return encoding46
-    case '@wdk-core/generateSeed-response': return encoding47
-    case '@wdk-core/dispose-request': return encoding48
+    case '@wdk-core/workletStart-request': return encoding2
+    case '@wdk-core/workletStart-response': return encoding3
+    case '@wdk-core/wdkInit-request-encrypted-seed': return encoding4
+    case '@wdk-core/wdkInit-request': return encoding5
+    case '@wdk-core/wdkInit-response': return encoding6
+    case '@wdk-core/getAddress-request': return encoding7
+    case '@wdk-core/getAddress-response': return encoding8
+    case '@wdk-core/getAddressBalance-request': return encoding9
+    case '@wdk-core/getAddressBalance-response': return encoding10
+    case '@wdk-core/quoteSendTransaction-request-options': return encoding11
+    case '@wdk-core/quoteSendTransaction-request': return encoding12
+    case '@wdk-core/quoteSendTransaction-response': return encoding13
+    case '@wdk-core/sendTransaction-request-options': return encoding14
+    case '@wdk-core/sendTransaction-request': return encoding15
+    case '@wdk-core/sendTransaction-response': return encoding16
+    case '@wdk-core/getAbstractedAddress-request': return encoding17
+    case '@wdk-core/getAbstractedAddress-response': return encoding18
+    case '@wdk-core/getAbstractedAddressBalance-request': return encoding19
+    case '@wdk-core/getAbstractedAddressBalance-response': return encoding20
+    case '@wdk-core/getAbstractedAddressTokenBalance-request': return encoding21
+    case '@wdk-core/getAbstractedAddressTokenBalance-response': return encoding22
+    case '@wdk-core/abstractedAccountTransfer-request-options': return encoding23
+    case '@wdk-core/abstractedAccountTransfer-request-config-paymasterToken': return encoding24
+    case '@wdk-core/abstractedAccountTransfer-request-config': return encoding25
+    case '@wdk-core/abstractedAccountTransfer-request': return encoding26
+    case '@wdk-core/abstractedAccountTransfer-response': return encoding27
+    case '@wdk-core/getApproveTransaction-request': return encoding28
+    case '@wdk-core/getApproveTransaction-response': return encoding29
+    case '@wdk-core/abstractedSendTransaction-request-config-paymasterToken': return encoding30
+    case '@wdk-core/abstractedSendTransaction-request-config': return encoding31
+    case '@wdk-core/abstractedSendTransaction-request': return encoding32
+    case '@wdk-core/abstractedSendTransaction-response': return encoding33
+    case '@wdk-core/abstractedAccountQuoteTransfer-request-options': return encoding34
+    case '@wdk-core/abstractedAccountQuoteTransfer-request-config-paymasterToken': return encoding35
+    case '@wdk-core/abstractedAccountQuoteTransfer-request-config': return encoding36
+    case '@wdk-core/abstractedAccountQuoteTransfer-request': return encoding37
+    case '@wdk-core/abstractedAccountQuoteTransfer-response': return encoding38
+    case '@wdk-core/getTransactionReceipt-request': return encoding39
+    case '@wdk-core/getTransactionReceipt-response': return encoding40
+    case '@wdk-core/generateAndEncrypt-request': return encoding41
+    case '@wdk-core/generateAndEncrypt-response': return encoding42
+    case '@wdk-core/decrypt-request': return encoding43
+    case '@wdk-core/decrypt-response': return encoding44
+    case '@wdk-core/generateSeed-request': return encoding45
+    case '@wdk-core/generateSeed-response': return encoding46
+    case '@wdk-core/dispose-request': return encoding47
     default: throw new Error('Encoder not found ' + name)
   }
 }

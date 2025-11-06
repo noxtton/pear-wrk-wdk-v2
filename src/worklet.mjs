@@ -30,7 +30,7 @@ let wdk = null
  *
  * @returns {Promise<{status: string}>} Status object indicating successful start
  * @throws {Error} If decryption fails or WdkManager initialization fails
- * @deprecated
+ * @deprecated use onWdkInit instead
  */
 rpc.onWorkletStart(async (/** @type {WorkletStart} */ init) => {
   try {
@@ -48,9 +48,9 @@ rpc.onWorkletStart(async (/** @type {WorkletStart} */ init) => {
  * @param {string} [WdkInit.seedBuffer] - 64-byte seed buffer in hex format
  * @param {string} [WdkInit.seedPhrase] - 12 or 24 word BIP-39 mnemonic phrase
  * @param {Object} [WdkInit.encryptedSeed] - Encrypted seed payload. New format: { prf, salt, seedBuffer }
- * @param {string} [WdkInit.encryptedSeed.prf] - Passkey/PRF used for decryption
- * @param {string} [WdkInit.encryptedSeed.salt] - Salt used for key derivation (hex string)
- * @param {string} [WdkInit.encryptedSeed.seedBuffer] - Encrypted seed buffer (hex string)
+ * @param {Buffer} [WdkInit.encryptedSeed.passkey] - Passkey/PRF used for decryption
+ * @param {Buffer} [WdkInit.encryptedSeed.salt] - Salt used for key derivation (hex string)
+ * @param {Buffer} [WdkInit.encryptedSeed.seedBuffer] - Encrypted seed buffer (hex string)
  * @property {string} config - JSON string containing WDK configuration
  */
 
@@ -119,17 +119,14 @@ rpc.onGenerateAndEncrypt(async (payload) => {
     if (payload.derivedKey) {
       payload.derivedKey = b4a.from(payload.derivedKey, "hex");
     }
-    payload.salt = b4a.from(payload.salt, "hex");
     const manager = new WdkSecretManager(payload.passkey, payload.salt);
-    const entropy = payload.seedPhrase
-      ? manager.mnemonicToEntropy(payload.seedPhrase)
-      : null;
     const { encryptedSeed, encryptedEntropy } =
-      await manager.generateAndEncrypt(entropy, payload.derivedKey);
+      await manager.generateAndEncrypt(payload.seedEntropy, payload.derivedKey);
     manager.dispose();
+    // Return buffers directly as per schema
     return {
-      encryptedSeed: b4a.toString(encryptedSeed, "hex"),
-      encryptedEntropy: b4a.toString(encryptedEntropy, "hex"),
+      encryptedSeed,
+      encryptedEntropy,
     };
   } catch (e) {
     throw new Error(`${e.message}: ${e.stack}`);
@@ -138,24 +135,18 @@ rpc.onGenerateAndEncrypt(async (payload) => {
 
 rpc.onDecrypt(async (payload) => {
   try {
-    if (payload.derivedKey) {
-      payload.derivedKey = b4a.from(payload.derivedKey, "hex");
-    }
-    payload.salt = b4a.from(payload.salt, "hex");
     const manager = new WdkSecretManager(
-      payload.passkey,
-      b4a.from(payload.salt, "hex")
+      payload.passkey, payload.salt
     );
     const decryptedData = manager.decrypt(
-      b4a.from(payload.encryptedData, "hex"),
+      payload.encryptedData,
       payload.derivedKey
     );
     manager.dispose();
     return {
-      result: b4a.toString(decryptedData, "hex"),
+      result: decryptedData,
     };
   } catch (e) {
-    console.error(e.message);
     return {
       result: null,
     };

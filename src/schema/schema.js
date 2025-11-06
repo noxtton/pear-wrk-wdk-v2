@@ -47,9 +47,9 @@ schemaNs.register({
 schemaNs.register({
   name: 'wdkInit-request-encrypted-seed',
   fields: [
-    { name: 'seedBuffer', type: 'string', required: true },
-    { name: 'salt', type: 'string', required: true },
-    { name: 'prf', type: 'string', required: true },
+    { name: 'seedBuffer', type: 'buffer', required: true },
+    { name: 'salt', type: 'buffer', required: true },
+    { name: 'passkey', type: 'buffer', required: true },
   ]
 })
 schemaNs.register({
@@ -57,7 +57,7 @@ schemaNs.register({
   fields: [
     { name: 'enableDebugLogs', type: 'uint', required: false },
     { name: 'seedPhrase', type: 'string', required: false },
-    { name: 'seedBuffer', type: 'string', required: false },
+    { name: 'seedBuffer', type: 'buffer', required: false },
     { name: 'encryptedSeed', type: '@wdk-core/wdkInit-request-encrypted-seed', required: false },
     { name: 'config', type: 'string', required: true }
   ]
@@ -379,18 +379,18 @@ schemaNs.register({
 schemaNs.register({
 	name: 'generateAndEncrypt-request',
 	fields: [
-		{ name: 'passkey', type: 'string' },
-		{ name: 'salt', type: 'string' },
-		{ name: 'seedPhrase', type: 'string', required: false },
-		{ name: 'derivedKey', type: 'string', required: false },
+		{ name: 'passkey', type: 'buffer' },
+		{ name: 'salt', type: 'buffer' },
+		{ name: 'seedEntropy', type: 'buffer', required: false },
+		{ name: 'derivedKey', type: 'buffer', required: false },
 	],
 });
 
 schemaNs.register({
 	name: 'generateAndEncrypt-response',
 	fields: [
-		{ name: 'encryptedEntropy', type: 'string' },
-		{ name: 'encryptedSeed', type: 'string' },
+		{ name: 'encryptedEntropy', type: 'buffer' },
+		{ name: 'encryptedSeed', type: 'buffer' },
 	],
 });
 
@@ -402,16 +402,16 @@ schemaNs.register({
 schemaNs.register({
 	name: 'decrypt-request',
 	fields: [
-		{ name: 'passkey', type: 'string' },
-		{ name: 'salt', type: 'string' },
-		{ name: 'encryptedData', type: 'string' },
-		{ name: 'derivedKey', type: 'string', required: false },
+		{ name: 'passkey', type: 'buffer' },
+		{ name: 'salt', type: 'buffer' },
+		{ name: 'encryptedData', type: 'buffer' },
+		{ name: 'derivedKey', type: 'buffer', required: false },
 	],
 });
 
-schemaNs.register({
+	schemaNs.register({
 	name: 'decrypt-response',
-	fields: [{ name: 'result', type: 'string' }],
+	fields: [{ name: 'result', type: 'buffer' }],
 });
 
 

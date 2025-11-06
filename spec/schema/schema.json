@@ -39,32 +39,6 @@
       ]
     },
     {
-      "name": "workletStart-request-encrypted-seed",
-      "namespace": "wdk-core",
-      "compact": false,
-      "flagsPosition": -1,
-      "fields": [
-        {
-          "name": "seedBuffer",
-          "required": true,
-          "type": "string",
-          "version": 1
-        },
-        {
-          "name": "salt",
-          "required": true,
-          "type": "string",
-          "version": 1
-        },
-        {
-          "name": "prf",
-          "required": true,
-          "type": "string",
-          "version": 1
-        }
-      ]
-    },
-    {
       "name": "workletStart-request",
       "namespace": "wdk-core",
       "compact": false,
@@ -118,19 +92,19 @@
         {
           "name": "seedBuffer",
           "required": true,
-          "type": "string",
+          "type": "buffer",
           "version": 1
         },
         {
           "name": "salt",
           "required": true,
-          "type": "string",
+          "type": "buffer",
           "version": 1
         },
         {
-          "name": "prf",
+          "name": "passkey",
           "required": true,
-          "type": "string",
+          "type": "buffer",
           "version": 1
         }
       ]
@@ -156,7 +130,7 @@
         {
           "name": "seedBuffer",
           "required": false,
-          "type": "string",
+          "type": "buffer",
           "version": 1
         },
         {
@@ -860,24 +834,24 @@
       "fields": [
         {
           "name": "passkey",
-          "type": "string",
+          "type": "buffer",
           "version": 1
         },
         {
           "name": "salt",
-          "type": "string",
+          "type": "buffer",
           "version": 1
         },
         {
-          "name": "seedPhrase",
+          "name": "seedEntropy",
           "required": false,
-          "type": "string",
+          "type": "buffer",
           "version": 1
         },
         {
           "name": "derivedKey",
           "required": false,
-          "type": "string",
+          "type": "buffer",
           "version": 1
         }
       ]
@@ -890,12 +864,12 @@
       "fields": [
         {
           "name": "encryptedEntropy",
-          "type": "string",
+          "type": "buffer",
           "version": 1
         },
         {
           "name": "encryptedSeed",
-          "type": "string",
+          "type": "buffer",
           "version": 1
         }
       ]
@@ -908,23 +882,23 @@
       "fields": [
         {
           "name": "passkey",
-          "type": "string",
+          "type": "buffer",
           "version": 1
         },
         {
           "name": "salt",
-          "type": "string",
+          "type": "buffer",
           "version": 1
         },
         {
           "name": "encryptedData",
-          "type": "string",
+          "type": "buffer",
           "version": 1
         },
         {
           "name": "derivedKey",
           "required": false,
-          "type": "string",
+          "type": "buffer",
           "version": 1
         }
       ]
@@ -937,7 +911,7 @@
       "fields": [
         {
           "name": "result",
-          "type": "string",
+          "type": "buffer",
           "version": 1
         }
       ]
