@@ -1,6 +1,7 @@
 import b4a from 'b4a'
 import bip39 from 'bip39'
 import {WdkSecretManager} from "@tetherto/wdk-secret-manager";
+import {sodium_memzero} from "sodium-native";
 
 /**
  * Get a seed buffer from one of the provided sources.
@@ -36,25 +37,11 @@ export async function getSeedBuffer(options = {}) {
       if (!(enc.seedBuffer instanceof Uint8Array)) throw new Error('encryptedSeed.seedBuffer must be a hex string or Uint8Array')
       seedBuffer = secretManager.decrypt(enc.seedBuffer);
       secretManager.dispose();
+      sodium_memzero(options.encryptedSeed.seedBuffer);
     } else {
       throw new Error('encryptedSeed parameter must be an object');
     }
   }
   if (seedBuffer) return seedBuffer;
   throw new Error('One of the following parameters must be provided: seedBuffer, seedPhrase, or encryptedSeed');
-}
-
-export function disposeWdkInitParams(options = {}) {
-  if (!options) return;
-
-  for (const key of Object.keys(options)) {
-    if (key === 'config' || key === 'enableDebugLogs') continue
-    if (Object.prototype.toString.call(options[key]) === '[object Object]') {
-      for (const subKey of Object.keys(options[key])) {
-        options[key][subKey] = undefined;
-      }
-    } else {
-      options[key] = undefined;
-    }
-  }
 }

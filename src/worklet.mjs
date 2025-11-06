@@ -5,7 +5,7 @@ import { stringifyError } from './exceptions/rpc-exception.js'
 import b4a from 'b4a'
 import bip39 from "bip39";
 import {WdkSecretManager} from "@tetherto/wdk-secret-manager";
-import {disposeWdkInitParams, getSeedBuffer} from "./lib/seed-buffer.js";
+import {getSeedBuffer} from "./lib/seed-buffer.js";
 
 
 // eslint-disable-next-line no-undef
@@ -36,7 +36,6 @@ rpc.onWorkletStart(async (/** @type {WorkletStart} */ init) => {
   try {
     if (wdk) wdk.dispose(); // cleanup existing;
       wdk = new WdkManager(init.seedPhrase, JSON.parse(init.config))
-      disposeWdkInitParams(init)
       return { status: 'started' }
   } catch (error) {
     throw new Error(stringifyError(error));
@@ -63,7 +62,6 @@ rpc.onWdkInit(async (/** @type {WdkInit} */ init) => {
     try {
         if (wdk) wdk.dispose(); // cleanup existing;
         wdk = new WdkManager(await getSeedBuffer(init), JSON.parse(init.config));
-        disposeWdkInitParams(init);
         return { status: "started" };
     } catch (error) {
         throw new Error(stringifyError(error));
@@ -116,9 +114,6 @@ rpc.onSendTransaction(async payload => {
 
 rpc.onGenerateAndEncrypt(async (payload) => {
   try {
-    if (payload.derivedKey) {
-      payload.derivedKey = b4a.from(payload.derivedKey, "hex");
-    }
     const manager = new WdkSecretManager(payload.passkey, payload.salt);
     const { encryptedSeed, encryptedEntropy } =
       await manager.generateAndEncrypt(payload.seedEntropy, payload.derivedKey);
@@ -147,9 +142,7 @@ rpc.onDecrypt(async (payload) => {
       result: decryptedData,
     };
   } catch (e) {
-    return {
-      result: null,
-    };
+      throw new Error(`${e.message}: ${e.stack}`);
   }
 });
 
