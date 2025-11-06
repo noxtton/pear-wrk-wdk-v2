@@ -1,5 +1,4 @@
 import fs from 'fs'
-import path from 'path'
 
 const HRPC_PATH = './spec/hrpc/hrpc.json'
 const SCHEMA_PATH = './spec/schema/schema.json'

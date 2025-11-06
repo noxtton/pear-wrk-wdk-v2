@@ -2,11 +2,9 @@ import HRPC from '../spec/hrpc'
 
 import WdkManager from './wdk-core/wdk-manager.js'
 import { stringifyError } from './exceptions/rpc-exception.js'
-import b4a from 'b4a'
-import bip39 from "bip39";
-import {WdkSecretManager} from "@tetherto/wdk-secret-manager";
-import {getSeedBuffer} from "./lib/seed-buffer.js";
-
+import bip39 from 'bip39'
+import { WdkSecretManager } from '@tetherto/wdk-secret-manager'
+import { getSeedBuffer } from './lib/seed-buffer.js'
 
 // eslint-disable-next-line no-undef
 const { IPC } = BareKit
@@ -17,7 +15,6 @@ const rpc = new HRPC(IPC)
  * @type {WdkManager}
  */
 let wdk = null
-
 
 /**
  * @typedef {Object} WorkletStart
@@ -34,13 +31,13 @@ let wdk = null
  */
 rpc.onWorkletStart(async (/** @type {WorkletStart} */ init) => {
   try {
-    if (wdk) wdk.dispose(); // cleanup existing;
-      wdk = new WdkManager(init.seedPhrase, JSON.parse(init.config))
-      return { status: 'started' }
+    if (wdk) wdk.dispose() // cleanup existing;
+    wdk = new WdkManager(init.seedPhrase, JSON.parse(init.config))
+    return { status: 'started' }
   } catch (error) {
-    throw new Error(stringifyError(error));
+    throw new Error(stringifyError(error))
   }
-});
+})
 
 /**
  * @typedef {Object} WdkInit
@@ -59,14 +56,14 @@ rpc.onWorkletStart(async (/** @type {WorkletStart} */ init) => {
  * @throws {Error} If decryption fails or WdkManager initialization fails
  */
 rpc.onWdkInit(async (/** @type {WdkInit} */ init) => {
-    try {
-        if (wdk) wdk.dispose(); // cleanup existing;
-        wdk = new WdkManager(await getSeedBuffer(init), JSON.parse(init.config));
-        return { status: "started" };
-    } catch (error) {
-        throw new Error(stringifyError(error));
-    }
-});
+  try {
+    if (wdk) wdk.dispose() // cleanup existing;
+    wdk = new WdkManager(await getSeedBuffer(init), JSON.parse(init.config))
+    return { status: 'started' }
+  } catch (error) {
+    throw new Error(stringifyError(error))
+  }
+})
 
 rpc.onGetAddress(async payload => {
   try {
@@ -114,47 +111,47 @@ rpc.onSendTransaction(async payload => {
 
 rpc.onGenerateAndEncrypt(async (payload) => {
   try {
-    const manager = new WdkSecretManager(payload.passkey, payload.salt);
+    const manager = new WdkSecretManager(payload.passkey, payload.salt)
     const { encryptedSeed, encryptedEntropy } =
-      await manager.generateAndEncrypt(payload.seedEntropy, payload.derivedKey);
-    manager.dispose();
+      await manager.generateAndEncrypt(payload.seedEntropy, payload.derivedKey)
+    manager.dispose()
     // Return buffers directly as per schema
     return {
       encryptedSeed,
-      encryptedEntropy,
-    };
+      encryptedEntropy
+    }
   } catch (e) {
-    throw new Error(`${e.message}: ${e.stack}`);
+    throw new Error(`${e.message}: ${e.stack}`)
   }
-});
+})
 
 rpc.onDecrypt(async (payload) => {
   try {
     const manager = new WdkSecretManager(
       payload.passkey, payload.salt
-    );
+    )
     const decryptedData = manager.decrypt(
       payload.encryptedData,
       payload.derivedKey
-    );
-    manager.dispose();
+    )
+    manager.dispose()
     return {
-      result: decryptedData,
-    };
+      result: decryptedData
+    }
   } catch (e) {
-      throw new Error(`${e.message}: ${e.stack}`);
+    throw new Error(`${e.message}: ${e.stack}`)
   }
-});
+})
 
 rpc.onGenerateSeed(async () => {
   try {
     return {
-      mnemonic: bip39.generateMnemonic(),
-    };
+      mnemonic: bip39.generateMnemonic()
+    }
   } catch (e) {
-    throw new Error(`${e.message}: ${e.stack}`);
+    throw new Error(`${e.message}: ${e.stack}`)
   }
-});
+})
 
 /*****************
  *

@@ -49,7 +49,7 @@ schemaNs.register({
   fields: [
     { name: 'seedBuffer', type: 'buffer', required: true },
     { name: 'salt', type: 'buffer', required: true },
-    { name: 'passkey', type: 'buffer', required: true },
+    { name: 'passkey', type: 'buffer', required: true }
   ]
 })
 schemaNs.register({
@@ -370,64 +370,60 @@ schemaNs.register({
   ]
 })
 
-
-
 /**
  * GenerateAndEncrypt
  */
 
 schemaNs.register({
-	name: 'generateAndEncrypt-request',
-	fields: [
-		{ name: 'passkey', type: 'buffer' },
-		{ name: 'salt', type: 'buffer' },
-		{ name: 'seedEntropy', type: 'buffer', required: false },
-		{ name: 'derivedKey', type: 'buffer', required: false },
-	],
-});
+  name: 'generateAndEncrypt-request',
+  fields: [
+    { name: 'passkey', type: 'buffer' },
+    { name: 'salt', type: 'buffer' },
+    { name: 'seedEntropy', type: 'buffer', required: false },
+    { name: 'derivedKey', type: 'buffer', required: false }
+  ]
+})
 
 schemaNs.register({
-	name: 'generateAndEncrypt-response',
-	fields: [
-		{ name: 'encryptedEntropy', type: 'buffer' },
-		{ name: 'encryptedSeed', type: 'buffer' },
-	],
-});
-
+  name: 'generateAndEncrypt-response',
+  fields: [
+    { name: 'encryptedEntropy', type: 'buffer' },
+    { name: 'encryptedSeed', type: 'buffer' }
+  ]
+})
 
 /**
  * Decrypt
  */
 
 schemaNs.register({
-	name: 'decrypt-request',
-	fields: [
-		{ name: 'passkey', type: 'buffer' },
-		{ name: 'salt', type: 'buffer' },
-		{ name: 'encryptedData', type: 'buffer' },
-		{ name: 'derivedKey', type: 'buffer', required: false },
-	],
-});
+  name: 'decrypt-request',
+  fields: [
+    { name: 'passkey', type: 'buffer' },
+    { name: 'salt', type: 'buffer' },
+    { name: 'encryptedData', type: 'buffer' },
+    { name: 'derivedKey', type: 'buffer', required: false }
+  ]
+})
 
-	schemaNs.register({
-	name: 'decrypt-response',
-	fields: [{ name: 'result', type: 'buffer' }],
-});
-
+schemaNs.register({
+  name: 'decrypt-response',
+  fields: [{ name: 'result', type: 'buffer' }]
+})
 
 /**
  * Generate Seed
  */
 
 schemaNs.register({
-	name: 'generateSeed-request',
-	fields: [],
-});
+  name: 'generateSeed-request',
+  fields: []
+})
 
 schemaNs.register({
-	name: 'generateSeed-response',
-	fields: [{ name: 'mnemonic', type: 'string' }],
-});
+  name: 'generateSeed-response',
+  fields: [{ name: 'mnemonic', type: 'string' }]
+})
 
 /**
  * Dispose
@@ -534,21 +530,21 @@ ns.register({
 })
 
 ns.register({
-	name: 'generateAndEncrypt',
-	request: { name: '@wdk-core/generateAndEncrypt-request', stream: false },
-	response: { name: '@wdk-core/generateAndEncrypt-response', stream: false },
-});
+  name: 'generateAndEncrypt',
+  request: { name: '@wdk-core/generateAndEncrypt-request', stream: false },
+  response: { name: '@wdk-core/generateAndEncrypt-response', stream: false }
+})
 
 ns.register({
-	name: 'decrypt',
-	request: { name: '@wdk-core/decrypt-request', stream: false },
-	response: { name: '@wdk-core/decrypt-response', stream: false },
-});
+  name: 'decrypt',
+  request: { name: '@wdk-core/decrypt-request', stream: false },
+  response: { name: '@wdk-core/decrypt-response', stream: false }
+})
 
 ns.register({
-	name: 'generateSeed',
-	request: { name: '@wdk-core/generateSeed-request', stream: false },
-	response: { name: '@wdk-core/generateSeed-response', stream: false },
-});
+  name: 'generateSeed',
+  request: { name: '@wdk-core/generateSeed-request', stream: false },
+  response: { name: '@wdk-core/generateSeed-response', stream: false }
+})
 // Save interface to disk
 ESMHRPC.toDisk(builder)
