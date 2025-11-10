@@ -29,7 +29,7 @@ schemaNs.register({
   fields: [
     { name: 'enableDebugLogs', type: 'uint', required: false },
     { name: 'seedPhrase', type: 'string', required: false },
-    { name: 'seedBuffer', type: 'string', required: false },
+    { name: 'seedBuffer', type: 'buffer', required: false },
     { name: 'config', type: 'string', required: true }
   ]
 })

@@ -65,7 +65,7 @@ const encoding2 = {
 
     if (m.enableDebugLogs) c.uint.preencode(state, m.enableDebugLogs)
     if (m.seedPhrase) c.string.preencode(state, m.seedPhrase)
-    if (m.seedBuffer) c.string.preencode(state, m.seedBuffer)
+    if (m.seedBuffer) c.buffer.preencode(state, m.seedBuffer)
     c.string.preencode(state, m.config)
   },
   encode (state, m) {
@@ -78,7 +78,7 @@ const encoding2 = {
 
     if (m.enableDebugLogs) c.uint.encode(state, m.enableDebugLogs)
     if (m.seedPhrase) c.string.encode(state, m.seedPhrase)
-    if (m.seedBuffer) c.string.encode(state, m.seedBuffer)
+    if (m.seedBuffer) c.buffer.encode(state, m.seedBuffer)
     c.string.encode(state, m.config)
   },
   decode (state) {
@@ -87,7 +87,7 @@ const encoding2 = {
     return {
       enableDebugLogs: (flags & 1) !== 0 ? c.uint.decode(state) : 0,
       seedPhrase: (flags & 2) !== 0 ? c.string.decode(state) : null,
-      seedBuffer: (flags & 4) !== 0 ? c.string.decode(state) : null,
+      seedBuffer: (flags & 4) !== 0 ? c.buffer.decode(state) : null,
       config: c.string.decode(state)
     }
   }
