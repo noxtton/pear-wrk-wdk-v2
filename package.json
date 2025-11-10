@@ -14,7 +14,6 @@
   },
   "dependencies": {
     "@tetherto/wdk-wallet-evm-erc-4337": "1.0.0-beta.1",
-    "@tetherto/wdk-wallet-ton": "1.0.0-beta.3",
     "@wdk/bare-ethers": "https://github.com/noxtton/wdk-bare-ethers-internal#07dfa4190f90aef6fcfca4abe60aa8ca07e78ba0",
     "@wdk/wallet": "https://github.com/tetherto/wdk-wallet#ee0f6046b6128d0a096f18cc6ca7845ca4cedb12",
     "@wdk/wallet-btc": "https://github.com/tetherto/wdk-wallet-btc#ed35de0b49344bb07736fc296a28b8465a8e8a6e",

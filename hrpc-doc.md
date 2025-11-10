@@ -19,7 +19,7 @@
 
 - `enableDebugLogs`: `uint` _(optional)_ _(v1)_
 - `seedPhrase`: `string` _(optional)_ _(v1)_
-- `seedBuffer`: `string` _(optional)_ _(v1)_
+- `seedBuffer`: `buffer` _(optional)_ _(v1)_
 - `config`: `string` _(v1)_
 
 **Response:** `@wdk-core/workletStart-response`
