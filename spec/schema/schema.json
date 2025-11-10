@@ -59,7 +59,7 @@
         {
           "name": "seedBuffer",
           "required": false,
-          "type": "string",
+          "type": "buffer",
           "version": 1
         },
         {
