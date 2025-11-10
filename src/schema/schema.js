@@ -210,7 +210,8 @@ schemaNs.register({
 schemaNs.register({
   name: 'abstractedAccountTransfer-request-config',
   fields: [
-    { name: 'paymasterToken', type: '@wdk-core/abstractedAccountTransfer-request-config-paymasterToken', required: false }
+    { name: 'paymasterToken', type: '@wdk-core/abstractedAccountTransfer-request-config-paymasterToken', required: false },
+    { name: 'transferMaxFee', type: 'string', required: false },
   ]
 })
 schemaNs.register({
