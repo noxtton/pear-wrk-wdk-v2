@@ -100,6 +100,11 @@ rpc.onGetAbstractedAddressTokenBalance(async payload => {
 rpc.onAbstractedAccountTransfer(async payload => {
   try {
     payload.options.amount = Number(payload.options.amount)
+    if (payload.config?.transferMaxFee) {
+        payload.config.transferMaxFee = Number(payload.config?.transferMaxFee)
+    } else {
+        delete payload.config?.transferMaxFee
+    }
     const transfer = await wdk.abstractedAccountTransfer(payload.network, payload.accountIndex, payload.options, payload.config)
     return { fee: transfer.fee.toString(), hash: transfer.hash }
   } catch (error) {
