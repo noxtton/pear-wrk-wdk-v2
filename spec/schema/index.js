@@ -65,7 +65,7 @@ const encoding2 = {
 
     if (m.enableDebugLogs) c.uint.preencode(state, m.enableDebugLogs)
     if (m.seedPhrase) c.string.preencode(state, m.seedPhrase)
-    if (m.seedBuffer) c.string.preencode(state, m.seedBuffer)
+    if (m.seedBuffer) c.buffer.preencode(state, m.seedBuffer)
     c.string.preencode(state, m.config)
   },
   encode (state, m) {
@@ -78,7 +78,7 @@ const encoding2 = {
 
     if (m.enableDebugLogs) c.uint.encode(state, m.enableDebugLogs)
     if (m.seedPhrase) c.string.encode(state, m.seedPhrase)
-    if (m.seedBuffer) c.string.encode(state, m.seedBuffer)
+    if (m.seedBuffer) c.buffer.encode(state, m.seedBuffer)
     c.string.encode(state, m.config)
   },
   decode (state) {
@@ -87,7 +87,7 @@ const encoding2 = {
     return {
       enableDebugLogs: (flags & 1) !== 0 ? c.uint.decode(state) : 0,
       seedPhrase: (flags & 2) !== 0 ? c.string.decode(state) : null,
-      seedBuffer: (flags & 4) !== 0 ? c.string.decode(state) : null,
+      seedBuffer: (flags & 4) !== 0 ? c.buffer.decode(state) : null,
       config: c.string.decode(state)
     }
   }
@@ -475,22 +475,27 @@ const encoding25_0 = c.frame(encoding24)
 // @wdk-core/abstractedAccountTransfer-request-config
 const encoding25 = {
   preencode (state, m) {
-    state.end++ // max flag is 1 so always one byte
+    state.end++ // max flag is 2 so always one byte
 
     if (m.paymasterToken) encoding25_0.preencode(state, m.paymasterToken)
+    if (m.transferMaxFee) c.string.preencode(state, m.transferMaxFee)
   },
   encode (state, m) {
-    const flags = m.paymasterToken ? 1 : 0
+    const flags =
+      (m.paymasterToken ? 1 : 0) |
+      (m.transferMaxFee ? 2 : 0)
 
     c.uint.encode(state, flags)
 
     if (m.paymasterToken) encoding25_0.encode(state, m.paymasterToken)
+    if (m.transferMaxFee) c.string.encode(state, m.transferMaxFee)
   },
   decode (state) {
     const flags = c.uint.decode(state)
 
     return {
-      paymasterToken: (flags & 1) !== 0 ? encoding25_0.decode(state) : null
+      paymasterToken: (flags & 1) !== 0 ? encoding25_0.decode(state) : null,
+      transferMaxFee: (flags & 2) !== 0 ? c.string.decode(state) : null
     }
   }
 }

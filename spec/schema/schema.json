@@ -1,5 +1,5 @@
 {
-  "version": 2,
+  "version": 1,
   "schema": [
     {
       "name": "log-type-enum",
@@ -510,7 +510,7 @@
           "name": "transferMaxFee",
           "required": false,
           "type": "string",
-          "version": 2
+          "version": 1
         }
       ]
     },

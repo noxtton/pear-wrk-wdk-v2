@@ -195,7 +195,7 @@
 - `config`: `object` _(optional)_ _(v1)_
   - `paymasterToken`: `object` _(optional)_ _(v1)_
     - `address`: `string` _(v1)_
-  - `transferMaxFee`: `string` _(optional)_ _(v2)_
+  - `transferMaxFee`: `string` _(optional)_ _(v1)_
 
 **Response:** `@wdk-core/abstractedAccountTransfer-response`
 
