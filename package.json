@@ -13,6 +13,7 @@
     "postinstall": "npm run gen:bundle"
   },
   "dependencies": {
+    "@tetherto/wdk-secret-manager": "1.0.0-beta.3",
     "@tetherto/wdk-wallet-evm-erc-4337": "1.0.0-beta.1",
     "@wdk/bare-ethers": "https://github.com/noxtton/wdk-bare-ethers-internal#07dfa4190f90aef6fcfca4abe60aa8ca07e78ba0",
     "@wdk/wallet": "https://github.com/tetherto/wdk-wallet#ee0f6046b6128d0a096f18cc6ca7845ca4cedb12",
@@ -23,11 +24,15 @@
     "@wdk/wallet-tron-gasfree": "https://github.com/tetherto/wdk-wallet-tron-gasfree#fd57ed375801ae281e98c6882ea0f2ad4c2b30f5",
     "@tetherto/wdk-wallet-ton": "1.0.0-beta.3",
     "@tetherto/wdk-wallet-ton-gasless": "1.0.0-beta.2",
+    "b4a": "^1.7.3",
     "bare-ipc": "1.1.1",
+    "bip39": "^3.1.0",
+    "crypto": "npm:bare-crypto@1.12.0",
     "encoding": "npm:bare-encoding@1.0.0",
     "hrpc": "4.0.1",
     "hyperschema": "1.12.4",
-    "os": "npm:bare-os@3.6.1"
+    "os": "npm:bare-os@3.6.1",
+    "sodium-native": "5.0.9"
   },
   "devDependencies": {
     "rimraf": "6.0.1",

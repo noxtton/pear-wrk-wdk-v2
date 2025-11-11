@@ -9,32 +9,40 @@ const methods = new Map([
   [0, '@wdk-core/log'],
   ['@wdk-core/workletStart', 1],
   [1, '@wdk-core/workletStart'],
-  ['@wdk-core/getAddress', 2],
-  [2, '@wdk-core/getAddress'],
-  ['@wdk-core/getAddressBalance', 3],
-  [3, '@wdk-core/getAddressBalance'],
-  ['@wdk-core/quoteSendTransaction', 4],
-  [4, '@wdk-core/quoteSendTransaction'],
-  ['@wdk-core/sendTransaction', 5],
-  [5, '@wdk-core/sendTransaction'],
-  ['@wdk-core/getAbstractedAddress', 6],
-  [6, '@wdk-core/getAbstractedAddress'],
-  ['@wdk-core/getAbstractedAddressBalance', 7],
-  [7, '@wdk-core/getAbstractedAddressBalance'],
-  ['@wdk-core/getAbstractedAddressTokenBalance', 8],
-  [8, '@wdk-core/getAbstractedAddressTokenBalance'],
-  ['@wdk-core/abstractedAccountTransfer', 9],
-  [9, '@wdk-core/abstractedAccountTransfer'],
-  ['@wdk-core/getApproveTransaction', 10],
-  [10, '@wdk-core/getApproveTransaction'],
-  ['@wdk-core/abstractedSendTransaction', 11],
-  [11, '@wdk-core/abstractedSendTransaction'],
-  ['@wdk-core/abstractedAccountQuoteTransfer', 12],
-  [12, '@wdk-core/abstractedAccountQuoteTransfer'],
-  ['@wdk-core/getTransactionReceipt', 13],
-  [13, '@wdk-core/getTransactionReceipt'],
-  ['@wdk-core/dispose', 14],
-  [14, '@wdk-core/dispose']
+  ['@wdk-core/wdkInit', 2],
+  [2, '@wdk-core/wdkInit'],
+  ['@wdk-core/getAddress', 3],
+  [3, '@wdk-core/getAddress'],
+  ['@wdk-core/getAddressBalance', 4],
+  [4, '@wdk-core/getAddressBalance'],
+  ['@wdk-core/quoteSendTransaction', 5],
+  [5, '@wdk-core/quoteSendTransaction'],
+  ['@wdk-core/sendTransaction', 6],
+  [6, '@wdk-core/sendTransaction'],
+  ['@wdk-core/getAbstractedAddress', 7],
+  [7, '@wdk-core/getAbstractedAddress'],
+  ['@wdk-core/getAbstractedAddressBalance', 8],
+  [8, '@wdk-core/getAbstractedAddressBalance'],
+  ['@wdk-core/getAbstractedAddressTokenBalance', 9],
+  [9, '@wdk-core/getAbstractedAddressTokenBalance'],
+  ['@wdk-core/abstractedAccountTransfer', 10],
+  [10, '@wdk-core/abstractedAccountTransfer'],
+  ['@wdk-core/getApproveTransaction', 11],
+  [11, '@wdk-core/getApproveTransaction'],
+  ['@wdk-core/abstractedSendTransaction', 12],
+  [12, '@wdk-core/abstractedSendTransaction'],
+  ['@wdk-core/abstractedAccountQuoteTransfer', 13],
+  [13, '@wdk-core/abstractedAccountQuoteTransfer'],
+  ['@wdk-core/getTransactionReceipt', 14],
+  [14, '@wdk-core/getTransactionReceipt'],
+  ['@wdk-core/dispose', 15],
+  [15, '@wdk-core/dispose'],
+  ['@wdk-core/generateAndEncrypt', 16],
+  [16, '@wdk-core/generateAndEncrypt'],
+  ['@wdk-core/decrypt', 17],
+  [17, '@wdk-core/decrypt'],
+  ['@wdk-core/generateSeed', 18],
+  [18, '@wdk-core/generateSeed']
 ])
 
 class HRPC {
@@ -44,6 +52,7 @@ class HRPC {
     this._requestEncodings = new Map([
       ['@wdk-core/log', getEncoding('@wdk-core/log-request')],
       ['@wdk-core/workletStart', getEncoding('@wdk-core/workletStart-request')],
+      ['@wdk-core/wdkInit', getEncoding('@wdk-core/wdkInit-request')],
       ['@wdk-core/getAddress', getEncoding('@wdk-core/getAddress-request')],
       ['@wdk-core/getAddressBalance', getEncoding('@wdk-core/getAddressBalance-request')],
       ['@wdk-core/quoteSendTransaction', getEncoding('@wdk-core/quoteSendTransaction-request')],
@@ -56,10 +65,14 @@ class HRPC {
       ['@wdk-core/abstractedSendTransaction', getEncoding('@wdk-core/abstractedSendTransaction-request')],
       ['@wdk-core/abstractedAccountQuoteTransfer', getEncoding('@wdk-core/abstractedAccountQuoteTransfer-request')],
       ['@wdk-core/getTransactionReceipt', getEncoding('@wdk-core/getTransactionReceipt-request')],
-      ['@wdk-core/dispose', getEncoding('@wdk-core/dispose-request')]
+      ['@wdk-core/dispose', getEncoding('@wdk-core/dispose-request')],
+      ['@wdk-core/generateAndEncrypt', getEncoding('@wdk-core/generateAndEncrypt-request')],
+      ['@wdk-core/decrypt', getEncoding('@wdk-core/decrypt-request')],
+      ['@wdk-core/generateSeed', getEncoding('@wdk-core/generateSeed-request')]
     ])
     this._responseEncodings = new Map([
       ['@wdk-core/workletStart', getEncoding('@wdk-core/workletStart-response')],
+      ['@wdk-core/wdkInit', getEncoding('@wdk-core/wdkInit-response')],
       ['@wdk-core/getAddress', getEncoding('@wdk-core/getAddress-response')],
       ['@wdk-core/getAddressBalance', getEncoding('@wdk-core/getAddressBalance-response')],
       ['@wdk-core/quoteSendTransaction', getEncoding('@wdk-core/quoteSendTransaction-response')],
@@ -71,7 +84,10 @@ class HRPC {
       ['@wdk-core/getApproveTransaction', getEncoding('@wdk-core/getApproveTransaction-response')],
       ['@wdk-core/abstractedSendTransaction', getEncoding('@wdk-core/abstractedSendTransaction-response')],
       ['@wdk-core/abstractedAccountQuoteTransfer', getEncoding('@wdk-core/abstractedAccountQuoteTransfer-response')],
-      ['@wdk-core/getTransactionReceipt', getEncoding('@wdk-core/getTransactionReceipt-response')]
+      ['@wdk-core/getTransactionReceipt', getEncoding('@wdk-core/getTransactionReceipt-response')],
+      ['@wdk-core/generateAndEncrypt', getEncoding('@wdk-core/generateAndEncrypt-response')],
+      ['@wdk-core/decrypt', getEncoding('@wdk-core/decrypt-response')],
+      ['@wdk-core/generateSeed', getEncoding('@wdk-core/generateSeed-response')]
     ])
     this._rpc = new RPC(stream, async (req) => {
       const command = methods.get(req.command)
@@ -143,6 +159,10 @@ class HRPC {
     return this._call('@wdk-core/workletStart', args)
   }
 
+  async wdkInit (args) {
+    return this._call('@wdk-core/wdkInit', args)
+  }
+
   async getAddress (args) {
     return this._call('@wdk-core/getAddress', args)
   }
@@ -195,12 +215,28 @@ class HRPC {
     return this._callSync('@wdk-core/dispose', args)
   }
 
+  async generateAndEncrypt (args) {
+    return this._call('@wdk-core/generateAndEncrypt', args)
+  }
+
+  async decrypt (args) {
+    return this._call('@wdk-core/decrypt', args)
+  }
+
+  async generateSeed (args) {
+    return this._call('@wdk-core/generateSeed', args)
+  }
+
   onLog (responseFn) {
     this._handlers['@wdk-core/log'] = responseFn
   }
 
   onWorkletStart (responseFn) {
     this._handlers['@wdk-core/workletStart'] = responseFn
+  }
+
+  onWdkInit (responseFn) {
+    this._handlers['@wdk-core/wdkInit'] = responseFn
   }
 
   onGetAddress (responseFn) {
@@ -253,6 +289,18 @@ class HRPC {
 
   onDispose (responseFn) {
     this._handlers['@wdk-core/dispose'] = responseFn
+  }
+
+  onGenerateAndEncrypt (responseFn) {
+    this._handlers['@wdk-core/generateAndEncrypt'] = responseFn
+  }
+
+  onDecrypt (responseFn) {
+    this._handlers['@wdk-core/decrypt'] = responseFn
+  }
+
+  onGenerateSeed (responseFn) {
+    this._handlers['@wdk-core/generateSeed'] = responseFn
   }
 
   _requestIsStream (command) {

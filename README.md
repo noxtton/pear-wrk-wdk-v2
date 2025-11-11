@@ -1,190 +1,305 @@
-# @wdk/bare
+# @tetherto/pear-wrk-wdk
 
-A cross-chain Wallet Development Kit (WDK) that provides a unified interface for interacting with multiple blockchains.
+Note: This package is published as `@tetherto/pear-wrk-wdk` (folder name: `pear-wrk-wdk`).
 
-## Overview
+A cross-runtime WDK manager and worklet bundle for mobile (iOS/Android) and Node environments. It unifies multi-chain wallet operations (EVM, TON, TRON, BTC, Solana) with optional account abstraction, provides a generated worklet bundle for React Native Bare Kit, and ships an HRPC schema for host↔worklet communication.
 
-@wdk/bare is a JavaScript/TypeScript library that simplifies blockchain wallet operations across multiple chains. It provides a consistent API for common wallet operations like address generation, balance checking, and transaction sending, abstracting away the complexities of different blockchain implementations.
+### 🔍 About WDK
 
-## Supported Blockchains
+Part of the WDK (Wallet Development Kit) ecosystem for building secure, non-custodial wallets with unified blockchain access, stateless design, and full user control.
 
-- Ethereum
-- Arbitrum
-- Polygon
-- TON (The Open Network)
-- Tron
-- Bitcoin
-- Solana
+See docs at `https://docs.wallet.tether.io`.
 
-## Installation
+### 🌟 Features
 
-```bash
-npm install @wdk/bare
-```
+- Unified manager API over multiple chains: Ethereum, Arbitrum, Polygon, TON, TRON, Bitcoin, Solana
+- Account abstraction support (EVM 4337, TON gasless, TRON gasfree)
+- Pluggable per-chain configs; multi-seed or single-seed inputs
+- Fee rates, address management, transfers, token balances, and receipts
+- Prebuilt worklet bundle for mobile via `bare-pack` (generated on postinstall)
+- HRPC spec and docs for host↔worklet RPC
 
-## Usage
+## 🧩 Architecture Overview
 
-### Basic Setup
+- **WDK (default export)**: Multi-chain wallet manager that dynamically loads per-chain wallet packages and exposes a unified API.
+- **Worklet bundle (`bundle`)**: Prebuilt module produced by `bare-pack` on postinstall, intended for React Native Bare to run wallet logic off the main JS thread.
+- **HRPC**: Typed RPC interface between host and worklet (see `hrpc-doc.md`).
+- **Choose a mode**:
+    - Use `WDK` directly in Node or simple React Native apps.
+    - Use `bundle` + `HRPC` in RN Bare apps that require background/off-thread execution.
 
-```javascript
-import WdkManager from "@wdk/bare";
+## 🧱 Platform Prerequisites
 
-// Create a new WDK instance with a seed phrase and configuration
-const wdk = new WdkManager(seedPhrase, {
-  ethereum: {
-    // Ethereum-specific configuration
-  },
-  arbitrum: {
-    // Arbitrum-specific configuration
-  },
-  // ... other blockchain configurations
-});
+- Node.js 18+ recommended
+- iOS toolchain (Xcode) and Android NDK/SDK when regenerating bundles
+- `npx` available to run `bare-pack`
 
-// Get an address for a specific blockchain
-const address = await wdk.getAddress("bitcoin", 0); // 0 is the account index
-
-// Get the balance of an address
-const balance = await wdk.getAddressBalance("bitcoin", 0);
-
-// Send a transaction
-const txResult = await wdk.sendTransaction("bitcoin", 0, {
-  to: "recipient-address",
-  value: 1000, // Amount in base units
-});
-
-// Clean up resources when done
-wdk.dispose();
-```
-
-### Abstracted Operations
-
-The library also provides abstracted operations that work across different blockchains:
-
-```javascript
-// Get an abstracted address
-const address = await wdk.getAbstractedAddress("ethereum", 0);
-
-// Transfer tokens
-const transferResult = await wdk.abstractedAccountTransfer("ethereum", 0, {
-  token: "evm-contract-token-address",
-  recipient: "recipient-address",
-  amount: 1000, // Amount in base units
-});
-```
-
-## React Native Integration
-
-@wdk/bare includes a bundle that can be used with React Native applications:
-
-```javascript
-import { bundle } from "@wdk/bare";
-```
-
-### Generating the Bundle
-
-The React Native compatible bundle is automatically generated during installation via the `postinstall` script. If you need to regenerate the bundle manually, you can use:
+## ⬇️ Installation
 
 ```bash
+npm install @tetherto/pear-wrk-wdk
+```
+
+## 🚀 Quick Start
+
+### Importing
+
+```javascript
+import WDK, { HRPC, bundle } from '@tetherto/pear-wrk-wdk'
+```
+
+- `default` export: `WDK` (multi-chain manager)
+- `HRPC`: exported spec for host↔worklet RPC
+- `bundle`: prebuilt worklet (`bundle/worklet.bundle.mjs`) generated on postinstall
+
+### Creating the Manager
+
+You can pass a single seed (used for all chains) or a map of per-chain seeds.
+
+```javascript
+const seed = 'test test test ...' // BIP39 mnemonic string or Uint8Array
+
+const wdk = new WDK(seed, {
+  ethereum: { provider: 'https://eth-mainnet.example', transferMaxFee: 1_000_000_000n },
+  arbitrum: { provider: 'https://arb1.example' },
+  polygon:  { provider: 'https://polygon.example' },
+  ton:      { /* TON config */ },
+  tron:     { /* TRON config */ },
+  bitcoin:  { /* BTC config */ },
+  solana:   { /* Solana config */ }
+})
+```
+
+Or with per-chain seeds:
+
+```javascript
+const wdk = new WDK({
+  ethereum: 'seed phrase...',
+  arbitrum: 'seed phrase...',
+  polygon:  'seed phrase...',
+  ton:      'seed phrase...',
+  tron:     'seed phrase...',
+  bitcoin:  'seed phrase...',
+  solana:   'seed phrase...'
+}, {/* same config object as above */})
+```
+
+### Accounts and Addresses
+
+```javascript
+// EVM example: get account by index (BIP-44 m/44'/60'/0'/0/index)
+const account = await wdk.getAccount('ethereum', 0)
+const address = await wdk.getAddress('ethereum', 0)
+
+// Custom path
+const accountByPath = await wdk.getAccountByPath('ethereum', "0'/0/5")
+
+// Fee rates (chain-specific)
+const fees = await wdk.getFeeRates('ethereum')
+```
+
+### Transfers and Quotes (Native)
+
+```javascript
+// Quote native transfer fee
+const quote = await wdk.quoteSendTransaction('ethereum', 0, {
+  to: '0xRecipient',
+  value: 1000000000000000n // 0.001 ETH
+})
+
+// Send native transfer
+const result = await wdk.sendTransaction('ethereum', 0, {
+  to: '0xRecipient',
+  value: 1000000000000000n
+})
+console.log(result.hash)
+```
+
+### Account Abstraction Flows
+
+Supported on EVM (ERC-4337), TON (gasless), TRON (gasfree).
+
+```javascript
+// Derive an abstracted account and read balances
+const aaAddress = await wdk.getAbstractedAddress('ethereum', 0)
+const aaNativeBalance = await wdk.getAbstractedAddressBalance('ethereum', 0)
+
+// Token balance (e.g., ERC20 on EVM)
+const tokenBalance = await wdk.getAbstractedAddressTokenBalance(
+  'ethereum', 0, '0xdAC17F958D2ee523a2206206994597C13D831ec7'
+)
+
+// Token transfer via AA
+const transfer = await wdk.abstractedAccountTransfer('ethereum', 0, {
+  token: '0xdAC17F...ec7',
+  recipient: '0xRecipient',
+  amount: 1_000_000n // base units
+}, {
+  // Optionally override configured transferMaxFee or paymaster token
+  transferMaxFee: 2_000_000n,
+  paymasterToken: { address: '0xPaymasterToken' }
+})
+
+// Quote AA transfer
+const transferQuote = await wdk.abstractedAccountQuoteTransfer('ethereum', 0, {
+  token: '0xdAC17F...ec7',
+  recipient: '0xRecipient',
+  amount: 1_000_000n
+})
+
+// AA send transaction (array of EVM tx objects)
+const txResult = await wdk.abstractedSendTransaction('ethereum', 0, [{
+  to: '0xContract',
+  value: 0,
+  data: '0x...' // encoded calldata
+}])
+
+// Receipt lookup
+const receipt = await wdk.getTransactionReceipt('ethereum', 0, txResult.hash)
+```
+
+
+```javascript
+const approveTx = await wdk.getApproveTransaction({
+  token: '0xdAC17F...ec7',
+  recipient: '0xSpender',
+  amount: 1000000n
+})
+// { to, value: 0, data }
+```
+
+### Disposing
+
+```javascript
+wdk.dispose()
+
+## 🔌 Integration Guide (React Native Bare)
+
+1. Install the package; `postinstall` generates the bundle automatically.
+2. Import `bundle` early in app startup to ensure the worklet code is loaded.
+3. Use `HRPC` requests (see `hrpc-doc.md`) to call worklet commands, or call `WDK` directly if off-thread execution is not required.
+4. For account abstraction, ensure relevant chain configs include `paymasterToken` if needed.
+
+Minimal example:
+
+```javascript
+import WDK, { bundle, HRPC } from '@tetherto/pear-wrk-wdk'
+const wdk = new WDK(seed, config)
+const address = await wdk.getAddress('ethereum', 0)
+```
+```
+
+## 📚 API Reference
+
+### WDK
+
+Constructor:
+
+```javascript
+new WDK(seedOrSeeds, config)
+```
+
+- `seedOrSeeds`: `string | Uint8Array | { ethereum, arbitrum, polygon, ton, tron, bitcoin, solana }`
+- `config`: `{ ethereum, arbitrum, polygon, ton, tron, bitcoin, solana }` where each chain entry matches its wallet package config
+
+Methods (async unless noted):
+
+- `getAccount(blockchain, index=0): Promise<IWalletAccount>`
+- `getAccountByPath(blockchain, path): Promise<IWalletAccount>`
+- `getFeeRates(blockchain): Promise<FeeRates>`
+- `getAddress(blockchain, index): Promise<string>`
+- `getAddressBalance(blockchain, index): Promise<number>`
+- `quoteSendTransaction(blockchain, index, options): Promise<{ fee: bigint }>`
+- `sendTransaction(blockchain, index, options): Promise<{ hash: string, fee: bigint }>`
+- `getAbstractedAccount(blockchain, index=0): Promise<IWalletAccount>`
+- `getAbstractedAccountByPath(blockchain, path): Promise<IWalletAccount>`
+- `getAbstractedAddress(blockchain, index): Promise<string>`
+- `getAbstractedAddressBalance(blockchain, index): Promise<number>`
+- `getAbstractedAddressTokenBalance(blockchain, index, tokenAddress): Promise<number>`
+- `getAbstractedAddressPaymasterTokenBalance(blockchain, index): Promise<number>`
+- `abstractedAccountTransfer(blockchain, index, transferOptions, transferConfig?): Promise<TransferResult>`
+- `abstractedAccountQuoteTransfer(blockchain, index, transferOptions, transferConfig?): Promise<Omit<TransferResult,'hash'>>`
+- `abstractedSendTransaction(blockchain, index, evmTransactions[], transferConfig?): Promise<TransactionResult>`
+- `getTransactionReceipt(blockchain, index, hash): Promise<unknown | null>`
+- `getApproveTransaction({ token, recipient, amount }): Promise<EvmTransaction>`
+- `dispose(): void`
+
+Supported blockchains enum values: `ethereum`, `arbitrum`, `polygon`, `ton`, `tron`, `bitcoin`, `solana`.
+
+## 📦 Bundle Lifecycle & Performance
+
+The prebuilt bundle is generated on `postinstall` via `bare-pack` for common iOS and Android targets.
+
+- Regenerate when updating targets or this package: `npm run gen:bundle`.
+- If CI cannot run `bare-pack`, consider committing the bundle to the repo.
+- Performance: load once at startup and reuse the HRPC context to avoid re-initialization costs.
+
+```javascript
+import { bundle } from '@tetherto/pear-wrk-wdk'
+// bundle points to bundle/worklet.bundle.mjs
+```
+
+Targets (from `gen:bundle`):
+- iOS: `ios-arm64`, `ios-arm64-simulator`, `ios-x64-simulator`
+- Android: `android-arm`, `android-arm64`, `android-ia32`, `android-x64`
+
+## 🔌 HRPC
+
+An HRPC schema and helpers are provided to integrate the worklet in a host app. See `hrpc-doc.md` for the current commands (e.g., `workletStart`, `getAddress`, `sendTransaction`, AA variants, etc.).
+
+```javascript
+import { HRPC } from '@tetherto/pear-wrk-wdk'
+// Use HRPC.spec / messages as needed in your host runtime
+```
+
+## 🌐 Supported Chains
+
+- Ethereum, Arbitrum, Polygon (EVM and Account Abstraction via `@tetherto/wdk-wallet-evm` and `@tetherto/wdk-wallet-evm-erc-4337`)
+- TON (standard and gasless variants)
+- TRON (standard and gasfree variants)
+- Bitcoin, Solana
+
+## 🔒 Security Considerations
+
+- Treat seed phrases and private keys as highly sensitive; never log them
+- Use trusted RPC endpoints; consider running your own nodes in production
+- Always estimate costs before sending transactions
+- Dispose managers when no longer needed to clear in-memory secrets
+
+## 🛠️ Development
+
+```bash
+# Install deps
+npm install
+
+# Generate worklet bundle (also runs on postinstall)
 npm run gen:bundle
-```
 
-This command uses `bare-pack` to create a bundle compatible with various iOS and Android architectures:
-
-```bash
-npx bare-pack --target ios-arm64 --target ios-arm64-simulator --target ios-x64-simulator --target android-arm --target android-arm64 --target android-ia32 --target android-x64 --linked --imports ./pack.imports.json --out bundle/worklet.bundle.mjs src/worklet.mjs
-```
-
-## React Native Usage
-
-### Basic Setup
-
-```javascript
-import { Worklet } from "react-native-bare-kit";
-import { bundle } from "@wdk/bare";
-
-const wdkManager = new Worklet();
-wdkManager.start("/wdk.manager.worklet.bundle", bundle);
-
-//configure WDK manager
-await wdkManager.workletStart({
-  enableDebugLogs: 0, //enable/disable debug mode
-  seedPhrase: seed, //12/24 word seed phrase
-  config: config, //json object
-});
-
-//get btc address
-const address = await wdkManager.getAddress({
-  network: "bitcoin",
-  accountIndex: 0,
-});
-
-//Get EVM based blockchain address
-const address = await wdkManager.getAbstractedAddress({
-  network: "polygon",
-  accountIndex: 0,
-});
-
-//Get EVM based blockchain address balance
-const evmAbstractedTokenBalance = await rpc.getAbstractedAddressTokenBalance({
-  network: "polygon",
-  accountIndex: 0,
-  tokenAddress: "evm-contract-token-address",
-});
-
-const tx = await rpc.abstractedAccountTransfer({
-  network: "polygon",
-  accountIndex: 0,
-  options: {
-    token: "evm-contract-token-address",
-    recipient: "recipient-address",
-    amount: 1000, //Amount in base units
-  },
-});
-```
-
-## API Documentation
-
-For detailed API documentation, see the [HRPC Command Documentation](./hrpc-doc.md).
-
-## Dependencies
-
-This library depends on several @wdk packages for blockchain-specific implementations:
-
-- @wdk/wallet - Core wallet functionality
-- @wdk/wallet-btc - Bitcoin implementation
-- @wdk/wallet-evm - Ethereum, Arbitrum, and Polygon implementation
-- @wdk/wallet-evm-erc-4337 - ERC-4337 (Account Abstraction) support
-- @wdk/wallet-solana - Solana implementation
-- @wdk/wallet-ton - TON implementation
-- @wdk/wallet-ton-gasless - Gasless transactions on TON
-- @wdk/wallet-tron - Tron implementation
-- @wdk/wallet-tron-gasfree - Gasfree transactions on Tron
-
-## Development
-
-### Building
-
-```bash
-# Build TypeScript definitions
-npm run build:types
-
-# Generate schema and HRPC documentation
+# Generate schemas and HRPC docs
 npm run gen:schema
 
-# Generate bundle for React Native
-npm run gen:bundle
-```
+# Build TypeScript declarations
+npm run build:types
 
-### Linting
-
-```bash
-# Run linter
+# Lint
 npm run lint
-
-# Fix linting issues
+# Fix lint issues
 npm run lint:fix
 ```
 
-## License
+## 🔗 Version & Compatibility
 
-Apache License 2.0
+- Wallet dependencies are pinned to specific SHAs in `package.json`; keep your app's direct dependencies compatible when mixing.
+- Node 18+ recommended. Ensure iOS/Android toolchains match `gen:bundle` targets when rebuilding bundles.
+
+## 📜 License
+
+Apache-2.0 - see the LICENSE file for details.
+
+## 🤝 Contributing
+
+Contributions are welcome! Please open a PR.
+
+## 🆘 Support
+
+For support, please open an issue in the repository.

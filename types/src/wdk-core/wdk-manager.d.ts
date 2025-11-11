@@ -241,21 +241,21 @@ export default class WdkManager {
     /** @private */
     private _getWalletManagerWithAccountAbstraction;
 }
-export type FeeRates = import("@wdk/wallet").FeeRates;
-export type TransferOptions = import("@wdk/wallet").TransferOptions;
-export type Transaction = import("@wdk/wallet").Transaction;
-export type TransactionResult = import("@wdk/wallet").TransactionResult;
-export type TransferResult = import("@wdk/wallet").TransferResult;
-export type IWalletAccount = import("@wdk/wallet").IWalletAccount;
-export type EvmWalletConfig = import("@wdk/wallet-evm").EvmWalletConfig;
-export type EvmTransaction = import("@wdk/wallet-evm").EvmTransaction;
-export type EvmErc4337WalletConfig = import("@wdk/wallet-evm-erc-4337").EvmErc4337WalletConfig;
-export type TonWalletConfig = import("@wdk/wallet-ton").TonWalletConfig;
-export type TonGaslessWalletConfig = import("@wdk/wallet-ton-gasless").TonGaslessWalletConfig;
-export type TronWalletConfig = import("@wdk/wallet-tron").TronWalletConfig;
-export type TronGasfreeWalletConfig = import("@wdk/wallet-tron-gasfree").TronGasfreeWalletConfig;
-export type BtcWalletConfig = import("@wdk/wallet-btc").BtcWalletConfig;
-export type SolanaWalletConfig = import("@wdk/wallet-solana").SolanaWalletConfig;
+export type FeeRates = import("@tetherto/wdk-wallet").FeeRates;
+export type TransferOptions = import("@tetherto/wdk-wallet").TransferOptions;
+export type Transaction = import("@tetherto/wdk-wallet").Transaction;
+export type TransactionResult = import("@tetherto/wdk-wallet").TransactionResult;
+export type TransferResult = import("@tetherto/wdk-wallet").TransferResult;
+export type IWalletAccount = import("@tetherto/wdk-wallet").IWalletAccount;
+export type EvmWalletConfig = import("@tetherto/wdk-wallet-evm").EvmWalletConfig;
+export type EvmTransaction = import("@tetherto/wdk-wallet-evm").EvmTransaction;
+export type EvmErc4337WalletConfig = import("@tetherto/wdk-wallet-evm-erc-4337").EvmErc4337WalletConfig;
+export type TonWalletConfig = import("@tetherto/wdk-wallet-ton").TonWalletConfig;
+export type TonGaslessWalletConfig = import("@tetherto/wdk-wallet-ton-gasless").TonGaslessWalletConfig;
+export type TronWalletConfig = import("@tetherto/wdk-wallet-tron").TronWalletConfig;
+export type TronGasfreeWalletConfig = import("@tetherto/wdk-wallet-tron-gasfree").TronGasfreeWalletConfig;
+export type BtcWalletConfig = import("@tetherto/wdk-wallet-btc").BtcWalletConfig;
+export type SolanaWalletConfig = import("@tetherto/wdk-wallet-solana").SolanaWalletConfig;
 export type Seed = string | Uint8Array;
 export type Seeds = {
     /**
