@@ -5,6 +5,8 @@ import { stringifyError } from './exceptions/rpc-exception.js'
 import bip39 from 'bip39'
 import { WdkSecretManager } from '@tetherto/wdk-secret-manager'
 import { getSeedBuffer } from './lib/seed-buffer.js'
+import b4a from "b4a";
+import {sodium_memzero} from "sodium-native";
 
 // eslint-disable-next-line no-undef
 const { IPC } = BareKit
@@ -112,8 +114,14 @@ rpc.onSendTransaction(async payload => {
 rpc.onGenerateAndEncrypt(async (payload) => {
   try {
     const manager = new WdkSecretManager(payload.passkey, payload.salt)
+      let entropy = null;
+    if (b4a.isBuffer(payload.seedPhrase)) {
+        entropy = manager.mnemonicToEntropy(payload.seedPhrase);
+        sodium_memzero(payload.seedPhrase);
+    }
     const { encryptedSeed, encryptedEntropy } =
-      await manager.generateAndEncrypt(payload.seedEntropy, payload.derivedKey)
+      await manager.generateAndEncrypt(entropy, payload.derivedKey)
+      entropy = null;
     manager.dispose()
     // Return buffers directly as per schema
     return {

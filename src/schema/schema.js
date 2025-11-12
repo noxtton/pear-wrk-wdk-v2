@@ -380,7 +380,7 @@ schemaNs.register({
   fields: [
     { name: 'passkey', type: 'buffer' },
     { name: 'salt', type: 'buffer' },
-    { name: 'seedEntropy', type: 'buffer', required: false },
+    { name: 'seedPhrase', type: 'buffer', required: false },
     { name: 'derivedKey', type: 'buffer', required: false }
   ]
 })

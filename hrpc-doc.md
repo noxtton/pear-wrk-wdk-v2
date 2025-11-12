@@ -308,7 +308,7 @@ _No fields defined_
 
 - `passkey`: `buffer` _(v1)_
 - `salt`: `buffer` _(v1)_
-- `seedEntropy`: `buffer` _(optional)_ _(v1)_
+- `seedPhrase`: `buffer` _(optional)_ _(v1)_
 - `derivedKey`: `buffer` _(optional)_ _(v1)_
 
 **Response:** `@wdk-core/generateAndEncrypt-response`

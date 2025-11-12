@@ -796,21 +796,21 @@ const encoding41 = {
 
     if (m.passkey) c.buffer.preencode(state, m.passkey)
     if (m.salt) c.buffer.preencode(state, m.salt)
-    if (m.seedEntropy) c.buffer.preencode(state, m.seedEntropy)
+    if (m.seedPhrase) c.buffer.preencode(state, m.seedPhrase)
     if (m.derivedKey) c.buffer.preencode(state, m.derivedKey)
   },
   encode (state, m) {
     const flags =
       (m.passkey ? 1 : 0) |
       (m.salt ? 2 : 0) |
-      (m.seedEntropy ? 4 : 0) |
+      (m.seedPhrase ? 4 : 0) |
       (m.derivedKey ? 8 : 0)
 
     c.uint.encode(state, flags)
 
     if (m.passkey) c.buffer.encode(state, m.passkey)
     if (m.salt) c.buffer.encode(state, m.salt)
-    if (m.seedEntropy) c.buffer.encode(state, m.seedEntropy)
+    if (m.seedPhrase) c.buffer.encode(state, m.seedPhrase)
     if (m.derivedKey) c.buffer.encode(state, m.derivedKey)
   },
   decode (state) {
@@ -819,7 +819,7 @@ const encoding41 = {
     return {
       passkey: (flags & 1) !== 0 ? c.buffer.decode(state) : null,
       salt: (flags & 2) !== 0 ? c.buffer.decode(state) : null,
-      seedEntropy: (flags & 4) !== 0 ? c.buffer.decode(state) : null,
+      seedPhrase: (flags & 4) !== 0 ? c.buffer.decode(state) : null,
       derivedKey: (flags & 8) !== 0 ? c.buffer.decode(state) : null
     }
   }
