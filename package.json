@@ -21,7 +21,7 @@
     "@wdk/wallet-solana": "https://github.com/tetherto/wdk-wallet-solana#e132dc8247cd7b9e84aeaad6c20667a92830e212",
     "@wdk/wallet-tron": "https://github.com/tetherto/wdk-wallet-tron#ec076473a5b8340599e005ab5ece8c8d246b3965",
     "@wdk/wallet-tron-gasfree": "https://github.com/tetherto/wdk-wallet-tron-gasfree#fd57ed375801ae281e98c6882ea0f2ad4c2b30f5",
-    "@tetherto/wdk-wallet-ton": "1.0.0-beta.3",
+    "@tetherto/wdk-wallet-ton": "1.0.0-beta.4",
     "@tetherto/wdk-wallet-ton-gasless": "1.0.0-beta.2",
     "bare-ipc": "1.1.1",
     "encoding": "npm:bare-encoding@1.0.0",
