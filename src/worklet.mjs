@@ -116,8 +116,10 @@ rpc.onGenerateAndEncrypt(async (payload) => {
     const manager = new WdkSecretManager(payload.passkey, payload.salt)
       let entropy = null;
     if (b4a.isBuffer(payload.seedPhrase)) {
-        entropy = manager.mnemonicToEntropy(payload.seedPhrase);
+        let seedPhrase = b4a.toString(payload.seedPhrase, 'hex');
+        entropy = manager.mnemonicToEntropy(seedPhrase);
         sodium_memzero(payload.seedPhrase);
+        seedPhrase = null;
     }
     const { encryptedSeed, encryptedEntropy } =
       await manager.generateAndEncrypt(entropy, payload.derivedKey)
