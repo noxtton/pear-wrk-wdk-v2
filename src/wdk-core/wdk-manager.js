@@ -12,27 +12,27 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 'use strict'
-/** @typedef {import('@wdk/wallet').FeeRates} FeeRates */
+/** @typedef {import('@tetherto/wdk-wallet').FeeRates} FeeRates */
 
-/** @typedef {import('@wdk/wallet').TransferOptions} TransferOptions */
-/** @typedef {import('@wdk/wallet').Transaction} Transaction */
-/** @typedef {import('@wdk/wallet').TransactionResult} TransactionResult */
-/** @typedef {import('@wdk/wallet').TransferResult} TransferResult */
-/** @typedef {import('@wdk/wallet').IWalletAccount} IWalletAccount */
+/** @typedef {import('@tetherto/wdk-wallet').TransferOptions} TransferOptions */
+/** @typedef {import('@tetherto/wdk-wallet').Transaction} Transaction */
+/** @typedef {import('@tetherto/wdk-wallet').TransactionResult} TransactionResult */
+/** @typedef {import('@tetherto/wdk-wallet').TransferResult} TransferResult */
+/** @typedef {import('@tetherto/wdk-wallet').IWalletAccount} IWalletAccount */
 
-/** @typedef {import('@wdk/wallet-evm').EvmWalletConfig} EvmWalletConfig */
-/** @typedef {import('@wdk/wallet-evm').EvmTransaction} EvmTransaction */
-/** @typedef {import('@wdk/wallet-evm-erc-4337').EvmErc4337WalletConfig} EvmErc4337WalletConfig */
+/** @typedef {import('@tetherto/wdk-wallet-evm').EvmWalletConfig} EvmWalletConfig */
+/** @typedef {import('@tetherto/wdk-wallet-evm').EvmTransaction} EvmTransaction */
+/** @typedef {import('@tetherto/wdk-wallet-evm-erc-4337').EvmErc4337WalletConfig} EvmErc4337WalletConfig */
 
-/** @typedef {import('@wdk/wallet-ton').TonWalletConfig} TonWalletConfig */
-/** @typedef {import('@wdk/wallet-ton-gasless').TonGaslessWalletConfig} TonGaslessWalletConfig */
+/** @typedef {import('@tetherto/wdk-wallet-ton').TonWalletConfig} TonWalletConfig */
+/** @typedef {import('@tetherto/wdk-wallet-ton-gasless').TonGaslessWalletConfig} TonGaslessWalletConfig */
 
-/** @typedef {import('@wdk/wallet-tron').TronWalletConfig} TronWalletConfig */
-/** @typedef {import('@wdk/wallet-tron-gasfree').TronGasfreeWalletConfig} TronGasfreeWalletConfig */
+/** @typedef {import('@tetherto/wdk-wallet-tron').TronWalletConfig} TronWalletConfig */
+/** @typedef {import('@tetherto/wdk-wallet-tron-gasfree').TronGasfreeWalletConfig} TronGasfreeWalletConfig */
 
-/** @typedef {import('@wdk/wallet-btc').BtcWalletConfig} BtcWalletConfig */
+/** @typedef {import('@tetherto/wdk-wallet-btc').BtcWalletConfig} BtcWalletConfig */
 
-/** @typedef {import('@wdk/wallet-solana').SolanaWalletConfig} SolanaWalletConfig */
+/** @typedef {import('@tetherto/wdk-wallet-solana').SolanaWalletConfig} SolanaWalletConfig */
 
 /** @typedef {string | Uint8Array} Seed */
 
@@ -361,7 +361,6 @@ export default class WdkManager {
      */
   async abstractedAccountTransfer (blockchain, accountIndex, options, config) {
     const account = await this.getAbstractedAccount(blockchain, accountIndex)
-
     return await account.transfer(options, config)
   }
 
@@ -416,15 +415,16 @@ export default class WdkManager {
      */
   async getTransactionReceipt (blockchain, accountIndex, hash) {
     const account = await this.getAbstractedAccount(blockchain, accountIndex)
-    const receipt = await account.getTransactionReceipt(hash);
-    if (!receipt) return null;
+    const receipt = await account.getTransactionReceipt(hash)
+    if (!receipt) return null
     if (blockchain === Blockchain.Ton) {
       return {
         hash: receipt.hash().toString('hex')
       }
     }
-    return receipt;
+    return receipt
   }
+
   /**
      * Returns an evm transaction to approve the interaction transaction.
      *

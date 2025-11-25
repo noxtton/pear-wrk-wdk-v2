@@ -1,9 +1,15 @@
-const { IPC } = BareKit
-
 import HRPC from '../spec/hrpc'
 
 import WdkManager from './wdk-core/wdk-manager.js'
-import { stringifyError } from '../src/exceptions/rpc-exception'
+import { stringifyError } from './exceptions/rpc-exception.js'
+import bip39 from 'bip39'
+import { WdkSecretManager } from '@tetherto/wdk-secret-manager'
+import { getSeedBuffer } from './lib/seed-buffer.js'
+import b4a from "b4a";
+import {sodium_memzero} from "sodium-native";
+
+// eslint-disable-next-line no-undef
+const { IPC } = BareKit
 
 const rpc = new HRPC(IPC)
 /**
@@ -12,7 +18,20 @@ const rpc = new HRPC(IPC)
  */
 let wdk = null
 
-rpc.onWorkletStart(async init => {
+/**
+ * @typedef {Object} WorkletStart
+ * @property {String} seedPhrase - The seed phrase string
+ * @property {String} seedBuffer - The seed buffer string as hex
+ * @property {string} config - JSON string containing WDK configuration
+ */
+
+/**
+ *
+ * @returns {Promise<{status: string}>} Status object indicating successful start
+ * @throws {Error} If decryption fails or WdkManager initialization fails
+ * @deprecated use onWdkInit instead
+ */
+rpc.onWorkletStart(async (/** @type {WorkletStart} */ init) => {
   try {
     if (wdk) wdk.dispose() // cleanup existing;
     wdk = new WdkManager(init.seedPhrase || init.seedBuffer, JSON.parse(init.config))
@@ -21,13 +40,39 @@ rpc.onWorkletStart(async init => {
     throw new Error(stringifyError(error))
   }
 })
+
+/**
+ * @typedef {Object} WdkInit
+ * @param {string} [WdkInit.seedBuffer] - 64-byte seed buffer in hex format
+ * @param {string} [WdkInit.seedPhrase] - 12 or 24 word BIP-39 mnemonic phrase
+ * @param {Object} [WdkInit.encryptedSeed] - Encrypted seed payload. New format: { prf, salt, seedBuffer }
+ * @param {Buffer} [WdkInit.encryptedSeed.passkey] - Passkey/PRF used for decryption
+ * @param {Buffer} [WdkInit.encryptedSeed.salt] - Salt used for key derivation (hex string)
+ * @param {Buffer} [WdkInit.encryptedSeed.seedBuffer] - Encrypted seed buffer (hex string)
+ * @property {string} config - JSON string containing WDK configuration
+ */
+
+/**
+ *
+ * @returns {Promise<{status: string}>} Status object indicating successful start
+ * @throws {Error} If decryption fails or WdkManager initialization fails
+ */
+rpc.onWdkInit(async (/** @type {WdkInit} */ init) => {
+  try {
+    if (wdk) wdk.dispose() // cleanup existing;
+    wdk = new WdkManager(await getSeedBuffer(init), JSON.parse(init.config))
+    return { status: 'started' }
+  } catch (error) {
+    throw new Error(stringifyError(error))
+  }
+})
+
 rpc.onGetAddress(async payload => {
   try {
     return { address: await wdk.getAddress(payload.network, payload.accountIndex) }
   } catch (error) {
     throw new Error(stringifyError(error))
   }
-
 })
 
 rpc.onGetAddressBalance(async payload => {
@@ -37,19 +82,17 @@ rpc.onGetAddressBalance(async payload => {
   } catch (error) {
     throw new Error(stringifyError(error))
   }
-
 })
 
 rpc.onQuoteSendTransaction(async payload => {
   try {
-    //Convert amount value to number
+    // Convert amount value to number
     payload.options.value = Number(payload.options.value)
     const transaction = await wdk.quoteSendTransaction(payload.network, payload.accountIndex, payload.options)
     return { fee: transaction.fee.toString() }
   } catch (error) {
     throw new Error(stringifyError(error))
   }
-
 })
 
 rpc.onSendTransaction(async payload => {
@@ -60,7 +103,64 @@ rpc.onSendTransaction(async payload => {
   } catch (error) {
     throw new Error(stringifyError(error))
   }
+})
 
+/*****************
+ *
+ * Secret Manager
+ *
+ *****************/
+
+rpc.onGenerateAndEncrypt(async (payload) => {
+  try {
+    const manager = new WdkSecretManager(payload.passkey, payload.salt)
+      let entropy = null;
+    if (b4a.isBuffer(payload.seedPhrase)) {
+        let seedPhrase = b4a.toString(payload.seedPhrase);
+        entropy = manager.mnemonicToEntropy(seedPhrase);
+        sodium_memzero(payload.seedPhrase);
+        seedPhrase = null;
+    }
+    const { encryptedSeed, encryptedEntropy } =
+      await manager.generateAndEncrypt(entropy, payload.derivedKey)
+      entropy = null;
+    manager.dispose()
+    // Return buffers directly as per schema
+    return {
+      encryptedSeed,
+      encryptedEntropy
+    }
+  } catch (e) {
+    throw new Error(`${e.message}: ${e.stack}`)
+  }
+})
+
+rpc.onDecrypt(async (payload) => {
+  try {
+    const manager = new WdkSecretManager(
+      payload.passkey, payload.salt
+    )
+    const decryptedData = manager.decrypt(
+      payload.encryptedData,
+      payload.derivedKey
+    )
+    manager.dispose()
+    return {
+      result: decryptedData
+    }
+  } catch (e) {
+    throw new Error(`${e.message}: ${e.stack}`)
+  }
+})
+
+rpc.onGenerateSeed(async () => {
+  try {
+    return {
+      mnemonic: bip39.generateMnemonic()
+    }
+  } catch (e) {
+    throw new Error(`${e.message}: ${e.stack}`)
+  }
 })
 
 /*****************
@@ -74,7 +174,6 @@ rpc.onGetAbstractedAddress(async payload => {
   } catch (error) {
     throw new Error(stringifyError(error))
   }
-
 })
 
 rpc.onGetAbstractedAddressBalance(async payload => {
@@ -84,7 +183,6 @@ rpc.onGetAbstractedAddressBalance(async payload => {
   } catch (error) {
     throw new Error(stringifyError(error))
   }
-
 })
 
 rpc.onGetAbstractedAddressTokenBalance(async payload => {
@@ -94,7 +192,6 @@ rpc.onGetAbstractedAddressTokenBalance(async payload => {
   } catch (error) {
     throw new Error(stringifyError(error))
   }
-
 })
 
 rpc.onAbstractedAccountTransfer(async payload => {
@@ -110,7 +207,6 @@ rpc.onAbstractedAccountTransfer(async payload => {
   } catch (error) {
     throw new Error(stringifyError(error))
   }
-
 })
 
 rpc.onAbstractedSendTransaction(async payload => {
@@ -121,7 +217,6 @@ rpc.onAbstractedSendTransaction(async payload => {
   } catch (error) {
     throw new Error(stringifyError(error))
   }
-
 })
 
 rpc.onAbstractedAccountQuoteTransfer(async payload => {
@@ -132,12 +227,11 @@ rpc.onAbstractedAccountQuoteTransfer(async payload => {
   } catch (error) {
     throw new Error(stringifyError(error))
   }
-
 })
 
 rpc.onGetTransactionReceipt(async payload => {
   try {
-    let receipt = await wdk.getTransactionReceipt(payload.network, payload.accountIndex, payload.hash)
+    const receipt = await wdk.getTransactionReceipt(payload.network, payload.accountIndex, payload.hash)
     if (receipt) {
       return { receipt: JSON.stringify(receipt) }
     }
@@ -150,7 +244,7 @@ rpc.onGetTransactionReceipt(async payload => {
 rpc.onGetApproveTransaction(async payload => {
   try {
     payload.amount = Number(payload.amount)
-    let approveTx = await wdk.getApproveTransaction(payload)
+    const approveTx = await wdk.getApproveTransaction(payload)
     if (approveTx) {
       approveTx.value = approveTx.value.toString()
       return approveTx
@@ -168,5 +262,4 @@ rpc.onDispose(() => {
   } catch (error) {
     throw new Error(stringifyError(error))
   }
-
 })

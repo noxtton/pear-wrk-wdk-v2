@@ -25,6 +25,19 @@
     },
     {
       "id": 2,
+      "name": "@wdk-core/wdkInit",
+      "request": {
+        "name": "@wdk-core/wdkInit-request",
+        "stream": false
+      },
+      "response": {
+        "name": "@wdk-core/wdkInit-response",
+        "stream": false
+      },
+      "version": 1
+    },
+    {
+      "id": 3,
       "name": "@wdk-core/getAddress",
       "request": {
         "name": "@wdk-core/getAddress-request",
@@ -37,7 +50,7 @@
       "version": 1
     },
     {
-      "id": 3,
+      "id": 4,
       "name": "@wdk-core/getAddressBalance",
       "request": {
         "name": "@wdk-core/getAddressBalance-request",
@@ -50,7 +63,7 @@
       "version": 1
     },
     {
-      "id": 4,
+      "id": 5,
       "name": "@wdk-core/quoteSendTransaction",
       "request": {
         "name": "@wdk-core/quoteSendTransaction-request",
@@ -63,7 +76,7 @@
       "version": 1
     },
     {
-      "id": 5,
+      "id": 6,
       "name": "@wdk-core/sendTransaction",
       "request": {
         "name": "@wdk-core/sendTransaction-request",
@@ -76,7 +89,7 @@
       "version": 1
     },
     {
-      "id": 6,
+      "id": 7,
       "name": "@wdk-core/getAbstractedAddress",
       "request": {
         "name": "@wdk-core/getAbstractedAddress-request",
@@ -89,7 +102,7 @@
       "version": 1
     },
     {
-      "id": 7,
+      "id": 8,
       "name": "@wdk-core/getAbstractedAddressBalance",
       "request": {
         "name": "@wdk-core/getAbstractedAddressBalance-request",
@@ -102,7 +115,7 @@
       "version": 1
     },
     {
-      "id": 8,
+      "id": 9,
       "name": "@wdk-core/getAbstractedAddressTokenBalance",
       "request": {
         "name": "@wdk-core/getAbstractedAddressTokenBalance-request",
@@ -115,7 +128,7 @@
       "version": 1
     },
     {
-      "id": 9,
+      "id": 10,
       "name": "@wdk-core/abstractedAccountTransfer",
       "request": {
         "name": "@wdk-core/abstractedAccountTransfer-request",
@@ -128,7 +141,7 @@
       "version": 1
     },
     {
-      "id": 10,
+      "id": 11,
       "name": "@wdk-core/getApproveTransaction",
       "request": {
         "name": "@wdk-core/getApproveTransaction-request",
@@ -141,7 +154,7 @@
       "version": 1
     },
     {
-      "id": 11,
+      "id": 12,
       "name": "@wdk-core/abstractedSendTransaction",
       "request": {
         "name": "@wdk-core/abstractedSendTransaction-request",
@@ -154,7 +167,7 @@
       "version": 1
     },
     {
-      "id": 12,
+      "id": 13,
       "name": "@wdk-core/abstractedAccountQuoteTransfer",
       "request": {
         "name": "@wdk-core/abstractedAccountQuoteTransfer-request",
@@ -167,7 +180,7 @@
       "version": 1
     },
     {
-      "id": 13,
+      "id": 14,
       "name": "@wdk-core/getTransactionReceipt",
       "request": {
         "name": "@wdk-core/getTransactionReceipt-request",
@@ -180,11 +193,50 @@
       "version": 1
     },
     {
-      "id": 14,
+      "id": 15,
       "name": "@wdk-core/dispose",
       "request": {
         "name": "@wdk-core/dispose-request",
         "send": true
+      },
+      "version": 1
+    },
+    {
+      "id": 16,
+      "name": "@wdk-core/generateAndEncrypt",
+      "request": {
+        "name": "@wdk-core/generateAndEncrypt-request",
+        "stream": false
+      },
+      "response": {
+        "name": "@wdk-core/generateAndEncrypt-response",
+        "stream": false
+      },
+      "version": 1
+    },
+    {
+      "id": 17,
+      "name": "@wdk-core/decrypt",
+      "request": {
+        "name": "@wdk-core/decrypt-request",
+        "stream": false
+      },
+      "response": {
+        "name": "@wdk-core/decrypt-response",
+        "stream": false
+      },
+      "version": 1
+    },
+    {
+      "id": 18,
+      "name": "@wdk-core/generateSeed",
+      "request": {
+        "name": "@wdk-core/generateSeed-request",
+        "stream": false
+      },
+      "response": {
+        "name": "@wdk-core/generateSeed-response",
+        "stream": false
       },
       "version": 1
     }

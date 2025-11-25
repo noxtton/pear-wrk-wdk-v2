@@ -30,6 +30,29 @@
 
 ---
 
+## wdkInit
+
+**Request:** `@wdk-core/wdkInit-request`
+
+**Fields:**
+
+- `enableDebugLogs`: `uint` _(optional)_ _(v1)_
+- `seedPhrase`: `string` _(optional)_ _(v1)_
+- `seedBuffer`: `buffer` _(optional)_ _(v1)_
+- `encryptedSeed`: `object` _(optional)_ _(v1)_
+  - `seedBuffer`: `buffer` _(v1)_
+  - `salt`: `buffer` _(v1)_
+  - `passkey`: `buffer` _(v1)_
+- `config`: `string` _(v1)_
+
+**Response:** `@wdk-core/wdkInit-response`
+
+**Fields:**
+
+- `status`: `string` _(v1)_
+
+---
+
 ## getAddress
 
 **Request:** `@wdk-core/getAddress-request`
@@ -172,7 +195,7 @@
 - `config`: `object` _(optional)_ _(v1)_
   - `paymasterToken`: `object` _(optional)_ _(v1)_
     - `address`: `string` _(v1)_
-  - `transferMaxFee`: `string` _(optional)_ _(v2)_
+  - `transferMaxFee`: `string` _(optional)_ _(v1)_
 
 **Response:** `@wdk-core/abstractedAccountTransfer-response`
 
@@ -274,6 +297,61 @@
 **Fields:**
 
 _No fields defined_
+
+---
+
+## generateAndEncrypt
+
+**Request:** `@wdk-core/generateAndEncrypt-request`
+
+**Fields:**
+
+- `passkey`: `buffer` _(v1)_
+- `salt`: `buffer` _(v1)_
+- `seedPhrase`: `buffer` _(optional)_ _(v1)_
+- `derivedKey`: `buffer` _(optional)_ _(v1)_
+
+**Response:** `@wdk-core/generateAndEncrypt-response`
+
+**Fields:**
+
+- `encryptedEntropy`: `buffer` _(v1)_
+- `encryptedSeed`: `buffer` _(v1)_
+
+---
+
+## decrypt
+
+**Request:** `@wdk-core/decrypt-request`
+
+**Fields:**
+
+- `passkey`: `buffer` _(v1)_
+- `salt`: `buffer` _(v1)_
+- `encryptedData`: `buffer` _(v1)_
+- `derivedKey`: `buffer` _(optional)_ _(v1)_
+
+**Response:** `@wdk-core/decrypt-response`
+
+**Fields:**
+
+- `result`: `buffer` _(v1)_
+
+---
+
+## generateSeed
+
+**Request:** `@wdk-core/generateSeed-request`
+
+**Fields:**
+
+_No fields defined_
+
+**Response:** `@wdk-core/generateSeed-response`
+
+**Fields:**
+
+- `mnemonic`: `string` _(v1)_
 
 ---
 

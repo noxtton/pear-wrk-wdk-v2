@@ -18,6 +18,7 @@ declare class HRPC {
     _callSync(name: any, args: any): any;
     log(args: any): any;
     workletStart(args: any): Promise<any>;
+    wdkInit(args: any): Promise<any>;
     getAddress(args: any): Promise<any>;
     getAddressBalance(args: any): Promise<any>;
     quoteSendTransaction(args: any): Promise<any>;
@@ -31,8 +32,12 @@ declare class HRPC {
     abstractedAccountQuoteTransfer(args: any): Promise<any>;
     getTransactionReceipt(args: any): Promise<any>;
     dispose(args: any): any;
+    generateAndEncrypt(args: any): Promise<any>;
+    decrypt(args: any): Promise<any>;
+    generateSeed(args: any): Promise<any>;
     onLog(responseFn: any): void;
     onWorkletStart(responseFn: any): void;
+    onWdkInit(responseFn: any): void;
     onGetAddress(responseFn: any): void;
     onGetAddressBalance(responseFn: any): void;
     onQuoteSendTransaction(responseFn: any): void;
@@ -46,6 +51,9 @@ declare class HRPC {
     onAbstractedAccountQuoteTransfer(responseFn: any): void;
     onGetTransactionReceipt(responseFn: any): void;
     onDispose(responseFn: any): void;
+    onGenerateAndEncrypt(responseFn: any): void;
+    onDecrypt(responseFn: any): void;
+    onGenerateSeed(responseFn: any): void;
     _requestIsStream(command: any): boolean;
     _responseIsStream(command: any): boolean;
     _requestIsSend(command: any): boolean;
