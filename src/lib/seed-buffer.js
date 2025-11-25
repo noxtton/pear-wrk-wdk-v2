@@ -22,7 +22,7 @@ export async function getSeedBuffer (options = {}) {
     if (options.seedBuffer instanceof Uint8Array) {
       seedBuffer = options.seedBuffer
     } else {
-      throw new Error('seedBuffer must be a hex string or Uint8Array')
+      throw new Error('seedBuffer must be a Uint8Array')
     }
   } else if (options.seedPhrase) {
     seedBuffer = await bip39.mnemonicToSeed(options.seedPhrase)
