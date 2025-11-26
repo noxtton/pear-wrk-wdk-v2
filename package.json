@@ -44,7 +44,8 @@
     }
   },
   "overrides": {
-    "bare-node-runtime": "1.1.4"
+    "bare-node-runtime": "1.1.4",
+    "@tetherto/wdk-wallet-ton": "https://github.com/tetherto/wdk-wallet-ton#852765944df0163a675c56d844ac999a500830e8"
   },
   "files": [
     "bundle/worklet.bundle.d.mts"
