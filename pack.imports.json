@@ -1,3 +1,4 @@
 {
-  "http": "bare-http1"
+  "http": "bare-http1",
+  "net": "bare-net"
 }
