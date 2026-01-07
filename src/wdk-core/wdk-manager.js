@@ -489,11 +489,12 @@ export default class WdkManager {
         const { default: WalletManagerBtc } = await import('@tetherto/wdk-wallet-btc')
 
         this._wallets.bitcoin = new WalletManagerBtc(seed, config.bitcoin)
-      } else if (blockchain === 'solana') {
-        const { default: WalletManagerSolana } = await import('@tetherto/wdk-wallet-solana')
-
-        this._wallets.solana = new WalletManagerSolana(seed, config.solana)
       }
+      // else if (blockchain === 'solana') {
+      //   const { default: WalletManagerSolana } = await import('@tetherto/wdk-wallet-solana')
+      //
+      //   this._wallets.solana = new WalletManagerSolana(seed, config.solana)
+      // }
     }
 
     return this._wallets[blockchain]
