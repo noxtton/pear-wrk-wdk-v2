@@ -13,6 +13,7 @@
     "postinstall": "npm run gen:bundle"
   },
   "dependencies": {
+    "@tetherto/wdk": "https://github.com/iveriatskureli/wdk-core#29d0720652b5b500dfeea882e375928443018854",
     "@tetherto/wdk-secret-manager": "1.0.0-beta.3",
     "@tetherto/wdk-wallet": "1.0.0-beta.6",
     "@tetherto/wdk-wallet-btc": "1.0.0-beta.4",
