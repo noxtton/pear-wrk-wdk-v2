@@ -474,7 +474,7 @@ export default class WdkManager {
       const config = this._config
 
       if (EVM_BLOCKCHAINS.includes(blockchain)) {
-        const { default: WalletManagerEvm } = await import('@wdk/wallet-evm')
+        const { default: WalletManagerEvm } = await import('@tetherto/wdk-wallet-evm')
 
         this._wallets[blockchain] = new WalletManagerEvm(seed, config[blockchain])
       } else if (blockchain === 'ton') {
