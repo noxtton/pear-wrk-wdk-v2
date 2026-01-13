@@ -1,6 +1,6 @@
 import HRPC from '../spec/hrpc'
 
-import WdkManager from './wdk-core/wdk-manager.js'
+import WdkManager from './wdk-core/wdk-manager-v3.js'
 import { stringifyError } from './exceptions/rpc-exception.js'
 import bip39 from 'bip39'
 import { WdkSecretManager } from '@tetherto/wdk-secret-manager'
@@ -33,8 +33,9 @@ let wdk = null
  */
 rpc.onWorkletStart(async (/** @type {WorkletStart} */ init) => {
   try {
-    if (wdk) wdk.dispose() // cleanup existing;
-    wdk = new WdkManager(init.seedPhrase || init.seedBuffer, JSON.parse(init.config))
+    if (!wdk) wdk = new WdkManager(init.config);
+    if (wdk.hasWdk()) wdk.disposeWdk() // cleanup existing;
+    wdk.initWdk(init.seedPhrase || init.seedBuffer)
     return { status: 'started' }
   } catch (error) {
     throw new Error(stringifyError(error))
@@ -59,13 +60,28 @@ rpc.onWorkletStart(async (/** @type {WorkletStart} */ init) => {
  */
 rpc.onWdkInit(async (/** @type {WdkInit} */ init) => {
   try {
-    if (wdk) wdk.dispose() // cleanup existing;
-    wdk = new WdkManager(await getSeedBuffer(init), JSON.parse(init.config))
+    if (!wdk) wdk = new WdkManager(init.config);
+    if (wdk.hasWdk()) wdk.disposeWdk() // cleanup existing;
+    wdk.initWdk(await getSeedBuffer(init))
     return { status: 'started' }
   } catch (error) {
     throw new Error(stringifyError(error))
   }
 })
+// /**
+//  *
+//  * @returns {Promise<{status: string}>} Status object indicating successful start
+//  * @throws {Error} If decryption fails or WdkManager initialization fails
+//  */
+// rpc.onWdkReadOnlyInit(async (init) => {
+//   try {
+//     if (!wdk) wdk = new WdkManager(init.config);
+//     if (!wdk.hasWdkReadOnly()) wdk.initWdkReadOnly();
+//     return { status: 'started' }
+//   } catch (error) {
+//     throw new Error(stringifyError(error))
+//   }
+// })
 
 rpc.onGetAddress(async payload => {
   try {
@@ -170,7 +186,7 @@ rpc.onGenerateSeed(async () => {
  *****************/
 rpc.onGetAbstractedAddress(async payload => {
   try {
-    return { address: await wdk.getAbstractedAddress(payload.network, payload.accountIndex) }
+    return await wdk.getAbstractedAddress(payload.network, payload.accountIndex)
   } catch (error) {
     throw new Error(stringifyError(error))
   }

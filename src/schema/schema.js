@@ -178,6 +178,7 @@ schemaNs.register({
 schemaNs.register({
   name: 'getAbstractedAddress-response',
   fields: [
+    { name: 'eoaAddress', type: 'string' },
     { name: 'address', type: 'string' }
   ]
 })

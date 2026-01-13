@@ -1,5 +1,5 @@
 {
-  "version": 1,
+  "version": 2,
   "schema": [
     {
       "name": "log-type-enum",
@@ -376,9 +376,14 @@
       "flagsPosition": 0,
       "fields": [
         {
-          "name": "address",
+          "name": "eoaAddress",
           "type": "string",
           "version": 1
+        },
+        {
+          "name": "address",
+          "type": "string",
+          "version": 2
         }
       ]
     },

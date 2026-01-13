@@ -141,7 +141,8 @@
 
 **Fields:**
 
-- `address`: `string` _(v1)_
+- `eoaAddress`: `string` _(v1)_
+- `address`: `string` _(v2)_
 
 ---
 
