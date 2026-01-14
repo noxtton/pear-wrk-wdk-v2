@@ -8,7 +8,7 @@
     "build:types": "rimraf *.d.ts src/**/*.d.ts; tsc",
     "lint": "standard",
     "lint:fix": "standard --fix",
-    "gen:bundle": "npx bare-pack --host ios-arm64 --host ios-arm64-simulator --host ios-x64-simulator --host android-arm --host android-arm64 --host android-ia32 --host android-x64 --linked --defer ledger-bitcoin --imports ./pack.imports.json --out bundle/worklet.bundle.mjs src/worklet.mjs",
+    "gen:bundle": "npx bare-pack --host ios-arm64 --host ios-arm64-simulator --host ios-x64-simulator --host android-arm --host android-arm64 --host android-ia32 --host android-x64 --linked --defer ledger-bitcoin --defer bufferutil --defer utf-8-validate --imports ./pack.imports.json --out bundle/worklet.bundle.mjs src/worklet.mjs",
     "gen:schema": "node src/schema/schema.js && node src/lib/hrpc-docs-builder.js",
     "postinstall": "npm run gen:bundle"
   },
