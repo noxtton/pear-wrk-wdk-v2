@@ -33,7 +33,7 @@ let wdk = null
  */
 rpc.onWorkletStart(async (/** @type {WorkletStart} */ init) => {
   try {
-    if (!wdk) wdk = new WdkManager(init.config);
+    if (!wdk) wdk = new WdkManager(JSON.parse(init.config));
     if (wdk.hasWdk()) wdk.disposeWdk() // cleanup existing;
     wdk.initWdk(init.seedPhrase || init.seedBuffer)
     return { status: 'started' }
@@ -60,7 +60,7 @@ rpc.onWorkletStart(async (/** @type {WorkletStart} */ init) => {
  */
 rpc.onWdkInit(async (/** @type {WdkInit} */ init) => {
   try {
-    if (!wdk) wdk = new WdkManager(init.config);
+    if (!wdk) wdk = new WdkManager(JSON.parse(init.config));
     if (wdk.hasWdk()) wdk.disposeWdk() // cleanup existing;
     wdk.initWdk(await getSeedBuffer(init))
     return { status: 'started' }

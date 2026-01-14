@@ -32,19 +32,12 @@ export const NetworkType = {
  * @enum {string}
  */
 export const Blockchain = {
-  // Standard networks
   Ethereum: 'ethereum',
   Arbitrum: 'arbitrum',
   Polygon: 'polygon',
   Ton: 'ton',
   Tron: 'tron',
-  Bitcoin: 'bitcoin',
-  // Abstraction networks
-  EthereumAbstraction: 'ethereumAbstraction',
-  ArbitrumAbstraction: 'arbitrumAbstraction',
-  PolygonAbstraction: 'polygonAbstraction',
-  TonAbstraction: 'tonAbstraction',
-  TronAbstraction: 'tronAbstraction'
+  Bitcoin: 'bitcoin'
 }
 
 /**
@@ -57,7 +50,7 @@ export const wdkType = {
 }
 
 /**
- * Mapping of blockchain to network type
+ * Mapping of blockchain to network type (standard wallets)
  */
 export const BLOCKCHAIN_NETWORK_TYPE = {
   [Blockchain.Ethereum]: NetworkType.EVM,
@@ -65,21 +58,19 @@ export const BLOCKCHAIN_NETWORK_TYPE = {
   [Blockchain.Polygon]: NetworkType.EVM,
   [Blockchain.Ton]: NetworkType.TON,
   [Blockchain.Tron]: NetworkType.TRON,
-  [Blockchain.Bitcoin]: NetworkType.BITCOIN,
-  [Blockchain.EthereumAbstraction]: NetworkType.EVM_ABSTRACTION,
-  [Blockchain.ArbitrumAbstraction]: NetworkType.EVM_ABSTRACTION,
-  [Blockchain.PolygonAbstraction]: NetworkType.EVM_ABSTRACTION,
-  [Blockchain.TonAbstraction]: NetworkType.TON_ABSTRACTION,
-  [Blockchain.TronAbstraction]: NetworkType.TRON_ABSTRACTION
+  [Blockchain.Bitcoin]: NetworkType.BITCOIN
 }
 
 /**
- * Mapping of abstraction blockchain to base blockchain (for config lookup)
+ * Mapping of blockchain to abstraction network type (abstracted wallets)
+ * ethereum, arbitrum, polygon -> EVM_ABSTRACTION (WalletManagerEvmErc4337)
+ * ton -> TON_ABSTRACTION (wdk-wallet-ton-gasless)
+ * tron -> TRON_ABSTRACTION (wdk-wallet-tron-gasfree)
  */
-export const ABSTRACTION_TO_BASE = {
-  [Blockchain.EthereumAbstraction]: Blockchain.Ethereum,
-  [Blockchain.ArbitrumAbstraction]: Blockchain.Arbitrum,
-  [Blockchain.PolygonAbstraction]: Blockchain.Polygon,
-  [Blockchain.TonAbstraction]: Blockchain.Ton,
-  [Blockchain.TronAbstraction]: Blockchain.Tron
+export const BLOCKCHAIN_ABSTRACTION_NETWORK_TYPE = {
+  [Blockchain.Ethereum]: NetworkType.EVM_ABSTRACTION,
+  [Blockchain.Arbitrum]: NetworkType.EVM_ABSTRACTION,
+  [Blockchain.Polygon]: NetworkType.EVM_ABSTRACTION,
+  [Blockchain.Ton]: NetworkType.TON_ABSTRACTION,
+  [Blockchain.Tron]: NetworkType.TRON_ABSTRACTION
 }

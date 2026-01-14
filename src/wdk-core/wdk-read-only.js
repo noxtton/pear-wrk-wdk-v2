@@ -13,7 +13,7 @@
 // limitations under the License.
 'use strict'
 /** @typedef {import('@tetherto/wdk-wallet').IWalletAccountReadOnly} IWalletAccountReadOnly */
-import { BLOCKCHAIN_NETWORK_TYPE, ABSTRACTION_TO_BASE } from './constants.js'
+import { BLOCKCHAIN_NETWORK_TYPE, BLOCKCHAIN_ABSTRACTION_NETWORK_TYPE } from './constants.js'
 import { moduleRegistry } from './module-registry.js'
 
 /**
@@ -50,13 +50,25 @@ class WDKReadOnly {
   }
 
   /**
+   * Get abstraction network type for a blockchain
+   * @param {Blockchain} blockchain
+   * @returns {NetworkType}
+   */
+  getAbstractionNetworkType (blockchain) {
+    const networkType = BLOCKCHAIN_ABSTRACTION_NETWORK_TYPE[blockchain]
+    if (!networkType) {
+      throw new Error(`Unsupported blockchain for abstraction: ${blockchain}`)
+    }
+    return networkType
+  }
+
+  /**
    * Get configuration for a blockchain
    * @param {Blockchain} blockchain
    * @returns {Object}
    */
   getConfig (blockchain) {
-    const configKey = ABSTRACTION_TO_BASE[blockchain] || blockchain
-    return this._config[configKey]
+    return this._config[blockchain]
   }
 
   /**
@@ -95,6 +107,32 @@ class WDKReadOnly {
     }
 
     const networkType = this.getNetworkType(blockchain)
+    const ReadOnlyAccount = await moduleRegistry.getReadOnlyAccount(networkType)
+    const config = this.getConfig(blockchain)
+
+    const account = new ReadOnlyAccount(address, config)
+    this._accounts.set(key, account)
+
+    return account
+  }
+
+  /**
+   * Get or create abstracted read-only account for blockchain and address
+   * Uses abstraction network type (e.g., EVM_ABSTRACTION for ethereum)
+   * @param {Blockchain} blockchain
+   * @param {string} address
+   * @returns {Promise<IWalletAccountReadOnly>}
+   */
+  async getAbstractedAccount (blockchain, address) {
+    this._checkDisposed()
+
+    const key = `${blockchain}_abstracted:${address}`
+
+    if (this._accounts.has(key)) {
+      return this._accounts.get(key)
+    }
+
+    const networkType = this.getAbstractionNetworkType(blockchain)
     const ReadOnlyAccount = await moduleRegistry.getReadOnlyAccount(networkType)
     const config = this.getConfig(blockchain)
 

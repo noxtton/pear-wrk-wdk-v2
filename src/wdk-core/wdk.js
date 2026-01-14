@@ -13,7 +13,7 @@
 // limitations under the License.
 'use strict'
 /** @typedef {import('@tetherto/wdk-wallet').IWalletAccount} IWalletAccount */
-import { BLOCKCHAIN_NETWORK_TYPE, ABSTRACTION_TO_BASE } from './constants.js'
+import { BLOCKCHAIN_NETWORK_TYPE, BLOCKCHAIN_ABSTRACTION_NETWORK_TYPE } from './constants.js'
 import { moduleRegistry } from './module-registry.js'
 
 /**
@@ -53,14 +53,25 @@ class WDK {
   }
 
   /**
+   * Get abstraction network type for a blockchain
+   * @param {Blockchain} blockchain
+   * @returns {NetworkType}
+   */
+  getAbstractionNetworkType (blockchain) {
+    const networkType = BLOCKCHAIN_ABSTRACTION_NETWORK_TYPE[blockchain]
+    if (!networkType) {
+      throw new Error(`Unsupported blockchain for abstraction: ${blockchain}`)
+    }
+    return networkType
+  }
+
+  /**
    * Get configuration for a blockchain
    * @param {Blockchain} blockchain
    * @returns {Object}
    */
   getConfig (blockchain) {
-    // For abstraction blockchains, use base blockchain config
-    const configKey = ABSTRACTION_TO_BASE[blockchain] || blockchain
-    return this._config[configKey]
+    return this._config[blockchain]
   }
 
   /**
@@ -95,6 +106,29 @@ class WDK {
   }
 
   /**
+   * Get or initialize abstracted wallet manager for blockchain
+   * Uses abstraction network type (e.g., EVM_ABSTRACTION for ethereum)
+   * @param {Blockchain} blockchain
+   * @returns {Promise<any>}
+   */
+  async getAbstractedWallet (blockchain) {
+    this._checkDisposed()
+
+    const abstractedKey = `${blockchain}_abstracted`
+    if (this._wallets.has(abstractedKey)) {
+      return this._wallets.get(abstractedKey)
+    }
+
+    const networkType = this.getAbstractionNetworkType(blockchain)
+    const WalletManager = await moduleRegistry.getWalletManager(networkType)
+    const config = this.getConfig(blockchain)
+    const wallet = new WalletManager(this._seed, config)
+    this._wallets.set(abstractedKey, wallet)
+
+    return wallet
+  }
+
+  /**
    * Get account for blockchain at index
    * @param {Blockchain} blockchain
    * @param {number} index
@@ -102,6 +136,18 @@ class WDK {
    */
   async getAccount (blockchain, index = 0) {
     const wallet = await this.getWallet(blockchain)
+    return wallet.getAccount(index)
+  }
+
+  /**
+   * Get abstracted account for blockchain at index
+   * Uses abstraction wallet manager (e.g., WalletManagerEvmErc4337 for ethereum)
+   * @param {Blockchain} blockchain
+   * @param {number} index
+   * @returns {Promise<IWalletAccount>}
+   */
+  async getAbstractedAccount (blockchain, index = 0) {
+    const wallet = await this.getAbstractedWallet(blockchain)
     return wallet.getAccount(index)
   }
 
