@@ -1,7 +1,24 @@
 import HRPC from '../spec/hrpc'
 
-import WdkManager from './wdk-core/wdk-manager-v3.js'
+import WdkManager, { wdkType } from './wdk-core/wdk-manager-v3.js'
 import { stringifyError } from './exceptions/rpc-exception.js'
+
+/**
+ * Validates that required parameters are provided based on wdkType
+ * @param {Object} payload
+ * @param {string} payload.wdkType - The WDK type (wdk or wdkReadOnly)
+ * @param {number} [payload.accountIndex] - Account index (required for WDK)
+ * @param {string} [payload.address] - Address (required for WDKReadOnly)
+ * @throws {Error} If required parameters are missing
+ */
+function validateWdkTypeParams(payload) {
+  if (payload.wdkType === wdkType.WDK && payload.accountIndex === undefined) {
+    throw new Error('accountIndex is required for wdkType WDK')
+  }
+  if (payload.wdkType === wdkType.WDKReadOnly && !payload.address) {
+    throw new Error('address is required for wdkType WDKReadOnly')
+  }
+}
 import bip39 from 'bip39'
 import { WdkSecretManager } from '@tetherto/wdk-secret-manager'
 import { getSeedBuffer } from './lib/seed-buffer.js'
@@ -93,7 +110,8 @@ rpc.onGetAddress(async payload => {
 
 rpc.onGetAddressBalance(async payload => {
   try {
-    const balance = await wdk.getAddressBalance(payload.network, payload.accountIndex)
+    validateWdkTypeParams(payload)
+    const balance = await wdk.getBalance(payload.wdkType, payload.network, { index: payload.accountIndex, address: payload.address })
     return { balance: balance.toString() }
   } catch (error) {
     throw new Error(stringifyError(error))
@@ -102,9 +120,10 @@ rpc.onGetAddressBalance(async payload => {
 
 rpc.onQuoteSendTransaction(async payload => {
   try {
+    validateWdkTypeParams(payload)
     // Convert amount value to number
     payload.options.value = Number(payload.options.value)
-    const transaction = await wdk.quoteSendTransaction(payload.network, payload.accountIndex, payload.options)
+    const transaction = await wdk.quoteSendTransaction(payload.wdkType, payload.network, { index: payload.accountIndex, address: payload.address }, payload.options)
     return { fee: transaction.fee.toString() }
   } catch (error) {
     throw new Error(stringifyError(error))
@@ -194,7 +213,8 @@ rpc.onGetAbstractedAddress(async payload => {
 
 rpc.onGetAbstractedAddressBalance(async payload => {
   try {
-    const balance = await wdk.getAbstractedAddressBalance(payload.network, payload.accountIndex)
+    validateWdkTypeParams(payload)
+    const balance = await wdk.getAbstractedAddressBalance(payload.wdkType, payload.network, { index: payload.accountIndex, address: payload.address })
     return { balance: balance.toString() }
   } catch (error) {
     throw new Error(stringifyError(error))
@@ -203,7 +223,8 @@ rpc.onGetAbstractedAddressBalance(async payload => {
 
 rpc.onGetAbstractedAddressTokenBalance(async payload => {
   try {
-    const balance = await wdk.getAbstractedAddressTokenBalance(payload.network, payload.accountIndex, payload.tokenAddress)
+    validateWdkTypeParams(payload)
+    const balance = await wdk.getAbstractedAddressTokenBalance(payload.wdkType, payload.network, payload.tokenAddress, { index: payload.accountIndex, address: payload.address })
     return { balance: balance.toString() }
   } catch (error) {
     throw new Error(stringifyError(error))
@@ -237,8 +258,9 @@ rpc.onAbstractedSendTransaction(async payload => {
 
 rpc.onAbstractedAccountQuoteTransfer(async payload => {
   try {
+    validateWdkTypeParams(payload)
     payload.options.amount = Number(payload.options.amount)
-    const transfer = await wdk.abstractedAccountQuoteTransfer(payload.network, payload.accountIndex, payload.options, payload.config)
+    const transfer = await wdk.abstractedAccountQuoteTransfer(payload.wdkType, payload.network, { index: payload.accountIndex, address: payload.address }, payload.options, payload.config)
     return { fee: transfer.fee.toString() }
   } catch (error) {
     throw new Error(stringifyError(error))
@@ -247,7 +269,8 @@ rpc.onAbstractedAccountQuoteTransfer(async payload => {
 
 rpc.onGetTransactionReceipt(async payload => {
   try {
-    const receipt = await wdk.getTransactionReceipt(payload.network, payload.accountIndex, payload.hash)
+    validateWdkTypeParams(payload)
+    const receipt = await wdk.getTransactionReceipt(payload.wdkType, payload.network, { index: payload.accountIndex, address: payload.address }, payload.hash)
     if (receipt) {
       return { receipt: JSON.stringify(receipt) }
     }

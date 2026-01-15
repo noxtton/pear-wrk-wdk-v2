@@ -53,6 +53,24 @@
 
 ---
 
+## wdkReadOnlyInit
+
+**Request:** `@wdk-core/wdkReadOnlyInit-request`
+
+**Fields:**
+
+- `enableDebugLogs`: `uint` _(optional)_ _(v1)_
+- `allowedNetworks`: `string` _(v1)_
+- `config`: `string` _(v1)_
+
+**Response:** `@wdk-core/wdkReadOnlyInit-response`
+
+**Fields:**
+
+- `status`: `string` _(v1)_
+
+---
+
 ## getAddress
 
 **Request:** `@wdk-core/getAddress-request`
@@ -76,8 +94,10 @@
 
 **Fields:**
 
+- `wdkType`: `string` _(v1)_
 - `network`: `string` _(v1)_
-- `accountIndex`: `uint` _(v1)_
+- `accountIndex`: `uint` _(optional)_ _(v1)_
+- `address`: `string` _(optional)_ _(v1)_
 
 **Response:** `@wdk-core/getAddressBalance-response`
 
@@ -93,8 +113,10 @@
 
 **Fields:**
 
+- `wdkType`: `string` _(v1)_
 - `network`: `string` _(v1)_
-- `accountIndex`: `uint` _(v1)_
+- `accountIndex`: `uint` _(optional)_ _(v1)_
+- `address`: `string` _(optional)_ _(v1)_
 - `options`: `object` _(v1)_
   - `to`: `string` _(v1)_
   - `value`: `string` _(v1)_
@@ -142,7 +164,7 @@
 **Fields:**
 
 - `eoaAddress`: `string` _(v1)_
-- `address`: `string` _(v2)_
+- `address`: `string` _(v1)_
 
 ---
 
@@ -152,8 +174,10 @@
 
 **Fields:**
 
+- `wdkType`: `string` _(v1)_
 - `network`: `string` _(v1)_
-- `accountIndex`: `uint` _(v1)_
+- `accountIndex`: `uint` _(optional)_ _(v1)_
+- `address`: `string` _(optional)_ _(v1)_
 
 **Response:** `@wdk-core/getAbstractedAddressBalance-response`
 
@@ -169,9 +193,11 @@
 
 **Fields:**
 
+- `wdkType`: `string` _(v1)_
 - `network`: `string` _(v1)_
-- `accountIndex`: `uint` _(v1)_
 - `tokenAddress`: `string` _(v1)_
+- `accountIndex`: `uint` _(optional)_ _(v1)_
+- `address`: `string` _(optional)_ _(v1)_
 
 **Response:** `@wdk-core/getAbstractedAddressTokenBalance-response`
 
@@ -255,8 +281,10 @@
 
 **Fields:**
 
+- `wdkType`: `string` _(v1)_
 - `network`: `string` _(v1)_
-- `accountIndex`: `uint` _(v1)_
+- `accountIndex`: `uint` _(optional)_ _(v1)_
+- `address`: `string` _(optional)_ _(v1)_
 - `options`: `object` _(v1)_
   - `token`: `string` _(v1)_
   - `recipient`: `string` _(v1)_
@@ -279,8 +307,10 @@
 
 **Fields:**
 
+- `wdkType`: `string` _(v1)_
 - `network`: `string` _(v1)_
-- `accountIndex`: `uint` _(v1)_
+- `accountIndex`: `uint` _(optional)_ _(v1)_
+- `address`: `string` _(optional)_ _(v1)_
 - `hash`: `string` _(v1)_
 
 **Response:** `@wdk-core/getTransactionReceipt-response`
@@ -353,24 +383,6 @@ _No fields defined_
 **Fields:**
 
 - `mnemonic`: `string` _(v1)_
-
----
-
-## wdkReadOnlyInit
-
-**Request:** `@wdk-core/wdkReadOnlyInit-request`
-
-**Fields:**
-
-- `enableDebugLogs`: `uint` _(optional)_ _(v3)_
-- `allowedNetworks`: `string` _(v3)_
-- `config`: `string` _(v3)_
-
-**Response:** `@wdk-core/wdkReadOnlyInit-response`
-
-**Fields:**
-
-- `status`: `string` _(v3)_
 
 ---
 

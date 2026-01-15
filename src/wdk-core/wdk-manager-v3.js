@@ -235,6 +235,28 @@ export default class WdkManager {
   }
 
   /**
+   * Get abstracted account based on wdkType
+   * @param {string} type - wdkType.WDK or wdkType.WDKReadOnly
+   * @param {Blockchain} blockchain
+   * @param {Object} options
+   * @param {number} [options.index] - account index for WDK
+   * @param {string} [options.address] - address for WDKReadOnly
+   * @returns {Promise<IWalletAccount | IWalletAccountReadOnly>}
+   */
+  async getAbstractedAccountByType (type, blockchain, { index, address } = {}) {
+    if (type === wdkType.WDKReadOnly) {
+      if (address === undefined) {
+        throw new Error('address is required for WDKReadOnly')
+      }
+      return this.getReadOnlyAccount(blockchain, address)
+    }
+    if (type === wdkType.WDK) {
+      return this.getAbstractedAccount(blockchain, index)
+    }
+    throw new Error(`Invalid wdkType: ${type}`)
+  }
+
+  /**
    * Get address for blockchain-abstracted account.
    * @param {Blockchain} blockchain
    * @param {number} index
@@ -250,24 +272,30 @@ export default class WdkManager {
 
   /**
    * Get balance for blockchain-abstracted account.
+   * @param {wdkType} type - wdkType.WDK or wdkType.WDKReadOnly
    * @param {Blockchain} blockchain
-   * @param {number} index
+   * @param {Object} options
+   * @param {number} [options.index] - account index for WDK
+   * @param {string} [options.address] - address for WDKReadOnly
    * @returns {Promise<bigint>}
    */
-  async getAbstractedAddressBalance (blockchain, index = 0) {
-    const account = await this.getAbstractedAccount(blockchain, index)
+  async getAbstractedAddressBalance (type, blockchain, { index, address } = {}) {
+    const account = await this.getAbstractedAccountByType(type, blockchain, { index, address })
     return account.getBalance()
   }
 
   /**
    * Get token balance for blockchain-abstracted account.
+   * @param {wdkType} type - wdkType.WDK or wdkType.WDKReadOnly
    * @param {Blockchain} blockchain
-   * @param {number} index
    * @param {string} tokenAddress
+   * @param {Object} options
+   * @param {number} [options.index] - account index for WDK
+   * @param {string} [options.address] - address for WDKReadOnly
    * @returns {Promise<bigint>}
    */
-  async getAbstractedAddressTokenBalance (blockchain, index, tokenAddress) {
-    const account = await this.getAbstractedAccount(blockchain, index)
+  async getAbstractedAddressTokenBalance (type, blockchain, tokenAddress, { index, address } = {}) {
+    const account = await this.getAbstractedAccountByType(type, blockchain, { index, address })
     return account.getTokenBalance(tokenAddress)
   }
 
@@ -393,8 +421,11 @@ export default class WdkManager {
    * Quotes the costs of a transfer operation.
    *
    * @see {@link transfer}
+   * @param {wdkType} type - wdkType.WDK or wdkType.WDKReadOnly
    * @param {Blockchain} blockchain - A blockchain identifier (e.g., "ethereum").
-   * @param {number} accountIndex - The index of the account to use (see [BIP-44](https://en.bitcoin.it/wiki/BIP_0044)).
+   * @param {Object} opt
+   * @param {number} [opt.index] - account index for WDK
+   * @param {string} [opt.address] - address for WDKReadOnly
    * @param {TransferOptions} options - The transfer's options.
    * @param {TransferConfig} [config] - If set, overrides the 'transferMaxFee' and 'paymasterToken' options defined in the manager configuration.
    * @returns {Promise<Omit<TransferResult, 'hash'>>} The transfer's quotes.
@@ -409,21 +440,24 @@ export default class WdkManager {
    *
    * console.log("Gas cost in paymaster token:", quote.fee);
    */
-  async abstractedAccountQuoteTransfer (blockchain, accountIndex, options, config) {
-    const account = await this.getAbstractedAccount(blockchain, accountIndex)
+  async abstractedAccountQuoteTransfer (type, blockchain, { index, address } = {}, options, config) {
+    const account = await this.getAbstractedAccountByType(type, blockchain, { index, address })
     return await account.quoteTransfer(options, config)
   }
 
   /**
    * Get abstracted account transaction receipt.
    *
+   * @param {wdkType} type - wdkType.WDK or wdkType.WDKReadOnly
    * @param {Blockchain} blockchain - A blockchain identifier (e.g., "ethereum").
-   * @param {number} accountIndex - The index of the account to use (see [BIP-44](https://en.bitcoin.it/wiki/BIP_0044)).
+   * @param {Object} opt
+   * @param {number} [opt.index] - account index for WDK
+   * @param {string} [opt.address] - address for WDKReadOnly
    * @param {string} hash - Transaction hash.
    * @return {Promise<unknown | null>} - The receipt, or null if the transaction has not been included in a block yet.
    */
-  async getTransactionReceipt (blockchain, accountIndex, hash) {
-    const account = await this.getAbstractedAccount(blockchain, accountIndex)
+  async getTransactionReceipt (type, blockchain, { index, address } = {}, hash) {
+    const account = await this.getAbstractedAccountByType(type, blockchain, { index, address })
     const receipt = await account.getTransactionReceipt(hash)
     if (!receipt) return null
     if (blockchain === Blockchain.Ton) {

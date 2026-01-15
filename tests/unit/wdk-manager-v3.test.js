@@ -248,25 +248,47 @@ describe('WdkManager', () => {
     })
 
     describe('getAbstractedAddressBalance', () => {
-      it('should return balance from abstracted account', async () => {
+      it('should return balance from abstracted account with wdkType WDK', async () => {
         const mockAccount = { getBalance: jest.fn().mockResolvedValue(BigInt(1000)) }
         mockWdkGetAbstractedAccount.mockResolvedValue(mockAccount)
 
-        const result = await manager.getAbstractedAddressBalance(Blockchain.Ethereum, 0)
+        const result = await manager.getAbstractedAddressBalance(wdkType.WDK, Blockchain.Ethereum, { index: 0 })
 
         expect(result).toBe(BigInt(1000))
+        expect(mockAccount.getBalance).toHaveBeenCalled()
+      })
+
+      it('should return balance from read-only account with wdkType WDKReadOnly', async () => {
+        manager.initWdkReadOnly()
+        const mockAccount = { getBalance: jest.fn().mockResolvedValue(BigInt(2000)) }
+        mockWdkReadOnlyGetAccount.mockResolvedValue(mockAccount)
+
+        const result = await manager.getAbstractedAddressBalance(wdkType.WDKReadOnly, Blockchain.Ethereum, { address: '0xtest' })
+
+        expect(result).toBe(BigInt(2000))
         expect(mockAccount.getBalance).toHaveBeenCalled()
       })
     })
 
     describe('getAbstractedAddressTokenBalance', () => {
-      it('should return token balance from abstracted account', async () => {
+      it('should return token balance from abstracted account with wdkType WDK', async () => {
         const mockAccount = { getTokenBalance: jest.fn().mockResolvedValue(BigInt(500)) }
         mockWdkGetAbstractedAccount.mockResolvedValue(mockAccount)
 
-        const result = await manager.getAbstractedAddressTokenBalance(Blockchain.Ethereum, 0, '0xtoken')
+        const result = await manager.getAbstractedAddressTokenBalance(wdkType.WDK, Blockchain.Ethereum, '0xtoken', { index: 0 })
 
         expect(result).toBe(BigInt(500))
+        expect(mockAccount.getTokenBalance).toHaveBeenCalledWith('0xtoken')
+      })
+
+      it('should return token balance from read-only account with wdkType WDKReadOnly', async () => {
+        manager.initWdkReadOnly()
+        const mockAccount = { getTokenBalance: jest.fn().mockResolvedValue(BigInt(750)) }
+        mockWdkReadOnlyGetAccount.mockResolvedValue(mockAccount)
+
+        const result = await manager.getAbstractedAddressTokenBalance(wdkType.WDKReadOnly, Blockchain.Ethereum, '0xtoken', { address: '0xtest' })
+
+        expect(result).toBe(BigInt(750))
         expect(mockAccount.getTokenBalance).toHaveBeenCalledWith('0xtoken')
       })
     })
@@ -316,13 +338,26 @@ describe('WdkManager', () => {
     })
 
     describe('abstractedAccountQuoteTransfer', () => {
-      it('should quote transfer via abstracted account', async () => {
+      it('should quote transfer via abstracted account with wdkType WDK', async () => {
         const mockQuote = { fee: BigInt(100) }
         const mockAccount = { quoteTransfer: jest.fn().mockResolvedValue(mockQuote) }
         mockWdkGetAbstractedAccount.mockResolvedValue(mockAccount)
 
         const options = { recipient: '0xabc', token: '0xtoken', amount: 1000000 }
-        const result = await manager.abstractedAccountQuoteTransfer(Blockchain.Ethereum, 0, options)
+        const result = await manager.abstractedAccountQuoteTransfer(wdkType.WDK, Blockchain.Ethereum, { index: 0 }, options)
+
+        expect(mockAccount.quoteTransfer).toHaveBeenCalledWith(options, undefined)
+        expect(result).toEqual(mockQuote)
+      })
+
+      it('should quote transfer via read-only account with wdkType WDKReadOnly', async () => {
+        manager.initWdkReadOnly()
+        const mockQuote = { fee: BigInt(200) }
+        const mockAccount = { quoteTransfer: jest.fn().mockResolvedValue(mockQuote) }
+        mockWdkReadOnlyGetAccount.mockResolvedValue(mockAccount)
+
+        const options = { recipient: '0xabc', token: '0xtoken', amount: 1000000 }
+        const result = await manager.abstractedAccountQuoteTransfer(wdkType.WDKReadOnly, Blockchain.Ethereum, { address: '0xtest' }, options)
 
         expect(mockAccount.quoteTransfer).toHaveBeenCalledWith(options, undefined)
         expect(result).toEqual(mockQuote)
@@ -330,12 +365,24 @@ describe('WdkManager', () => {
     })
 
     describe('getTransactionReceipt', () => {
-      it('should return transaction receipt', async () => {
+      it('should return transaction receipt with wdkType WDK', async () => {
         const mockReceipt = { status: 1, blockNumber: 12345 }
         const mockAccount = { getTransactionReceipt: jest.fn().mockResolvedValue(mockReceipt) }
         mockWdkGetAbstractedAccount.mockResolvedValue(mockAccount)
 
-        const result = await manager.getTransactionReceipt(Blockchain.Ethereum, 0, '0xhash')
+        const result = await manager.getTransactionReceipt(wdkType.WDK, Blockchain.Ethereum, { index: 0 }, '0xhash')
+
+        expect(mockAccount.getTransactionReceipt).toHaveBeenCalledWith('0xhash')
+        expect(result).toEqual(mockReceipt)
+      })
+
+      it('should return transaction receipt with wdkType WDKReadOnly', async () => {
+        manager.initWdkReadOnly()
+        const mockReceipt = { status: 1, blockNumber: 12345 }
+        const mockAccount = { getTransactionReceipt: jest.fn().mockResolvedValue(mockReceipt) }
+        mockWdkReadOnlyGetAccount.mockResolvedValue(mockAccount)
+
+        const result = await manager.getTransactionReceipt(wdkType.WDKReadOnly, Blockchain.Ethereum, { address: '0xtest' }, '0xhash')
 
         expect(mockAccount.getTransactionReceipt).toHaveBeenCalledWith('0xhash')
         expect(result).toEqual(mockReceipt)
@@ -345,7 +392,7 @@ describe('WdkManager', () => {
         const mockAccount = { getTransactionReceipt: jest.fn().mockResolvedValue(null) }
         mockWdkGetAbstractedAccount.mockResolvedValue(mockAccount)
 
-        const result = await manager.getTransactionReceipt(Blockchain.Ethereum, 0, '0xhash')
+        const result = await manager.getTransactionReceipt(wdkType.WDK, Blockchain.Ethereum, { index: 0 }, '0xhash')
 
         expect(result).toBeNull()
       })
@@ -356,7 +403,7 @@ describe('WdkManager', () => {
         const mockAccount = { getTransactionReceipt: jest.fn().mockResolvedValue(mockReceipt) }
         mockWdkGetAbstractedAccount.mockResolvedValue(mockAccount)
 
-        const result = await manager.getTransactionReceipt(Blockchain.Ton, 0, '0xhash')
+        const result = await manager.getTransactionReceipt(wdkType.WDK, Blockchain.Ton, { index: 0 }, '0xhash')
 
         expect(result).toEqual({ hash: mockHashBuffer.toString('hex') })
       })
@@ -395,6 +442,42 @@ describe('WdkManager', () => {
 
     it('should throw error for invalid wdkType', async () => {
       await expect(manager.getAccountByType('invalidType', Blockchain.Ethereum, {}))
+        .rejects.toThrow('Invalid wdkType: invalidType')
+    })
+  })
+
+  describe('getAbstractedAccountByType', () => {
+    it('should return abstracted account when type is WDK', async () => {
+      manager.initWdk(mockSeed)
+      const mockAccount = { address: '0x456' }
+      mockWdkGetAbstractedAccount.mockResolvedValue(mockAccount)
+
+      const result = await manager.getAbstractedAccountByType(wdkType.WDK, Blockchain.Ethereum, { index: 1 })
+
+      expect(mockWdkGetAbstractedAccount).toHaveBeenCalledWith(Blockchain.Ethereum, 1)
+      expect(result).toEqual(mockAccount)
+    })
+
+    it('should return read-only account when type is WDKReadOnly', async () => {
+      manager.initWdkReadOnly()
+      const mockAccount = { address: '0xreadonly' }
+      mockWdkReadOnlyGetAccount.mockResolvedValue(mockAccount)
+
+      const result = await manager.getAbstractedAccountByType(wdkType.WDKReadOnly, Blockchain.Ethereum, { address: '0xtest' })
+
+      expect(mockWdkReadOnlyGetAccount).toHaveBeenCalledWith(Blockchain.Ethereum, '0xtest')
+      expect(result).toEqual(mockAccount)
+    })
+
+    it('should throw error when WDKReadOnly requires address but not provided', async () => {
+      manager.initWdkReadOnly()
+
+      await expect(manager.getAbstractedAccountByType(wdkType.WDKReadOnly, Blockchain.Ethereum, {}))
+        .rejects.toThrow('address is required for WDKReadOnly')
+    })
+
+    it('should throw error for invalid wdkType', async () => {
+      await expect(manager.getAbstractedAccountByType('invalidType', Blockchain.Ethereum, {}))
         .rejects.toThrow('Invalid wdkType: invalidType')
     })
   })

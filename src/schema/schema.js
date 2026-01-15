@@ -110,8 +110,10 @@ schemaNs.register({
 schemaNs.register({
   name: 'getAddressBalance-request',
   fields: [
+    { name: 'wdkType', type: 'string', required: true },
     { name: 'network', type: 'string', required: true },
-    { name: 'accountIndex', type: 'uint', required: true }
+    { name: 'accountIndex', type: 'uint', required: false },
+    { name: 'address', type: 'string', required: false }
   ]
 })
 
@@ -135,8 +137,10 @@ schemaNs.register({
 schemaNs.register({
   name: 'quoteSendTransaction-request',
   fields: [
+    { name: 'wdkType', type: 'string', required: true },
     { name: 'network', type: 'string', required: true },
-    { name: 'accountIndex', type: 'uint', required: true },
+    { name: 'accountIndex', type: 'uint', required: false },
+    { name: 'address', type: 'string', required: false },
     { name: 'options', type: '@wdk-core/quoteSendTransaction-request-options', required: true }
   ]
 })
@@ -205,8 +209,10 @@ schemaNs.register({
 schemaNs.register({
   name: 'getAbstractedAddressBalance-request',
   fields: [
+    { name: 'wdkType', type: 'string', required: true },
     { name: 'network', type: 'string', required: true },
-    { name: 'accountIndex', type: 'uint', required: true }
+    { name: 'accountIndex', type: 'uint', required: false },
+    { name: 'address', type: 'string', required: false }
   ]
 })
 
@@ -223,9 +229,11 @@ schemaNs.register({
 schemaNs.register({
   name: 'getAbstractedAddressTokenBalance-request',
   fields: [
+    { name: 'wdkType', type: 'string', required: true },
     { name: 'network', type: 'string', required: true },
-    { name: 'accountIndex', type: 'uint', required: true },
-    { name: 'tokenAddress', type: 'string', required: true }
+    { name: 'tokenAddress', type: 'string', required: true },
+    { name: 'accountIndex', type: 'uint', required: false },
+    { name: 'address', type: 'string', required: false }
   ]
 })
 
@@ -358,8 +366,10 @@ schemaNs.register({
 schemaNs.register({
   name: 'abstractedAccountQuoteTransfer-request',
   fields: [
+    { name: 'wdkType', type: 'string', required: true },
     { name: 'network', type: 'string', required: true },
-    { name: 'accountIndex', type: 'uint', required: true },
+    { name: 'accountIndex', type: 'uint', required: false },
+    { name: 'address', type: 'string', required: false },
     { name: 'options', type: '@wdk-core/abstractedAccountQuoteTransfer-request-options', required: true },
     { name: 'config', type: '@wdk-core/abstractedAccountQuoteTransfer-request-config', required: false }
   ]
@@ -375,8 +385,10 @@ schemaNs.register({
 schemaNs.register({
   name: 'getTransactionReceipt-request',
   fields: [
+    { name: 'wdkType', type: 'string', required: true },
     { name: 'network', type: 'string', required: true },
-    { name: 'accountIndex', type: 'uint', required: true },
+    { name: 'accountIndex', type: 'uint', required: false },
+    { name: 'address', type: 'string', required: false },
     { name: 'hash', type: 'string', required: true }
   ]
 })
