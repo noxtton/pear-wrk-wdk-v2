@@ -248,7 +248,7 @@ export default class WdkManager {
       if (address === undefined) {
         throw new Error('address is required for WDKReadOnly')
       }
-      return this.getReadOnlyAccount(blockchain, address)
+      return this.getReadOnlyAbstractedAccount(blockchain, address)
     }
     if (type === wdkType.WDK) {
       return this.getAbstractedAccount(blockchain, index)
@@ -501,6 +501,18 @@ export default class WdkManager {
   async getReadOnlyAccount (blockchain, address) {
     this._requireWdkReadOnly()
     return this.wdkReadOnly.getAccount(blockchain, address)
+  }
+
+  /**
+   * Get read-only abstracted account for blockchain and address
+   * Uses abstraction network type (e.g., EVM_ABSTRACTION for ethereum)
+   * @param {Blockchain} blockchain
+   * @param {string} address
+   * @returns {Promise<IWalletAccountReadOnly>}
+   */
+  async getReadOnlyAbstractedAccount (blockchain, address) {
+    this._requireWdkReadOnly()
+    return this.wdkReadOnly.getAbstractedAccount(blockchain, address)
   }
 
   /**

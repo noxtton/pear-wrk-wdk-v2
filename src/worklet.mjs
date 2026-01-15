@@ -12,7 +12,7 @@ import { stringifyError } from './exceptions/rpc-exception.js'
  * @throws {Error} If required parameters are missing
  */
 function validateWdkTypeParams(payload) {
-  if (payload.wdkType === wdkType.WDK && payload.accountIndex === undefined) {
+  if (payload.wdkType === wdkType.WDK && payload.accountIndex === null) {
     throw new Error('accountIndex is required for wdkType WDK')
   }
   if (payload.wdkType === wdkType.WDKReadOnly && !payload.address) {
@@ -92,7 +92,7 @@ rpc.onWdkInit(async (/** @type {WdkInit} */ init) => {
  */
 rpc.onWdkReadOnlyInit(async (init) => {
   try {
-    if (!wdk) wdk = new WdkManager(init.config);
+    if (!wdk) wdk = new WdkManager(JSON.parse(init.config));
     if (!wdk.hasWdkReadOnly()) wdk.initWdkReadOnly();
     return { status: 'started' }
   } catch (error) {
