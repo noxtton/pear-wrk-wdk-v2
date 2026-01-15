@@ -20,7 +20,14 @@
 
 import test from 'brittle'
 import { serverStream, clientStream } from '../../../src/lib/ipc.js'
-import config from '../../../local/chains.json'
+import { validateTestConfig, loadTestSeeds, loadChainsConfig } from './test-utils.js'
+
+// Validate config files exist before proceeding
+validateTestConfig()
+
+// Load configurations
+const config = loadChainsConfig()
+const testSeeds = loadTestSeeds()
 
 // Setup BareKit mock before importing worklet
 global.BareKit = { IPC: serverStream }
@@ -30,9 +37,9 @@ import HRPC from '../../../spec/hrpc'
 
 const rpc = new HRPC(clientStream)
 
-// Test seed phrases
-const TEST_SEED_PHRASE = 'clump cherry rural carry lazy blade gain high holiday point witness when'
-const ALT_SEED_PHRASE = 'rack cruise mouse aspect wise model abstract acquire crack chicken defense blue'
+// Test seed phrases loaded from local config (gitignored)
+const TEST_SEED_PHRASE = testSeeds.primary
+const ALT_SEED_PHRASE = testSeeds.secondary
 
 // ============================================
 // onWdkInit Tests
