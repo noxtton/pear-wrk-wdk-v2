@@ -11,6 +11,7 @@
     "test": "node --experimental-vm-modules node_modules/jest/bin/jest.js",
     "test:watch": "node --experimental-vm-modules node_modules/jest/bin/jest.js --watch",
     "test:coverage": "node --experimental-vm-modules node_modules/jest/bin/jest.js --coverage",
+    "test:bare": "brittle-bare tests/integrations/bare/*.test.js",
     "gen:bundle": "npx bare-pack --target ios-arm64 --target ios-arm64-simulator --target ios-x64-simulator --target android-arm --target android-arm64 --target android-ia32 --target android-x64 --linked --defer ledger-bitcoin --defer bufferutil --defer utf-8-validate --imports ./pack.imports.json --out bundle/worklet.bundle.mjs src/worklet.mjs",
     "gen:schema": "node src/schema/schema.js && node src/lib/hrpc-docs-builder.js",
     "postinstall": "npm run gen:bundle"
