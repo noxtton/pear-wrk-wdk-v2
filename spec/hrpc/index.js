@@ -42,7 +42,9 @@ const methods = new Map([
   ['@wdk-core/decrypt', 17],
   [17, '@wdk-core/decrypt'],
   ['@wdk-core/generateSeed', 18],
-  [18, '@wdk-core/generateSeed']
+  [18, '@wdk-core/generateSeed'],
+  ['@wdk-core/wdkReadOnlyInit', 19],
+  [19, '@wdk-core/wdkReadOnlyInit']
 ])
 
 class HRPC {
@@ -68,7 +70,8 @@ class HRPC {
       ['@wdk-core/dispose', getEncoding('@wdk-core/dispose-request')],
       ['@wdk-core/generateAndEncrypt', getEncoding('@wdk-core/generateAndEncrypt-request')],
       ['@wdk-core/decrypt', getEncoding('@wdk-core/decrypt-request')],
-      ['@wdk-core/generateSeed', getEncoding('@wdk-core/generateSeed-request')]
+      ['@wdk-core/generateSeed', getEncoding('@wdk-core/generateSeed-request')],
+      ['@wdk-core/wdkReadOnlyInit', getEncoding('@wdk-core/wdkReadOnlyInit-request')]
     ])
     this._responseEncodings = new Map([
       ['@wdk-core/workletStart', getEncoding('@wdk-core/workletStart-response')],
@@ -87,7 +90,8 @@ class HRPC {
       ['@wdk-core/getTransactionReceipt', getEncoding('@wdk-core/getTransactionReceipt-response')],
       ['@wdk-core/generateAndEncrypt', getEncoding('@wdk-core/generateAndEncrypt-response')],
       ['@wdk-core/decrypt', getEncoding('@wdk-core/decrypt-response')],
-      ['@wdk-core/generateSeed', getEncoding('@wdk-core/generateSeed-response')]
+      ['@wdk-core/generateSeed', getEncoding('@wdk-core/generateSeed-response')],
+      ['@wdk-core/wdkReadOnlyInit', getEncoding('@wdk-core/wdkReadOnlyInit-response')]
     ])
     this._rpc = new RPC(stream, async (req) => {
       const command = methods.get(req.command)
@@ -227,6 +231,10 @@ class HRPC {
     return this._call('@wdk-core/generateSeed', args)
   }
 
+  async wdkReadOnlyInit (args) {
+    return this._call('@wdk-core/wdkReadOnlyInit', args)
+  }
+
   onLog (responseFn) {
     this._handlers['@wdk-core/log'] = responseFn
   }
@@ -301,6 +309,10 @@ class HRPC {
 
   onGenerateSeed (responseFn) {
     this._handlers['@wdk-core/generateSeed'] = responseFn
+  }
+
+  onWdkReadOnlyInit (responseFn) {
+    this._handlers['@wdk-core/wdkReadOnlyInit'] = responseFn
   }
 
   _requestIsStream (command) {

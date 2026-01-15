@@ -1,5 +1,5 @@
 {
-  "version": 1,
+  "version": 2,
   "schema": [
     {
       "id": 0,
@@ -239,6 +239,19 @@
         "stream": false
       },
       "version": 1
+    },
+    {
+      "id": 3,
+      "name": "@wdk-core/wdkReadOnlyInit",
+      "request": {
+        "name": "@wdk-core/wdkReadOnlyInit-request",
+        "stream": false
+      },
+      "response": {
+        "name": "@wdk-core/wdkReadOnlyInit-response",
+        "stream": false
+      },
+      "version": 2
     }
   ]
 }

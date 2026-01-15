@@ -68,20 +68,20 @@ rpc.onWdkInit(async (/** @type {WdkInit} */ init) => {
     throw new Error(stringifyError(error))
   }
 })
-// /**
-//  *
-//  * @returns {Promise<{status: string}>} Status object indicating successful start
-//  * @throws {Error} If decryption fails or WdkManager initialization fails
-//  */
-// rpc.onWdkReadOnlyInit(async (init) => {
-//   try {
-//     if (!wdk) wdk = new WdkManager(init.config);
-//     if (!wdk.hasWdkReadOnly()) wdk.initWdkReadOnly();
-//     return { status: 'started' }
-//   } catch (error) {
-//     throw new Error(stringifyError(error))
-//   }
-// })
+/**
+ *
+ * @returns {Promise<{status: string}>} Status object indicating successful start
+ * @throws {Error} If decryption fails or WdkManager initialization fails
+ */
+rpc.onWdkReadOnlyInit(async (init) => {
+  try {
+    if (!wdk) wdk = new WdkManager(init.config);
+    if (!wdk.hasWdkReadOnly()) wdk.initWdkReadOnly();
+    return { status: 'started' }
+  } catch (error) {
+    throw new Error(stringifyError(error))
+  }
+})
 
 rpc.onGetAddress(async payload => {
   try {

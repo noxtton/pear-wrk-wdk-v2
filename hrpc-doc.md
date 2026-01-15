@@ -356,3 +356,21 @@ _No fields defined_
 
 ---
 
+## wdkReadOnlyInit
+
+**Request:** `@wdk-core/wdkReadOnlyInit-request`
+
+**Fields:**
+
+- `enableDebugLogs`: `uint` _(optional)_ _(v3)_
+- `allowedNetworks`: `string` _(v3)_
+- `config`: `string` _(v3)_
+
+**Response:** `@wdk-core/wdkReadOnlyInit-response`
+
+**Fields:**
+
+- `status`: `string` _(v3)_
+
+---
+

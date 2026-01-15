@@ -1,5 +1,5 @@
 {
-  "version": 2,
+  "version": 3,
   "schema": [
     {
       "name": "log-type-enum",
@@ -953,6 +953,45 @@
       "compact": false,
       "flagsPosition": -1,
       "fields": []
+    },
+    {
+      "name": "wdkReadOnlyInit-request",
+      "namespace": "wdk-core",
+      "compact": false,
+      "flagsPosition": 0,
+      "fields": [
+        {
+          "name": "enableDebugLogs",
+          "required": false,
+          "type": "uint",
+          "version": 3
+        },
+        {
+          "name": "allowedNetworks",
+          "required": true,
+          "type": "string",
+          "version": 3
+        },
+        {
+          "name": "config",
+          "required": true,
+          "type": "string",
+          "version": 3
+        }
+      ]
+    },
+    {
+      "name": "wdkReadOnlyInit-response",
+      "namespace": "wdk-core",
+      "compact": false,
+      "flagsPosition": 0,
+      "fields": [
+        {
+          "name": "status",
+          "type": "string",
+          "version": 3
+        }
+      ]
     }
   ]
 }

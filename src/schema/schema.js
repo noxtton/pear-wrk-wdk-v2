@@ -70,6 +70,22 @@ schemaNs.register({
   ]
 })
 
+schemaNs.register({
+  name: 'wdkReadOnlyInit-request',
+  fields: [
+    { name: 'enableDebugLogs', type: 'uint', required: false },
+    { name: 'allowedNetworks', type: 'string', required: true },
+    { name: 'config', type: 'string', required: true }
+  ]
+})
+
+schemaNs.register({
+  name: 'wdkReadOnlyInit-response',
+  fields: [
+    { name: 'status', type: 'string' }
+  ]
+})
+
 /**
  * Get address based on network
  */
@@ -458,6 +474,12 @@ ns.register({
   name: 'wdkInit',
   request: { name: '@wdk-core/wdkInit-request', stream: false },
   response: { name: '@wdk-core/wdkInit-response', stream: false }
+})
+
+ns.register({
+  name: 'wdkReadOnlyInit',
+  request: { name: '@wdk-core/wdkReadOnlyInit-request', stream: false },
+  response: { name: '@wdk-core/wdkReadOnlyInit-response', stream: false }
 })
 
 ns.register({
