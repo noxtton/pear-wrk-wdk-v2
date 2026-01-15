@@ -176,7 +176,8 @@ test('getAddressBalance - WDK type should require accountIndex', async (t) => {
     })
     t.fail('Should have thrown an error')
   } catch (error) {
-    t.ok(error.message.includes('accountIndex is required'), 'Error should mention accountIndex requirement')
+    const errorString = error.message || error.toString()
+    t.ok(errorString.includes('accountIndex is required'), 'Error should mention accountIndex requirement')
   }
 })
 
@@ -289,7 +290,8 @@ test('getAddressBalance - WDKReadOnly type should require address', async (t) =>
     })
     t.fail('Should have thrown an error')
   } catch (error) {
-    t.ok(error.message.includes('address is required'), 'Error should mention address requirement')
+    const errorString = error.message || error.toString()
+    t.ok(errorString.includes('address is required'), 'Error should mention address requirement')
   }
 })
 

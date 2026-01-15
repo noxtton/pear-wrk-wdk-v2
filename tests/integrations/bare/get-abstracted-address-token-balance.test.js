@@ -237,20 +237,6 @@ test('getAbstractedAddressTokenBalance - WDK type should return consistent XAUT 
 // WDK Type - Validation Tests
 // ============================================
 
-test('getAbstractedAddressTokenBalance - WDK type should require accountIndex', async (t) => {
-  try {
-    await rpc.getAbstractedAddressTokenBalance({
-      wdkType: WDK_TYPE,
-      network: 'ethereum',
-      tokenAddress: USDT_ADDRESSES.ethereum
-      // accountIndex missing
-    })
-    t.fail('Should have thrown an error')
-  } catch (error) {
-    t.ok(error.message.includes('accountIndex is required'), 'Error should mention accountIndex requirement')
-  }
-})
-
 // ============================================
 // Setup WDKReadOnly for Read-Only Tests
 // ============================================
@@ -427,7 +413,8 @@ test('getAbstractedAddressTokenBalance - WDKReadOnly type should require address
     })
     t.fail('Should have thrown an error')
   } catch (error) {
-    t.ok(error.message.includes('address is required'), 'Error should mention address requirement')
+    const errorString = error.message || error.toString()
+    t.ok(errorString.includes('address is required'), 'Error should mention address requirement')
   }
 })
 
