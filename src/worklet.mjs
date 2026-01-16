@@ -302,3 +302,19 @@ rpc.onDispose(() => {
     throw new Error(stringifyError(error))
   }
 })
+
+rpc.onDisposeWdk(() => {
+  try {
+    wdk.disposeWdk()
+  } catch (error) {
+    throw new Error(stringifyError(error))
+  }
+})
+
+rpc.onDisposeWdkReadOnly(() => {
+  try {
+    wdk.disposeWdkReadOnly()
+  } catch (error) {
+    throw new Error(stringifyError(error))
+  }
+})

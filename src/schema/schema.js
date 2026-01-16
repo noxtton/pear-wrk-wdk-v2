@@ -464,6 +464,16 @@ schemaNs.register({
   fields: []
 })
 
+schemaNs.register({
+  name: 'disposeWdk-request',
+  fields: []
+})
+
+schemaNs.register({
+  name: 'disposeWdkReadOnly-request',
+  fields: []
+})
+
 ESMHyperschema.toDisk(schema)
 
 // Load and build interface
@@ -563,6 +573,16 @@ ns.register({
 ns.register({
   name: 'dispose',
   request: { name: '@wdk-core/dispose-request', send: true }
+})
+
+ns.register({
+  name: 'disposeWdk',
+  request: { name: '@wdk-core/disposeWdk-request', send: true }
+})
+
+ns.register({
+  name: 'disposeWdkReadOnly',
+  request: { name: '@wdk-core/disposeWdkReadOnly-request', send: true }
 })
 
 ns.register({

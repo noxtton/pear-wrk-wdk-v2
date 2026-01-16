@@ -1,5 +1,5 @@
 {
-  "version": 1,
+  "version": 2,
   "schema": [
     {
       "name": "log-type-enum",
@@ -1060,6 +1060,20 @@
     },
     {
       "name": "dispose-request",
+      "namespace": "wdk-core",
+      "compact": false,
+      "flagsPosition": -1,
+      "fields": []
+    },
+    {
+      "name": "disposeWdk-request",
+      "namespace": "wdk-core",
+      "compact": false,
+      "flagsPosition": -1,
+      "fields": []
+    },
+    {
+      "name": "disposeWdkReadOnly-request",
       "namespace": "wdk-core",
       "compact": false,
       "flagsPosition": -1,

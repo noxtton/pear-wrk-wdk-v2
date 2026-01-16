@@ -44,7 +44,11 @@ const methods = new Map([
   ['@wdk-core/decrypt', 18],
   [18, '@wdk-core/decrypt'],
   ['@wdk-core/generateSeed', 19],
-  [19, '@wdk-core/generateSeed']
+  [19, '@wdk-core/generateSeed'],
+  ['@wdk-core/disposeWdk', 20],
+  [20, '@wdk-core/disposeWdk'],
+  ['@wdk-core/disposeWdkReadOnly', 21],
+  [21, '@wdk-core/disposeWdkReadOnly']
 ])
 
 class HRPC {
@@ -71,7 +75,9 @@ class HRPC {
       ['@wdk-core/dispose', getEncoding('@wdk-core/dispose-request')],
       ['@wdk-core/generateAndEncrypt', getEncoding('@wdk-core/generateAndEncrypt-request')],
       ['@wdk-core/decrypt', getEncoding('@wdk-core/decrypt-request')],
-      ['@wdk-core/generateSeed', getEncoding('@wdk-core/generateSeed-request')]
+      ['@wdk-core/generateSeed', getEncoding('@wdk-core/generateSeed-request')],
+      ['@wdk-core/disposeWdk', getEncoding('@wdk-core/disposeWdk-request')],
+      ['@wdk-core/disposeWdkReadOnly', getEncoding('@wdk-core/disposeWdkReadOnly-request')]
     ])
     this._responseEncodings = new Map([
       ['@wdk-core/workletStart', getEncoding('@wdk-core/workletStart-response')],
@@ -235,6 +241,14 @@ class HRPC {
     return this._call('@wdk-core/generateSeed', args)
   }
 
+  disposeWdk (args) {
+    return this._callSync('@wdk-core/disposeWdk', args)
+  }
+
+  disposeWdkReadOnly (args) {
+    return this._callSync('@wdk-core/disposeWdkReadOnly', args)
+  }
+
   onLog (responseFn) {
     this._handlers['@wdk-core/log'] = responseFn
   }
@@ -315,6 +329,14 @@ class HRPC {
     this._handlers['@wdk-core/generateSeed'] = responseFn
   }
 
+  onDisposeWdk (responseFn) {
+    this._handlers['@wdk-core/disposeWdk'] = responseFn
+  }
+
+  onDisposeWdkReadOnly (responseFn) {
+    this._handlers['@wdk-core/disposeWdkReadOnly'] = responseFn
+  }
+
   _requestIsStream (command) {
     return [
     ].includes(command)
@@ -328,7 +350,9 @@ class HRPC {
   _requestIsSend (command) {
     return [
       '@wdk-core/log',
-      '@wdk-core/dispose'
+      '@wdk-core/dispose',
+      '@wdk-core/disposeWdk',
+      '@wdk-core/disposeWdkReadOnly'
     ].includes(command)
   }
 }

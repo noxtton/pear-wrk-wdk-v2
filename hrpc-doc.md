@@ -386,3 +386,23 @@ _No fields defined_
 
 ---
 
+## disposeWdk
+
+**Request:** `@wdk-core/disposeWdk-request`
+
+**Fields:**
+
+_No fields defined_
+
+---
+
+## disposeWdkReadOnly
+
+**Request:** `@wdk-core/disposeWdkReadOnly-request`
+
+**Fields:**
+
+_No fields defined_
+
+---
+

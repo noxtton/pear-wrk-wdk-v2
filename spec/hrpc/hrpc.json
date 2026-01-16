@@ -1,5 +1,5 @@
 {
-  "version": 1,
+  "version": 2,
   "schema": [
     {
       "id": 0,
@@ -252,6 +252,24 @@
         "stream": false
       },
       "version": 1
+    },
+    {
+      "id": 17,
+      "name": "@wdk-core/disposeWdk",
+      "request": {
+        "name": "@wdk-core/disposeWdk-request",
+        "send": true
+      },
+      "version": 2
+    },
+    {
+      "id": 18,
+      "name": "@wdk-core/disposeWdkReadOnly",
+      "request": {
+        "name": "@wdk-core/disposeWdkReadOnly-request",
+        "send": true
+      },
+      "version": 2
     }
   ]
 }

@@ -159,3 +159,249 @@ test('combined - should get address for multiple networks after WDK init', async
     t.ok(result.address, `Should return address for ${network}`)
   }
 })
+
+// ============================================
+// onDispose Tests
+// ============================================
+
+test('onDispose - should dispose WDK after initialization', async (t) => {
+  // Initialize WDK first
+  await rpc.wdkInit({
+    seedPhrase: TEST_SEED_PHRASE,
+    config: JSON.stringify(config)
+  })
+
+  // Dispose should not throw
+  await rpc.dispose({})
+  t.pass('Dispose completed without error')
+})
+
+test('onDispose - should allow re-initialization after dispose', async (t) => {
+  // Initialize WDK
+  await rpc.wdkInit({
+    seedPhrase: TEST_SEED_PHRASE,
+    config: JSON.stringify(config)
+  })
+
+  // Dispose
+  await rpc.dispose({})
+
+  // Re-initialize should work
+  const result = await rpc.wdkInit({
+    seedPhrase: TEST_SEED_PHRASE,
+    config: JSON.stringify(config)
+  })
+
+  t.is(result.status, 'started', 'Should reinitialize after dispose')
+})
+
+test('onDispose - should dispose after WDKReadOnly initialization', async (t) => {
+  // Initialize WDKReadOnly first
+  await rpc.wdkReadOnlyInit({
+    allowedNetworks: 'ethereum,polygon',
+    config: JSON.stringify(config)
+  })
+
+  // Dispose should not throw
+  await rpc.dispose({})
+  t.pass('Dispose completed without error after WDKReadOnly init')
+})
+
+test('onDispose - should dispose after both WDK and WDKReadOnly initialization', async (t) => {
+  // Initialize both
+  await rpc.wdkInit({
+    seedPhrase: TEST_SEED_PHRASE,
+    config: JSON.stringify(config)
+  })
+
+  await rpc.wdkReadOnlyInit({
+    allowedNetworks: 'ethereum,polygon',
+    config: JSON.stringify(config)
+  })
+
+  // Dispose should clean up both
+  await rpc.dispose({})
+  t.pass('Dispose completed without error after both initializations')
+})
+
+test('onDispose - should allow full workflow after dispose and reinit', async (t) => {
+  // Initialize
+  await rpc.wdkInit({
+    seedPhrase: TEST_SEED_PHRASE,
+    config: JSON.stringify(config)
+  })
+
+  // Get address to confirm working state
+  const addressBefore = await rpc.getAddress({
+    network: 'ethereum',
+    accountIndex: 0
+  })
+  t.ok(addressBefore.address, 'Should get address before dispose')
+
+  // Dispose
+  await rpc.dispose({})
+
+  // Re-initialize
+  await rpc.wdkInit({
+    seedPhrase: TEST_SEED_PHRASE,
+    config: JSON.stringify(config)
+  })
+
+  // Get address again to confirm working state restored
+  const addressAfter = await rpc.getAddress({
+    network: 'ethereum',
+    accountIndex: 0
+  })
+  t.ok(addressAfter.address, 'Should get address after reinit')
+  t.is(addressBefore.address, addressAfter.address, 'Address should be same after reinit with same seed')
+})
+
+// ============================================
+// onDisposeWdk Tests (Dispose WDK only)
+// ============================================
+
+test('onDisposeWdk - should dispose only WDK instance', async (t) => {
+  // Initialize WDK
+  await rpc.wdkInit({
+    seedPhrase: TEST_SEED_PHRASE,
+    config: JSON.stringify(config)
+  })
+
+  // Dispose WDK only should not throw
+  await rpc.disposeWdk({})
+  t.pass('DisposeWdk completed without error')
+})
+
+test('onDisposeWdk - should allow WDK re-initialization after disposeWdk', async (t) => {
+  // Initialize WDK
+  await rpc.wdkInit({
+    seedPhrase: TEST_SEED_PHRASE,
+    config: JSON.stringify(config)
+  })
+
+  // Dispose WDK only
+  await rpc.disposeWdk({})
+
+  // Re-initialize WDK should work
+  const result = await rpc.wdkInit({
+    seedPhrase: TEST_SEED_PHRASE,
+    config: JSON.stringify(config)
+  })
+
+  t.is(result.status, 'started', 'Should reinitialize WDK after disposeWdk')
+})
+
+test('onDisposeWdk - should keep WDKReadOnly working after disposeWdk', async (t) => {
+  // Initialize both WDK and WDKReadOnly
+  await rpc.wdkInit({
+    seedPhrase: TEST_SEED_PHRASE,
+    config: JSON.stringify(config)
+  })
+
+  await rpc.wdkReadOnlyInit({
+    allowedNetworks: 'ethereum,polygon',
+    config: JSON.stringify(config)
+  })
+
+  // Dispose WDK only
+  await rpc.disposeWdk({})
+
+  // WDKReadOnly should still be initialized, reinit should work
+  const result = await rpc.wdkReadOnlyInit({
+    allowedNetworks: 'ethereum',
+    config: JSON.stringify(config)
+  })
+  t.is(result.status, 'started', 'WDKReadOnly should still work after disposeWdk')
+})
+
+// ============================================
+// onDisposeWdkReadOnly Tests (Dispose WDKReadOnly only)
+// ============================================
+
+test('onDisposeWdkReadOnly - should dispose only WDKReadOnly instance', async (t) => {
+  // Initialize WDKReadOnly
+  await rpc.wdkReadOnlyInit({
+    allowedNetworks: 'ethereum,polygon',
+    config: JSON.stringify(config)
+  })
+
+  // Dispose WDKReadOnly only should not throw
+  await rpc.disposeWdkReadOnly({})
+  t.pass('DisposeWdkReadOnly completed without error')
+})
+
+test('onDisposeWdkReadOnly - should allow WDKReadOnly re-initialization after disposeWdkReadOnly', async (t) => {
+  // Initialize WDKReadOnly
+  await rpc.wdkReadOnlyInit({
+    allowedNetworks: 'ethereum,polygon',
+    config: JSON.stringify(config)
+  })
+
+  // Dispose WDKReadOnly only
+  await rpc.disposeWdkReadOnly({})
+
+  // Re-initialize WDKReadOnly should work
+  const result = await rpc.wdkReadOnlyInit({
+    allowedNetworks: 'ethereum',
+    config: JSON.stringify(config)
+  })
+
+  t.is(result.status, 'started', 'Should reinitialize WDKReadOnly after disposeWdkReadOnly')
+})
+
+test('onDisposeWdkReadOnly - should keep WDK working after disposeWdkReadOnly', async (t) => {
+  // Initialize both WDK and WDKReadOnly
+  await rpc.wdkInit({
+    seedPhrase: TEST_SEED_PHRASE,
+    config: JSON.stringify(config)
+  })
+
+  await rpc.wdkReadOnlyInit({
+    allowedNetworks: 'ethereum,polygon',
+    config: JSON.stringify(config)
+  })
+
+  // Dispose WDKReadOnly only
+  await rpc.disposeWdkReadOnly({})
+
+  // WDK should still work - get address should succeed
+  const result = await rpc.getAddress({
+    network: 'ethereum',
+    accountIndex: 0
+  })
+  t.ok(result.address, 'WDK should still work after disposeWdkReadOnly')
+})
+
+test('onDisposeWdk and onDisposeWdkReadOnly - should dispose both separately', async (t) => {
+  // Initialize both WDK and WDKReadOnly
+  await rpc.wdkInit({
+    seedPhrase: TEST_SEED_PHRASE,
+    config: JSON.stringify(config)
+  })
+
+  await rpc.wdkReadOnlyInit({
+    allowedNetworks: 'ethereum,polygon',
+    config: JSON.stringify(config)
+  })
+
+  // Dispose WDK first
+  await rpc.disposeWdk({})
+  t.pass('DisposeWdk completed')
+
+  // Dispose WDKReadOnly second
+  await rpc.disposeWdkReadOnly({})
+  t.pass('DisposeWdkReadOnly completed')
+
+  // Both should be disposable, reinit both
+  const wdkResult = await rpc.wdkInit({
+    seedPhrase: TEST_SEED_PHRASE,
+    config: JSON.stringify(config)
+  })
+  t.is(wdkResult.status, 'started', 'WDK should reinitialize after separate disposes')
+
+  const readOnlyResult = await rpc.wdkReadOnlyInit({
+    allowedNetworks: 'ethereum',
+    config: JSON.stringify(config)
+  })
+  t.is(readOnlyResult.status, 'started', 'WDKReadOnly should reinitialize after separate disposes')
+})
