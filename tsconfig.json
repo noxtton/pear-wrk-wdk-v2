@@ -1,7 +1,7 @@
 {
   "include": [
     "index.js",
-    "src/wdk-core/wdk-manager.js",
+    "src/wdk-core/wdk-manager-v3.js",
     "spec/hrpc/index.js"
   ],
   "compilerOptions": {

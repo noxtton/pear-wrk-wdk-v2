@@ -1,4 +1,4 @@
-export { default } from "./src/wdk-core/wdk-manager.js";
+export { default } from "./src/wdk-core/wdk-manager-v3.js";
 export { default as HRPC } from "./spec/hrpc/index.js";
 export { default as bundle } from "./bundle/worklet.bundle.mjs";
 export type FeeRates = any;
