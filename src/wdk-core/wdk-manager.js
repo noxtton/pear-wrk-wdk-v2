@@ -259,6 +259,19 @@ export default class WdkManager {
   }
 
   /**
+     * Returns the maximum spendable amount for an account.
+     *
+     * @param {Blockchain} blockchain - A blockchain identifier (e.g., "bitcoin").
+     * @param {number} accountIndex - The index of the account to use (see [BIP-44](https://en.bitcoin.it/wiki/BIP_0044)).
+     * @returns {Promise<{amount: bigint, fee: bigint, changeValue: bigint}>} The max spendable info.
+     */
+  async getMaxSpendable (blockchain, accountIndex) {
+    const account = await this.getAccount(blockchain, accountIndex)
+
+    return await account.getMaxSpendable()
+  }
+
+  /**
      * Transfers a token to another address.
      *
      * @param {Blockchain} blockchain - A blockchain identifier (e.g., "ethereum").

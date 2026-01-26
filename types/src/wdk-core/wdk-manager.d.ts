@@ -112,6 +112,18 @@ export default class WdkManager {
        */
     quoteSendTransaction(blockchain: Blockchain, accountIndex: number, options: Transaction): Promise<Omit<TransactionResult, "hash">>;
     /**
+       * Returns the maximum spendable amount for an account.
+       *
+       * @param {Blockchain} blockchain - A blockchain identifier (e.g., "bitcoin").
+       * @param {number} accountIndex - The index of the account to use (see [BIP-44](https://en.bitcoin.it/wiki/BIP_0044)).
+       * @returns {Promise<{amount: bigint, fee: bigint, changeValue: bigint}>} The max spendable info.
+       */
+    getMaxSpendable(blockchain: Blockchain, accountIndex: number): Promise<{
+        amount: bigint;
+        fee: bigint;
+        changeValue: bigint;
+    }>;
+    /**
        * Transfers a token to another address.
        *
        * @param {Blockchain} blockchain - A blockchain identifier (e.g., "ethereum").
@@ -255,7 +267,7 @@ export type TonGaslessWalletConfig = import("@tetherto/wdk-wallet-ton-gasless").
 export type TronWalletConfig = import("@tetherto/wdk-wallet-tron").TronWalletConfig;
 export type TronGasfreeWalletConfig = import("@tetherto/wdk-wallet-tron-gasfree").TronGasfreeWalletConfig;
 export type BtcWalletConfig = import("@tetherto/wdk-wallet-btc").BtcWalletConfig;
-export type SolanaWalletConfig = import("@tetherto/wdk-wallet-solana").SolanaWalletConfig;
+export type SolanaWalletConfig = any;
 export type Seed = string | Uint8Array;
 export type Seeds = {
     /**

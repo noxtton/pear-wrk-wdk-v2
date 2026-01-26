@@ -355,3 +355,22 @@ _No fields defined_
 
 ---
 
+## getMaxSpendable
+
+**Request:** `@wdk-core/getMaxSpendable-request`
+
+**Fields:**
+
+- `network`: `string` _(v1)_
+- `accountIndex`: `uint` _(v1)_
+
+**Response:** `@wdk-core/getMaxSpendable-response`
+
+**Fields:**
+
+- `amount`: `string` _(v1)_
+- `fee`: `string` _(v1)_
+- `changeValue`: `string` _(v1)_
+
+---
+

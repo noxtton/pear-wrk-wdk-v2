@@ -239,6 +239,19 @@
         "stream": false
       },
       "version": 1
+    },
+    {
+      "id": 19,
+      "name": "@wdk-core/getMaxSpendable",
+      "request": {
+        "name": "@wdk-core/getMaxSpendable-request",
+        "stream": false
+      },
+      "response": {
+        "name": "@wdk-core/getMaxSpendable-response",
+        "stream": false
+      },
+      "version": 1
     }
   ]
 }
