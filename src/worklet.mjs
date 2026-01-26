@@ -5,8 +5,8 @@ import { stringifyError } from './exceptions/rpc-exception.js'
 import bip39 from 'bip39'
 import { WdkSecretManager } from '@tetherto/wdk-secret-manager'
 import { getSeedBuffer } from './lib/seed-buffer.js'
-import b4a from "b4a";
-import {sodium_memzero} from "sodium-native";
+import b4a from 'b4a'
+import { sodium_memzero } from 'sodium-native'
 
 // eslint-disable-next-line no-undef
 const { IPC } = BareKit
@@ -114,16 +114,16 @@ rpc.onSendTransaction(async payload => {
 rpc.onGenerateAndEncrypt(async (payload) => {
   try {
     const manager = new WdkSecretManager(payload.passkey, payload.salt)
-      let entropy = null;
+    let entropy = null
     if (b4a.isBuffer(payload.seedPhrase)) {
-        let seedPhrase = b4a.toString(payload.seedPhrase);
-        entropy = manager.mnemonicToEntropy(seedPhrase);
-        sodium_memzero(payload.seedPhrase);
-        seedPhrase = null;
+      let seedPhrase = b4a.toString(payload.seedPhrase)
+      entropy = manager.mnemonicToEntropy(seedPhrase)
+      sodium_memzero(payload.seedPhrase)
+      seedPhrase = null
     }
     const { encryptedSeed, encryptedEntropy } =
       await manager.generateAndEncrypt(entropy, payload.derivedKey)
-      entropy = null;
+    entropy = null
     manager.dispose()
     // Return buffers directly as per schema
     return {
@@ -198,9 +198,9 @@ rpc.onAbstractedAccountTransfer(async payload => {
   try {
     payload.options.amount = Number(payload.options.amount)
     if (payload.config?.transferMaxFee) {
-        payload.config.transferMaxFee = Number(payload.config?.transferMaxFee)
+      payload.config.transferMaxFee = Number(payload.config?.transferMaxFee)
     } else {
-        delete payload.config?.transferMaxFee
+      delete payload.config?.transferMaxFee
     }
     const transfer = await wdk.abstractedAccountTransfer(payload.network, payload.accountIndex, payload.options, payload.config)
     return { fee: transfer.fee.toString(), hash: transfer.hash }
@@ -259,6 +259,19 @@ rpc.onDispose(() => {
   try {
     wdk.dispose()
     wdk = null
+  } catch (error) {
+    throw new Error(stringifyError(error))
+  }
+})
+
+rpc.onGetMaxSpendable(async payload => {
+  try {
+    const result = await wdk.getMaxSpendable(payload.network, payload.accountIndex)
+    return {
+      amount: result.amount.toString(),
+      fee: result.fee.toString(),
+      changeValue: result.changeValue.toString()
+    }
   } catch (error) {
     throw new Error(stringifyError(error))
   }

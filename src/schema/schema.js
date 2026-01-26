@@ -240,7 +240,7 @@ schemaNs.register({
   name: 'abstractedAccountTransfer-request-config',
   fields: [
     { name: 'paymasterToken', type: '@wdk-core/abstractedAccountTransfer-request-config-paymasterToken', required: false },
-    { name: 'transferMaxFee', type: 'string', required: false },
+    { name: 'transferMaxFee', type: 'string', required: false }
   ]
 })
 schemaNs.register({
@@ -435,6 +435,26 @@ schemaNs.register({
   fields: []
 })
 
+/**
+ * getMaxSpendable
+ */
+schemaNs.register({
+  name: 'getMaxSpendable-request',
+  fields: [
+    { name: 'network', type: 'string', required: true },
+    { name: 'accountIndex', type: 'uint', required: true }
+  ]
+})
+
+schemaNs.register({
+  name: 'getMaxSpendable-response',
+  fields: [
+    { name: 'amount', type: 'string' },
+    { name: 'fee', type: 'string' },
+    { name: 'changeValue', type: 'string' }
+  ]
+})
+
 ESMHyperschema.toDisk(schema)
 
 // Load and build interface
@@ -547,5 +567,12 @@ ns.register({
   request: { name: '@wdk-core/generateSeed-request', stream: false },
   response: { name: '@wdk-core/generateSeed-response', stream: false }
 })
+
+ns.register({
+  name: 'getMaxSpendable',
+  request: { name: '@wdk-core/getMaxSpendable-request', stream: false },
+  response: { name: '@wdk-core/getMaxSpendable-response', stream: false }
+})
+
 // Save interface to disk
 ESMHRPC.toDisk(builder)

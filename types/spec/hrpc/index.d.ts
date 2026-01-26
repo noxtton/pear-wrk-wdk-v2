@@ -35,6 +35,7 @@ declare class HRPC {
     generateAndEncrypt(args: any): Promise<any>;
     decrypt(args: any): Promise<any>;
     generateSeed(args: any): Promise<any>;
+    getMaxSpendable(args: any): Promise<any>;
     onLog(responseFn: any): void;
     onWorkletStart(responseFn: any): void;
     onWdkInit(responseFn: any): void;
@@ -54,6 +55,7 @@ declare class HRPC {
     onGenerateAndEncrypt(responseFn: any): void;
     onDecrypt(responseFn: any): void;
     onGenerateSeed(responseFn: any): void;
+    onGetMaxSpendable(responseFn: any): void;
     _requestIsStream(command: any): boolean;
     _responseIsStream(command: any): boolean;
     _requestIsSend(command: any): boolean;

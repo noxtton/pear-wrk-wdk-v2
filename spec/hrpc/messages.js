@@ -952,6 +952,41 @@ const encoding46 = {
 // @wdk-core/dispose-request
 const encoding47 = encoding45
 
+// @wdk-core/getMaxSpendable-request
+const encoding48 = encoding7
+
+// @wdk-core/getMaxSpendable-response
+const encoding49 = {
+  preencode (state, m) {
+    state.end++ // max flag is 4 so always one byte
+
+    if (m.amount) c.string.preencode(state, m.amount)
+    if (m.fee) c.string.preencode(state, m.fee)
+    if (m.changeValue) c.string.preencode(state, m.changeValue)
+  },
+  encode (state, m) {
+    const flags =
+      (m.amount ? 1 : 0) |
+      (m.fee ? 2 : 0) |
+      (m.changeValue ? 4 : 0)
+
+    c.uint.encode(state, flags)
+
+    if (m.amount) c.string.encode(state, m.amount)
+    if (m.fee) c.string.encode(state, m.fee)
+    if (m.changeValue) c.string.encode(state, m.changeValue)
+  },
+  decode (state) {
+    const flags = c.uint.decode(state)
+
+    return {
+      amount: (flags & 1) !== 0 ? c.string.decode(state) : null,
+      fee: (flags & 2) !== 0 ? c.string.decode(state) : null,
+      changeValue: (flags & 4) !== 0 ? c.string.decode(state) : null
+    }
+  }
+}
+
 function setVersion (v) {
   version = v
 }
@@ -1023,6 +1058,8 @@ function getEncoding (name) {
     case '@wdk-core/generateSeed-request': return encoding45
     case '@wdk-core/generateSeed-response': return encoding46
     case '@wdk-core/dispose-request': return encoding47
+    case '@wdk-core/getMaxSpendable-request': return encoding48
+    case '@wdk-core/getMaxSpendable-response': return encoding49
     default: throw new Error('Encoder not found ' + name)
   }
 }
