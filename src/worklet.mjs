@@ -219,6 +219,17 @@ rpc.onAbstractedSendTransaction(async payload => {
   }
 })
 
+rpc.onAbstractedQuoteSendTransaction(async payload => {
+  try {
+    payload.options.value = Number(payload.options.value)
+    const transfer = await wdk.abstractedQuoteSendTransaction(payload.network, payload.accountIndex, payload.options, payload.config)
+    return { fee: transfer.fee.toString() }
+  } catch (error) {
+    throw new Error(stringifyError(error))
+  }
+})
+
+
 rpc.onAbstractedAccountQuoteTransfer(async payload => {
   try {
     payload.options.amount = Number(payload.options.amount)

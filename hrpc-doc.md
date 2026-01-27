@@ -377,3 +377,27 @@ _No fields defined_
 
 ---
 
+## abstractedQuoteSendTransaction
+
+**Request:** `@wdk-core/abstractedQuoteSendTransaction-request`
+
+**Fields:**
+
+- `network`: `string` _(v2)_
+- `accountIndex`: `uint` _(v2)_
+- `options`: `object` _(v2)_
+  - `to`: `string` _(v2)_
+  - `value`: `string` _(v2)_
+  - `data`: `string` _(optional)_ _(v2)_
+- `config`: `object` _(optional)_ _(v2)_
+  - `paymasterToken`: `object` _(optional)_ _(v2)_
+    - `address`: `string` _(v2)_
+
+**Response:** `@wdk-core/abstractedQuoteSendTransaction-response`
+
+**Fields:**
+
+- `fee`: `string` _(v2)_
+
+---
+

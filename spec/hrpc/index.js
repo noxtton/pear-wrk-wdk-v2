@@ -44,7 +44,9 @@ const methods = new Map([
   ['@wdk-core/generateSeed', 18],
   [18, '@wdk-core/generateSeed'],
   ['@wdk-core/getMaxSpendable', 19],
-  [19, '@wdk-core/getMaxSpendable']
+  [19, '@wdk-core/getMaxSpendable'],
+  ['@wdk-core/abstractedQuoteSendTransaction', 20],
+  [20, '@wdk-core/abstractedQuoteSendTransaction']
 ])
 
 class HRPC {
@@ -71,7 +73,8 @@ class HRPC {
       ['@wdk-core/generateAndEncrypt', getEncoding('@wdk-core/generateAndEncrypt-request')],
       ['@wdk-core/decrypt', getEncoding('@wdk-core/decrypt-request')],
       ['@wdk-core/generateSeed', getEncoding('@wdk-core/generateSeed-request')],
-      ['@wdk-core/getMaxSpendable', getEncoding('@wdk-core/getMaxSpendable-request')]
+      ['@wdk-core/getMaxSpendable', getEncoding('@wdk-core/getMaxSpendable-request')],
+      ['@wdk-core/abstractedQuoteSendTransaction', getEncoding('@wdk-core/abstractedQuoteSendTransaction-request')]
     ])
     this._responseEncodings = new Map([
       ['@wdk-core/workletStart', getEncoding('@wdk-core/workletStart-response')],
@@ -91,7 +94,8 @@ class HRPC {
       ['@wdk-core/generateAndEncrypt', getEncoding('@wdk-core/generateAndEncrypt-response')],
       ['@wdk-core/decrypt', getEncoding('@wdk-core/decrypt-response')],
       ['@wdk-core/generateSeed', getEncoding('@wdk-core/generateSeed-response')],
-      ['@wdk-core/getMaxSpendable', getEncoding('@wdk-core/getMaxSpendable-response')]
+      ['@wdk-core/getMaxSpendable', getEncoding('@wdk-core/getMaxSpendable-response')],
+      ['@wdk-core/abstractedQuoteSendTransaction', getEncoding('@wdk-core/abstractedQuoteSendTransaction-response')]
     ])
     this._rpc = new RPC(stream, async (req) => {
       const command = methods.get(req.command)
@@ -235,6 +239,10 @@ class HRPC {
     return this._call('@wdk-core/getMaxSpendable', args)
   }
 
+  async abstractedQuoteSendTransaction (args) {
+    return this._call('@wdk-core/abstractedQuoteSendTransaction', args)
+  }
+
   onLog (responseFn) {
     this._handlers['@wdk-core/log'] = responseFn
   }
@@ -313,6 +321,10 @@ class HRPC {
 
   onGetMaxSpendable (responseFn) {
     this._handlers['@wdk-core/getMaxSpendable'] = responseFn
+  }
+
+  onAbstractedQuoteSendTransaction (responseFn) {
+    this._handlers['@wdk-core/abstractedQuoteSendTransaction'] = responseFn
   }
 
   _requestIsStream (command) {

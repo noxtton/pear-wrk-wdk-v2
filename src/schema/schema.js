@@ -324,6 +324,46 @@ schemaNs.register({
 })
 
 /**
+ * abstractedQuoteSendTransaction
+ */
+schemaNs.register({
+  name: 'abstractedQuoteSendTransaction-request-config-paymasterToken',
+  fields: [
+    { name: 'address', type: 'string', required: true }
+  ]
+})
+schemaNs.register({
+  name: 'abstractedQuoteSendTransaction-request-options',
+  fields: [
+    { name: 'to', type: 'string', required: true },
+    { name: 'value', type: 'string', required: true },
+    { name: 'data', type: 'string', required: false }
+  ]
+})
+schemaNs.register({
+  name: 'abstractedQuoteSendTransaction-request-config',
+  fields: [
+    { name: 'paymasterToken', type: '@wdk-core/abstractedQuoteSendTransaction-request-config-paymasterToken', required: false }
+  ]
+})
+schemaNs.register({
+  name: 'abstractedQuoteSendTransaction-request',
+  fields: [
+    { name: 'network', type: 'string', required: true },
+    { name: 'accountIndex', type: 'uint', required: true },
+    { name: 'options', type: '@wdk-core/abstractedQuoteSendTransaction-request-options', required: true },
+    { name: 'config', type: '@wdk-core/abstractedQuoteSendTransaction-request-config', required: false }
+  ]
+})
+
+schemaNs.register({
+  name: 'abstractedQuoteSendTransaction-response',
+  fields: [
+    { name: 'fee', type: 'string' }
+  ]
+})
+
+/**
  * abstractedAccountQuoteTransfer
  */
 schemaNs.register({
@@ -542,6 +582,11 @@ ns.register({
   name: 'abstractedSendTransaction',
   request: { name: '@wdk-core/abstractedSendTransaction-request', stream: false },
   response: { name: '@wdk-core/abstractedSendTransaction-response', stream: false }
+})
+ns.register({
+  name: 'abstractedQuoteSendTransaction',
+  request: { name: '@wdk-core/abstractedQuoteSendTransaction-request', stream: false },
+  response: { name: '@wdk-core/abstractedQuoteSendTransaction-response', stream: false }
 })
 ns.register({
   name: 'abstractedAccountQuoteTransfer',

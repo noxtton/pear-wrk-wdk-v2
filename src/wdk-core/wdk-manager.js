@@ -394,6 +394,20 @@ export default class WdkManager {
   }
 
   /**
+   * Quote the costs of a native token transfer operation. (POL, ARB, ETH)
+   *
+   * @param {Blockchain} blockchain - A blockchain identifier (e.g., "ethereum").
+   * @param {number} accountIndex - The index of the account to use (see [BIP-44](https://en.bitcoin.it/wiki/BIP_0044)).
+   * @param {EvmTransaction} options - The transaction options.
+   * @param {TransferConfig} [config] - If set, overrides the 'transferMaxFee' and 'paymasterToken' options defined in the manager configuration.
+   * @return {Promise<Omit<TransactionResult, "hash">>}
+   */
+  async abstractedQuoteSendTransaction (blockchain, accountIndex, options, config) {
+    const account = await this.getAbstractedAccount(blockchain, accountIndex)
+    return await account.quoteSendTransaction(options, config)
+  }
+
+  /**
      * Quotes the costs of a transfer operation.
      *
      * @see {@link transfer}

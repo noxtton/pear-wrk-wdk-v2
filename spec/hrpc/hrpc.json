@@ -1,5 +1,5 @@
 {
-  "version": 1,
+  "version": 2,
   "schema": [
     {
       "id": 0,
@@ -252,6 +252,19 @@
         "stream": false
       },
       "version": 1
+    },
+    {
+      "id": 13,
+      "name": "@wdk-core/abstractedQuoteSendTransaction",
+      "request": {
+        "name": "@wdk-core/abstractedQuoteSendTransaction-request",
+        "stream": false
+      },
+      "response": {
+        "name": "@wdk-core/abstractedQuoteSendTransaction-response",
+        "stream": false
+      },
+      "version": 2
     }
   ]
 }

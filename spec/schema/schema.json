@@ -1,5 +1,5 @@
 {
-  "version": 1,
+  "version": 2,
   "schema": [
     {
       "name": "log-type-enum",
@@ -1015,6 +1015,105 @@
           "name": "changeValue",
           "type": "string",
           "version": 1
+        }
+      ]
+    },
+    {
+      "name": "abstractedQuoteSendTransaction-request-config-paymasterToken",
+      "namespace": "wdk-core",
+      "compact": false,
+      "flagsPosition": -1,
+      "fields": [
+        {
+          "name": "address",
+          "required": true,
+          "type": "string",
+          "version": 2
+        }
+      ]
+    },
+    {
+      "name": "abstractedQuoteSendTransaction-request-options",
+      "namespace": "wdk-core",
+      "compact": false,
+      "flagsPosition": 2,
+      "fields": [
+        {
+          "name": "to",
+          "required": true,
+          "type": "string",
+          "version": 2
+        },
+        {
+          "name": "value",
+          "required": true,
+          "type": "string",
+          "version": 2
+        },
+        {
+          "name": "data",
+          "required": false,
+          "type": "string",
+          "version": 2
+        }
+      ]
+    },
+    {
+      "name": "abstractedQuoteSendTransaction-request-config",
+      "namespace": "wdk-core",
+      "compact": false,
+      "flagsPosition": 0,
+      "fields": [
+        {
+          "name": "paymasterToken",
+          "required": false,
+          "type": "@wdk-core/abstractedQuoteSendTransaction-request-config-paymasterToken",
+          "version": 2
+        }
+      ]
+    },
+    {
+      "name": "abstractedQuoteSendTransaction-request",
+      "namespace": "wdk-core",
+      "compact": false,
+      "flagsPosition": 3,
+      "fields": [
+        {
+          "name": "network",
+          "required": true,
+          "type": "string",
+          "version": 2
+        },
+        {
+          "name": "accountIndex",
+          "required": true,
+          "type": "uint",
+          "version": 2
+        },
+        {
+          "name": "options",
+          "required": true,
+          "type": "@wdk-core/abstractedQuoteSendTransaction-request-options",
+          "version": 2
+        },
+        {
+          "name": "config",
+          "required": false,
+          "type": "@wdk-core/abstractedQuoteSendTransaction-request-config",
+          "version": 2
+        }
+      ]
+    },
+    {
+      "name": "abstractedQuoteSendTransaction-response",
+      "namespace": "wdk-core",
+      "compact": false,
+      "flagsPosition": 0,
+      "fields": [
+        {
+          "name": "fee",
+          "type": "string",
+          "version": 2
         }
       ]
     }
