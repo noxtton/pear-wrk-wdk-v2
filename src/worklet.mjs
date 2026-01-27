@@ -211,8 +211,8 @@ rpc.onAbstractedAccountTransfer(async payload => {
 
 rpc.onAbstractedSendTransaction(async payload => {
   try {
-    const options = JSON.parse(payload.options)
-    const transfer = await wdk.abstractedSendTransaction(payload.network, payload.accountIndex, options, payload.config)
+    // const options = JSON.parse(payload.options)
+    const transfer = await wdk.abstractedSendTransaction(payload.network, payload.accountIndex, payload.options, payload.config)
     return { fee: transfer.fee.toString(), hash: transfer.hash }
   } catch (error) {
     throw new Error(stringifyError(error))

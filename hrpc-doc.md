@@ -234,7 +234,10 @@
 
 - `network`: `string` _(v1)_
 - `accountIndex`: `uint` _(v1)_
-- `options`: `string` _(v1)_
+- `options`: `object` _(v1)_
+  - `to`: `string` _(v1)_
+  - `value`: `string` _(v1)_
+  - `data`: `string` _(optional)_ _(v1)_
 - `config`: `object` _(optional)_ _(v1)_
   - `paymasterToken`: `object` _(optional)_ _(v1)_
     - `address`: `string` _(v1)_

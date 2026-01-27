@@ -292,6 +292,14 @@ schemaNs.register({
   ]
 })
 schemaNs.register({
+  name: 'abstractedSendTransaction-request-options',
+  fields: [
+    { name: 'to', type: 'string', required: true },
+    { name: 'value', type: 'string', required: true },
+    { name: 'data', type: 'string', required: false }
+  ]
+})
+schemaNs.register({
   name: 'abstractedSendTransaction-request-config',
   fields: [
     { name: 'paymasterToken', type: '@wdk-core/abstractedSendTransaction-request-config-paymasterToken', required: false }
@@ -302,7 +310,7 @@ schemaNs.register({
   fields: [
     { name: 'network', type: 'string', required: true },
     { name: 'accountIndex', type: 'uint', required: true },
-    { name: 'options', type: 'string', required: true },
+    { name: 'options', type: '@wdk-core/abstractedSendTransaction-request-options', required: true },
     { name: 'config', type: '@wdk-core/abstractedSendTransaction-request-config', required: false }
   ]
 })
