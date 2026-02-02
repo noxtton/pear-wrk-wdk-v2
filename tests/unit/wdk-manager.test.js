@@ -58,7 +58,7 @@ jest.unstable_mockModule('@wdk/bare-ethers', () => ({
 
 // Import after mocking
 const { Blockchain, wdkType } = await import('../../src/wdk-core/constants.js')
-const { default: WdkManager } = await import('../../src/wdk-core/wdk-manager-v3.js')
+const { default: WdkManager } = await import('../../src/wdk-core/wdk-manager.js')
 
 describe('WdkManager', () => {
   let manager

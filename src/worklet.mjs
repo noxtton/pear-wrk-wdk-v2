@@ -1,6 +1,6 @@
 import HRPC from '../spec/hrpc'
 
-import WdkManager, { wdkType } from './wdk-core/wdk-manager-v3.js'
+import WdkManager, { wdkType } from './wdk-core/wdk-manager.js'
 import { stringifyError } from './exceptions/rpc-exception.js'
 
 /**
