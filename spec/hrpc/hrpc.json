@@ -1,5 +1,5 @@
 {
-  "version": 2,
+  "version": 1,
   "schema": [
     {
       "id": 0,
@@ -103,6 +103,19 @@
     },
     {
       "id": 8,
+      "name": "@wdk-core/getMaxSpendable",
+      "request": {
+        "name": "@wdk-core/getMaxSpendable-request",
+        "stream": false
+      },
+      "response": {
+        "name": "@wdk-core/getMaxSpendable-response",
+        "stream": false
+      },
+      "version": 1
+    },
+    {
+      "id": 9,
       "name": "@wdk-core/getAbstractedAddress",
       "request": {
         "name": "@wdk-core/getAbstractedAddress-request",
@@ -115,7 +128,7 @@
       "version": 1
     },
     {
-      "id": 9,
+      "id": 10,
       "name": "@wdk-core/getAbstractedAddressBalance",
       "request": {
         "name": "@wdk-core/getAbstractedAddressBalance-request",
@@ -128,7 +141,7 @@
       "version": 1
     },
     {
-      "id": 10,
+      "id": 11,
       "name": "@wdk-core/getAbstractedAddressTokenBalance",
       "request": {
         "name": "@wdk-core/getAbstractedAddressTokenBalance-request",
@@ -141,7 +154,7 @@
       "version": 1
     },
     {
-      "id": 11,
+      "id": 12,
       "name": "@wdk-core/abstractedAccountTransfer",
       "request": {
         "name": "@wdk-core/abstractedAccountTransfer-request",
@@ -154,7 +167,7 @@
       "version": 1
     },
     {
-      "id": 12,
+      "id": 13,
       "name": "@wdk-core/getApproveTransaction",
       "request": {
         "name": "@wdk-core/getApproveTransaction-request",
@@ -167,7 +180,7 @@
       "version": 1
     },
     {
-      "id": 13,
+      "id": 14,
       "name": "@wdk-core/abstractedSendTransaction",
       "request": {
         "name": "@wdk-core/abstractedSendTransaction-request",
@@ -180,7 +193,20 @@
       "version": 1
     },
     {
-      "id": 14,
+      "id": 15,
+      "name": "@wdk-core/abstractedQuoteSendTransaction",
+      "request": {
+        "name": "@wdk-core/abstractedQuoteSendTransaction-request",
+        "stream": false
+      },
+      "response": {
+        "name": "@wdk-core/abstractedQuoteSendTransaction-response",
+        "stream": false
+      },
+      "version": 1
+    },
+    {
+      "id": 16,
       "name": "@wdk-core/abstractedAccountQuoteTransfer",
       "request": {
         "name": "@wdk-core/abstractedAccountQuoteTransfer-request",
@@ -193,7 +219,7 @@
       "version": 1
     },
     {
-      "id": 15,
+      "id": 17,
       "name": "@wdk-core/getTransactionReceipt",
       "request": {
         "name": "@wdk-core/getTransactionReceipt-request",
@@ -206,7 +232,7 @@
       "version": 1
     },
     {
-      "id": 16,
+      "id": 18,
       "name": "@wdk-core/dispose",
       "request": {
         "name": "@wdk-core/dispose-request",
@@ -215,7 +241,25 @@
       "version": 1
     },
     {
-      "id": 17,
+      "id": 19,
+      "name": "@wdk-core/disposeWdk",
+      "request": {
+        "name": "@wdk-core/disposeWdk-request",
+        "send": true
+      },
+      "version": 1
+    },
+    {
+      "id": 20,
+      "name": "@wdk-core/disposeWdkReadOnly",
+      "request": {
+        "name": "@wdk-core/disposeWdkReadOnly-request",
+        "send": true
+      },
+      "version": 1
+    },
+    {
+      "id": 21,
       "name": "@wdk-core/generateAndEncrypt",
       "request": {
         "name": "@wdk-core/generateAndEncrypt-request",
@@ -228,7 +272,7 @@
       "version": 1
     },
     {
-      "id": 18,
+      "id": 22,
       "name": "@wdk-core/decrypt",
       "request": {
         "name": "@wdk-core/decrypt-request",
@@ -241,7 +285,7 @@
       "version": 1
     },
     {
-      "id": 19,
+      "id": 23,
       "name": "@wdk-core/generateSeed",
       "request": {
         "name": "@wdk-core/generateSeed-request",
@@ -252,24 +296,6 @@
         "stream": false
       },
       "version": 1
-    },
-    {
-      "id": 17,
-      "name": "@wdk-core/disposeWdk",
-      "request": {
-        "name": "@wdk-core/disposeWdk-request",
-        "send": true
-      },
-      "version": 2
-    },
-    {
-      "id": 18,
-      "name": "@wdk-core/disposeWdkReadOnly",
-      "request": {
-        "name": "@wdk-core/disposeWdkReadOnly-request",
-        "send": true
-      },
-      "version": 2
     }
   ]
 }

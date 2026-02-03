@@ -140,6 +140,19 @@ rpc.onSendTransaction(async payload => {
   }
 })
 
+rpc.onGetMaxSpendable(async payload => {
+  try {
+    const result = await wdk.getMaxSpendable(payload.wdkType, payload.network, { index: payload.accountIndex, address: payload.address })
+    return {
+      amount: result.amount.toString(),
+      fee: result.fee.toString(),
+      changeValue: result.changeValue.toString()
+    }
+  } catch (error) {
+    throw new Error(stringifyError(error))
+  }
+})
+
 /*****************
  *
  * Secret Manager
@@ -248,9 +261,18 @@ rpc.onAbstractedAccountTransfer(async payload => {
 
 rpc.onAbstractedSendTransaction(async payload => {
   try {
-    const options = JSON.parse(payload.options)
-    const transfer = await wdk.abstractedSendTransaction(payload.network, payload.accountIndex, options, payload.config)
+    const transfer = await wdk.abstractedSendTransaction(payload.network, payload.accountIndex, payload.options, payload.config)
     return { fee: transfer.fee.toString(), hash: transfer.hash }
+  } catch (error) {
+    throw new Error(stringifyError(error))
+  }
+})
+
+rpc.onAbstractedQuoteSendTransaction(async payload => {
+  try {
+    payload.options.value = Number(payload.options.value)
+    const transfer = await wdk.abstractedQuoteSendTransaction(payload.wdkType, payload.network, { index: payload.accountIndex, address: payload.address }, payload.options, payload.config)
+    return { fee: transfer.fee.toString() }
   } catch (error) {
     throw new Error(stringifyError(error))
   }

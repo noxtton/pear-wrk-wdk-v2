@@ -179,6 +179,28 @@ schemaNs.register({
   ]
 })
 
+/**
+ * getMaxSpendable
+ */
+schemaNs.register({
+  name: 'getMaxSpendable-request',
+  fields: [
+    { name: 'wdkType', type: 'string', required: true },
+    { name: 'network', type: 'string', required: true },
+    { name: 'accountIndex', type: 'uint', required: false },
+    { name: 'address', type: 'string', required: false },
+  ]
+})
+
+schemaNs.register({
+  name: 'getMaxSpendable-response',
+  fields: [
+    { name: 'amount', type: 'string' },
+    { name: 'fee', type: 'string' },
+    { name: 'changeValue', type: 'string' }
+  ]
+})
+
 /********************
  *
  * ABSTRACTION
@@ -317,6 +339,14 @@ schemaNs.register({
   ]
 })
 schemaNs.register({
+  name: 'abstractedSendTransaction-request-options',
+  fields: [
+    { name: 'to', type: 'string', required: true },
+    { name: 'value', type: 'string', required: true },
+    { name: 'data', type: 'string', required: false }
+  ]
+})
+schemaNs.register({
   name: 'abstractedSendTransaction-request-config',
   fields: [
     { name: 'paymasterToken', type: '@wdk-core/abstractedSendTransaction-request-config-paymasterToken', required: false }
@@ -327,7 +357,7 @@ schemaNs.register({
   fields: [
     { name: 'network', type: 'string', required: true },
     { name: 'accountIndex', type: 'uint', required: true },
-    { name: 'options', type: 'string', required: true },
+    { name: 'options', type: '@wdk-core/abstractedSendTransaction-request-options', required: true },
     { name: 'config', type: '@wdk-core/abstractedSendTransaction-request-config', required: false }
   ]
 })
@@ -336,6 +366,46 @@ schemaNs.register({
   name: 'abstractedSendTransaction-response',
   fields: [
     { name: 'hash', type: 'string' },
+    { name: 'fee', type: 'string' }
+  ]
+})
+
+/**
+ * abstractedQuoteSendTransaction
+ */
+schemaNs.register({
+  name: 'abstractedQuoteSendTransaction-request-config-paymasterToken',
+  fields: [
+    { name: 'address', type: 'string', required: true }
+  ]
+})
+schemaNs.register({
+  name: 'abstractedQuoteSendTransaction-request-options',
+  fields: [
+    { name: 'to', type: 'string', required: true },
+    { name: 'value', type: 'string', required: true },
+    { name: 'data', type: 'string', required: false }
+  ]
+})
+schemaNs.register({
+  name: 'abstractedQuoteSendTransaction-request-config',
+  fields: [
+    { name: 'paymasterToken', type: '@wdk-core/abstractedQuoteSendTransaction-request-config-paymasterToken', required: false }
+  ]
+})
+schemaNs.register({
+  name: 'abstractedQuoteSendTransaction-request',
+  fields: [
+    { name: 'network', type: 'string', required: true },
+    { name: 'accountIndex', type: 'uint', required: true },
+    { name: 'options', type: '@wdk-core/abstractedQuoteSendTransaction-request-options', required: true },
+    { name: 'config', type: '@wdk-core/abstractedQuoteSendTransaction-request-config', required: false }
+  ]
+})
+
+schemaNs.register({
+  name: 'abstractedQuoteSendTransaction-response',
+  fields: [
     { name: 'fee', type: 'string' }
   ]
 })
@@ -529,6 +599,12 @@ ns.register({
 })
 
 ns.register({
+  name: 'getMaxSpendable',
+  request: { name: '@wdk-core/getMaxSpendable-request', stream: false },
+  response: { name: '@wdk-core/getMaxSpendable-response', stream: false }
+})
+
+ns.register({
   name: 'getAbstractedAddress',
   request: { name: '@wdk-core/getAbstractedAddress-request', stream: false },
   response: { name: '@wdk-core/getAbstractedAddress-response', stream: false }
@@ -559,6 +635,11 @@ ns.register({
   name: 'abstractedSendTransaction',
   request: { name: '@wdk-core/abstractedSendTransaction-request', stream: false },
   response: { name: '@wdk-core/abstractedSendTransaction-response', stream: false }
+})
+ns.register({
+  name: 'abstractedQuoteSendTransaction',
+  request: { name: '@wdk-core/abstractedQuoteSendTransaction-request', stream: false },
+  response: { name: '@wdk-core/abstractedQuoteSendTransaction-response', stream: false }
 })
 ns.register({
   name: 'abstractedAccountQuoteTransfer',

@@ -150,6 +150,27 @@
 
 ---
 
+## getMaxSpendable
+
+**Request:** `@wdk-core/getMaxSpendable-request`
+
+**Fields:**
+
+- `wdkType`: `string` _(v1)_
+- `network`: `string` _(v1)_
+- `accountIndex`: `uint` _(optional)_ _(v1)_
+- `address`: `string` _(optional)_ _(v1)_
+
+**Response:** `@wdk-core/getMaxSpendable-response`
+
+**Fields:**
+
+- `amount`: `string` _(v1)_
+- `fee`: `string` _(v1)_
+- `changeValue`: `string` _(v1)_
+
+---
+
 ## getAbstractedAddress
 
 **Request:** `@wdk-core/getAbstractedAddress-request`
@@ -261,7 +282,10 @@
 
 - `network`: `string` _(v1)_
 - `accountIndex`: `uint` _(v1)_
-- `options`: `string` _(v1)_
+- `options`: `object` _(v1)_
+  - `to`: `string` _(v1)_
+  - `value`: `string` _(v1)_
+  - `data`: `string` _(optional)_ _(v1)_
 - `config`: `object` _(optional)_ _(v1)_
   - `paymasterToken`: `object` _(optional)_ _(v1)_
     - `address`: `string` _(v1)_
@@ -271,6 +295,30 @@
 **Fields:**
 
 - `hash`: `string` _(v1)_
+- `fee`: `string` _(v1)_
+
+---
+
+## abstractedQuoteSendTransaction
+
+**Request:** `@wdk-core/abstractedQuoteSendTransaction-request`
+
+**Fields:**
+
+- `network`: `string` _(v1)_
+- `accountIndex`: `uint` _(v1)_
+- `options`: `object` _(v1)_
+  - `to`: `string` _(v1)_
+  - `value`: `string` _(v1)_
+  - `data`: `string` _(optional)_ _(v1)_
+- `config`: `object` _(optional)_ _(v1)_
+  - `paymasterToken`: `object` _(optional)_ _(v1)_
+    - `address`: `string` _(v1)_
+
+**Response:** `@wdk-core/abstractedQuoteSendTransaction-response`
+
+**Fields:**
+
 - `fee`: `string` _(v1)_
 
 ---
@@ -331,6 +379,26 @@ _No fields defined_
 
 ---
 
+## disposeWdk
+
+**Request:** `@wdk-core/disposeWdk-request`
+
+**Fields:**
+
+_No fields defined_
+
+---
+
+## disposeWdkReadOnly
+
+**Request:** `@wdk-core/disposeWdkReadOnly-request`
+
+**Fields:**
+
+_No fields defined_
+
+---
+
 ## generateAndEncrypt
 
 **Request:** `@wdk-core/generateAndEncrypt-request`
@@ -383,26 +451,6 @@ _No fields defined_
 **Fields:**
 
 - `mnemonic`: `string` _(v1)_
-
----
-
-## disposeWdk
-
-**Request:** `@wdk-core/disposeWdk-request`
-
-**Fields:**
-
-_No fields defined_
-
----
-
-## disposeWdkReadOnly
-
-**Request:** `@wdk-core/disposeWdkReadOnly-request`
-
-**Fields:**
-
-_No fields defined_
 
 ---
 

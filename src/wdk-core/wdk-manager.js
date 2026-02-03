@@ -325,6 +325,23 @@ export default class WdkManager {
     return await account.quoteSendTransaction(options)
   }
 
+
+  /**
+   * Returns the maximum spendable amount for an account.
+   *
+   * @param {wdkType} type - wdkType.WDK or wdkType.WDKReadOnly
+   * @param {Blockchain} blockchain - A blockchain identifier (e.g., "bitcoin").
+   * @param {Object} opt
+   * @param {number} [opt.index] - - The index of the account to use (see [BIP-44](https://en.bitcoin.it/wiki/BIP_0044)).
+   * @param {string} [opt.address] - address for WDKReadOnly
+   * @returns {Promise<{amount: bigint, fee: bigint, changeValue: bigint}>} The max spendable info.
+   */
+  async getMaxSpendable (type, blockchain, { index, address } = { },) {
+    const account = await this.getAccountByType(type, blockchain, { index, address})
+
+    return await account.getMaxSpendable()
+  }
+
   /**
    * Transfers a token to another address.
    *
@@ -415,6 +432,23 @@ export default class WdkManager {
     const account = await this.getAbstractedAccount(blockchain, accountIndex)
 
     return await account.sendTransaction(options, config)
+  }
+
+  /**
+   * Quote the costs of a native token transfer operation. (POL, ARB, ETH)
+   *
+   * @param {wdkType} type - wdkType.WDK or wdkType.WDKReadOnly
+   * @param {Blockchain} blockchain - A blockchain identifier (e.g., "ethereum").
+   * @param {Object} opt
+   * @param {number} [opt.index] - account index for WDK
+   * @param {string} [opt.address] - address for WDKReadOnly
+   * @param {EvmTransaction} options - The transaction options.
+   * @param {TransferConfig} [config] - If set, overrides the 'transferMaxFee' and 'paymasterToken' options defined in the manager configuration.
+   * @return {Promise<Omit<TransactionResult, "hash">>}
+   */
+  async abstractedQuoteSendTransaction (type, blockchain, { index, address } = {}, options, config) {
+    const account = await this.getAbstractedAccountByType(type, blockchain, {index, address})
+    return await account.quoteSendTransaction(options, config)
   }
 
   /**

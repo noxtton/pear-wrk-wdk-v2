@@ -166,6 +166,24 @@ export default class WdkManager {
         address?: string;
     }, options: Transaction): Promise<Omit<TransactionResult, "hash">>;
     /**
+     * Returns the maximum spendable amount for an account.
+     *
+     * @param {wdkType} type - wdkType.WDK or wdkType.WDKReadOnly
+     * @param {Blockchain} blockchain - A blockchain identifier (e.g., "bitcoin").
+     * @param {Object} opt
+     * @param {number} [opt.index] - - The index of the account to use (see [BIP-44](https://en.bitcoin.it/wiki/BIP_0044)).
+     * @param {string} [opt.address] - address for WDKReadOnly
+     * @returns {Promise<{amount: bigint, fee: bigint, changeValue: bigint}>} The max spendable info.
+     */
+    getMaxSpendable(type: wdkType, blockchain: Blockchain, { index, address }?: {
+        index?: number;
+        address?: string;
+    }): Promise<{
+        amount: bigint;
+        fee: bigint;
+        changeValue: bigint;
+    }>;
+    /**
      * Transfers a token to another address.
      *
      * @param {Blockchain} blockchain - A blockchain identifier (e.g., "ethereum").
@@ -241,6 +259,22 @@ export default class WdkManager {
      *
      */
     abstractedSendTransaction(blockchain: Blockchain, accountIndex: number, options: EvmTransaction[], config?: TransferConfig): Promise<TransactionResult>;
+    /**
+     * Quote the costs of a native token transfer operation. (POL, ARB, ETH)
+     *
+     * @param {wdkType} type - wdkType.WDK or wdkType.WDKReadOnly
+     * @param {Blockchain} blockchain - A blockchain identifier (e.g., "ethereum").
+     * @param {Object} opt
+     * @param {number} [opt.index] - account index for WDK
+     * @param {string} [opt.address] - address for WDKReadOnly
+     * @param {EvmTransaction} options - The transaction options.
+     * @param {TransferConfig} [config] - If set, overrides the 'transferMaxFee' and 'paymasterToken' options defined in the manager configuration.
+     * @return {Promise<Omit<TransactionResult, "hash">>}
+     */
+    abstractedQuoteSendTransaction(type: wdkType, blockchain: Blockchain, { index, address }: {
+        index?: number;
+        address?: string;
+    }, options: EvmTransaction, config?: TransferConfig): Promise<Omit<TransactionResult, "hash">>;
     /**
      * Quotes the costs of a transfer operation.
      *

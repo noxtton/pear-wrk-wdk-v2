@@ -21,34 +21,38 @@ const methods = new Map([
   [6, '@wdk-core/quoteSendTransaction'],
   ['@wdk-core/sendTransaction', 7],
   [7, '@wdk-core/sendTransaction'],
-  ['@wdk-core/getAbstractedAddress', 8],
-  [8, '@wdk-core/getAbstractedAddress'],
-  ['@wdk-core/getAbstractedAddressBalance', 9],
-  [9, '@wdk-core/getAbstractedAddressBalance'],
-  ['@wdk-core/getAbstractedAddressTokenBalance', 10],
-  [10, '@wdk-core/getAbstractedAddressTokenBalance'],
-  ['@wdk-core/abstractedAccountTransfer', 11],
-  [11, '@wdk-core/abstractedAccountTransfer'],
-  ['@wdk-core/getApproveTransaction', 12],
-  [12, '@wdk-core/getApproveTransaction'],
-  ['@wdk-core/abstractedSendTransaction', 13],
-  [13, '@wdk-core/abstractedSendTransaction'],
-  ['@wdk-core/abstractedAccountQuoteTransfer', 14],
-  [14, '@wdk-core/abstractedAccountQuoteTransfer'],
-  ['@wdk-core/getTransactionReceipt', 15],
-  [15, '@wdk-core/getTransactionReceipt'],
-  ['@wdk-core/dispose', 16],
-  [16, '@wdk-core/dispose'],
-  ['@wdk-core/generateAndEncrypt', 17],
-  [17, '@wdk-core/generateAndEncrypt'],
-  ['@wdk-core/decrypt', 18],
-  [18, '@wdk-core/decrypt'],
-  ['@wdk-core/generateSeed', 19],
-  [19, '@wdk-core/generateSeed'],
-  ['@wdk-core/disposeWdk', 20],
-  [20, '@wdk-core/disposeWdk'],
-  ['@wdk-core/disposeWdkReadOnly', 21],
-  [21, '@wdk-core/disposeWdkReadOnly']
+  ['@wdk-core/getMaxSpendable', 8],
+  [8, '@wdk-core/getMaxSpendable'],
+  ['@wdk-core/getAbstractedAddress', 9],
+  [9, '@wdk-core/getAbstractedAddress'],
+  ['@wdk-core/getAbstractedAddressBalance', 10],
+  [10, '@wdk-core/getAbstractedAddressBalance'],
+  ['@wdk-core/getAbstractedAddressTokenBalance', 11],
+  [11, '@wdk-core/getAbstractedAddressTokenBalance'],
+  ['@wdk-core/abstractedAccountTransfer', 12],
+  [12, '@wdk-core/abstractedAccountTransfer'],
+  ['@wdk-core/getApproveTransaction', 13],
+  [13, '@wdk-core/getApproveTransaction'],
+  ['@wdk-core/abstractedSendTransaction', 14],
+  [14, '@wdk-core/abstractedSendTransaction'],
+  ['@wdk-core/abstractedQuoteSendTransaction', 15],
+  [15, '@wdk-core/abstractedQuoteSendTransaction'],
+  ['@wdk-core/abstractedAccountQuoteTransfer', 16],
+  [16, '@wdk-core/abstractedAccountQuoteTransfer'],
+  ['@wdk-core/getTransactionReceipt', 17],
+  [17, '@wdk-core/getTransactionReceipt'],
+  ['@wdk-core/dispose', 18],
+  [18, '@wdk-core/dispose'],
+  ['@wdk-core/disposeWdk', 19],
+  [19, '@wdk-core/disposeWdk'],
+  ['@wdk-core/disposeWdkReadOnly', 20],
+  [20, '@wdk-core/disposeWdkReadOnly'],
+  ['@wdk-core/generateAndEncrypt', 21],
+  [21, '@wdk-core/generateAndEncrypt'],
+  ['@wdk-core/decrypt', 22],
+  [22, '@wdk-core/decrypt'],
+  ['@wdk-core/generateSeed', 23],
+  [23, '@wdk-core/generateSeed']
 ])
 
 class HRPC {
@@ -64,20 +68,22 @@ class HRPC {
       ['@wdk-core/getAddressBalance', getEncoding('@wdk-core/getAddressBalance-request')],
       ['@wdk-core/quoteSendTransaction', getEncoding('@wdk-core/quoteSendTransaction-request')],
       ['@wdk-core/sendTransaction', getEncoding('@wdk-core/sendTransaction-request')],
+      ['@wdk-core/getMaxSpendable', getEncoding('@wdk-core/getMaxSpendable-request')],
       ['@wdk-core/getAbstractedAddress', getEncoding('@wdk-core/getAbstractedAddress-request')],
       ['@wdk-core/getAbstractedAddressBalance', getEncoding('@wdk-core/getAbstractedAddressBalance-request')],
       ['@wdk-core/getAbstractedAddressTokenBalance', getEncoding('@wdk-core/getAbstractedAddressTokenBalance-request')],
       ['@wdk-core/abstractedAccountTransfer', getEncoding('@wdk-core/abstractedAccountTransfer-request')],
       ['@wdk-core/getApproveTransaction', getEncoding('@wdk-core/getApproveTransaction-request')],
       ['@wdk-core/abstractedSendTransaction', getEncoding('@wdk-core/abstractedSendTransaction-request')],
+      ['@wdk-core/abstractedQuoteSendTransaction', getEncoding('@wdk-core/abstractedQuoteSendTransaction-request')],
       ['@wdk-core/abstractedAccountQuoteTransfer', getEncoding('@wdk-core/abstractedAccountQuoteTransfer-request')],
       ['@wdk-core/getTransactionReceipt', getEncoding('@wdk-core/getTransactionReceipt-request')],
       ['@wdk-core/dispose', getEncoding('@wdk-core/dispose-request')],
+      ['@wdk-core/disposeWdk', getEncoding('@wdk-core/disposeWdk-request')],
+      ['@wdk-core/disposeWdkReadOnly', getEncoding('@wdk-core/disposeWdkReadOnly-request')],
       ['@wdk-core/generateAndEncrypt', getEncoding('@wdk-core/generateAndEncrypt-request')],
       ['@wdk-core/decrypt', getEncoding('@wdk-core/decrypt-request')],
-      ['@wdk-core/generateSeed', getEncoding('@wdk-core/generateSeed-request')],
-      ['@wdk-core/disposeWdk', getEncoding('@wdk-core/disposeWdk-request')],
-      ['@wdk-core/disposeWdkReadOnly', getEncoding('@wdk-core/disposeWdkReadOnly-request')]
+      ['@wdk-core/generateSeed', getEncoding('@wdk-core/generateSeed-request')]
     ])
     this._responseEncodings = new Map([
       ['@wdk-core/workletStart', getEncoding('@wdk-core/workletStart-response')],
@@ -87,12 +93,14 @@ class HRPC {
       ['@wdk-core/getAddressBalance', getEncoding('@wdk-core/getAddressBalance-response')],
       ['@wdk-core/quoteSendTransaction', getEncoding('@wdk-core/quoteSendTransaction-response')],
       ['@wdk-core/sendTransaction', getEncoding('@wdk-core/sendTransaction-response')],
+      ['@wdk-core/getMaxSpendable', getEncoding('@wdk-core/getMaxSpendable-response')],
       ['@wdk-core/getAbstractedAddress', getEncoding('@wdk-core/getAbstractedAddress-response')],
       ['@wdk-core/getAbstractedAddressBalance', getEncoding('@wdk-core/getAbstractedAddressBalance-response')],
       ['@wdk-core/getAbstractedAddressTokenBalance', getEncoding('@wdk-core/getAbstractedAddressTokenBalance-response')],
       ['@wdk-core/abstractedAccountTransfer', getEncoding('@wdk-core/abstractedAccountTransfer-response')],
       ['@wdk-core/getApproveTransaction', getEncoding('@wdk-core/getApproveTransaction-response')],
       ['@wdk-core/abstractedSendTransaction', getEncoding('@wdk-core/abstractedSendTransaction-response')],
+      ['@wdk-core/abstractedQuoteSendTransaction', getEncoding('@wdk-core/abstractedQuoteSendTransaction-response')],
       ['@wdk-core/abstractedAccountQuoteTransfer', getEncoding('@wdk-core/abstractedAccountQuoteTransfer-response')],
       ['@wdk-core/getTransactionReceipt', getEncoding('@wdk-core/getTransactionReceipt-response')],
       ['@wdk-core/generateAndEncrypt', getEncoding('@wdk-core/generateAndEncrypt-response')],
@@ -193,6 +201,10 @@ class HRPC {
     return this._call('@wdk-core/sendTransaction', args)
   }
 
+  async getMaxSpendable (args) {
+    return this._call('@wdk-core/getMaxSpendable', args)
+  }
+
   async getAbstractedAddress (args) {
     return this._call('@wdk-core/getAbstractedAddress', args)
   }
@@ -217,6 +229,10 @@ class HRPC {
     return this._call('@wdk-core/abstractedSendTransaction', args)
   }
 
+  async abstractedQuoteSendTransaction (args) {
+    return this._call('@wdk-core/abstractedQuoteSendTransaction', args)
+  }
+
   async abstractedAccountQuoteTransfer (args) {
     return this._call('@wdk-core/abstractedAccountQuoteTransfer', args)
   }
@@ -229,6 +245,14 @@ class HRPC {
     return this._callSync('@wdk-core/dispose', args)
   }
 
+  disposeWdk (args) {
+    return this._callSync('@wdk-core/disposeWdk', args)
+  }
+
+  disposeWdkReadOnly (args) {
+    return this._callSync('@wdk-core/disposeWdkReadOnly', args)
+  }
+
   async generateAndEncrypt (args) {
     return this._call('@wdk-core/generateAndEncrypt', args)
   }
@@ -239,14 +263,6 @@ class HRPC {
 
   async generateSeed (args) {
     return this._call('@wdk-core/generateSeed', args)
-  }
-
-  disposeWdk (args) {
-    return this._callSync('@wdk-core/disposeWdk', args)
-  }
-
-  disposeWdkReadOnly (args) {
-    return this._callSync('@wdk-core/disposeWdkReadOnly', args)
   }
 
   onLog (responseFn) {
@@ -281,6 +297,10 @@ class HRPC {
     this._handlers['@wdk-core/sendTransaction'] = responseFn
   }
 
+  onGetMaxSpendable (responseFn) {
+    this._handlers['@wdk-core/getMaxSpendable'] = responseFn
+  }
+
   onGetAbstractedAddress (responseFn) {
     this._handlers['@wdk-core/getAbstractedAddress'] = responseFn
   }
@@ -305,6 +325,10 @@ class HRPC {
     this._handlers['@wdk-core/abstractedSendTransaction'] = responseFn
   }
 
+  onAbstractedQuoteSendTransaction (responseFn) {
+    this._handlers['@wdk-core/abstractedQuoteSendTransaction'] = responseFn
+  }
+
   onAbstractedAccountQuoteTransfer (responseFn) {
     this._handlers['@wdk-core/abstractedAccountQuoteTransfer'] = responseFn
   }
@@ -317,6 +341,14 @@ class HRPC {
     this._handlers['@wdk-core/dispose'] = responseFn
   }
 
+  onDisposeWdk (responseFn) {
+    this._handlers['@wdk-core/disposeWdk'] = responseFn
+  }
+
+  onDisposeWdkReadOnly (responseFn) {
+    this._handlers['@wdk-core/disposeWdkReadOnly'] = responseFn
+  }
+
   onGenerateAndEncrypt (responseFn) {
     this._handlers['@wdk-core/generateAndEncrypt'] = responseFn
   }
@@ -327,14 +359,6 @@ class HRPC {
 
   onGenerateSeed (responseFn) {
     this._handlers['@wdk-core/generateSeed'] = responseFn
-  }
-
-  onDisposeWdk (responseFn) {
-    this._handlers['@wdk-core/disposeWdk'] = responseFn
-  }
-
-  onDisposeWdkReadOnly (responseFn) {
-    this._handlers['@wdk-core/disposeWdkReadOnly'] = responseFn
   }
 
   _requestIsStream (command) {

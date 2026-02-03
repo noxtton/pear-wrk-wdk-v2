@@ -24,6 +24,7 @@ const mockWdkGetAbstractedAccount = jest.fn()
 
 const mockWdkReadOnlyDispose = jest.fn()
 const mockWdkReadOnlyGetAccount = jest.fn()
+const mockWdkReadOnlyGetAbstractedAccount = jest.fn()
 
 const MockWDK = jest.fn().mockImplementation(() => ({
   dispose: mockWdkDispose,
@@ -35,7 +36,8 @@ const MockWDK = jest.fn().mockImplementation(() => ({
 
 const MockWDKReadOnly = jest.fn().mockImplementation(() => ({
   dispose: mockWdkReadOnlyDispose,
-  getAccount: mockWdkReadOnlyGetAccount
+  getAccount: mockWdkReadOnlyGetAccount,
+  getAbstractedAccount: mockWdkReadOnlyGetAbstractedAccount
 }))
 
 jest.unstable_mockModule('../../src/wdk-core/wdk.js', () => ({
@@ -261,7 +263,7 @@ describe('WdkManager', () => {
       it('should return balance from read-only account with wdkType WDKReadOnly', async () => {
         manager.initWdkReadOnly()
         const mockAccount = { getBalance: jest.fn().mockResolvedValue(BigInt(2000)) }
-        mockWdkReadOnlyGetAccount.mockResolvedValue(mockAccount)
+        mockWdkReadOnlyGetAbstractedAccount.mockResolvedValue(mockAccount)
 
         const result = await manager.getAbstractedAddressBalance(wdkType.WDKReadOnly, Blockchain.Ethereum, { address: '0xtest' })
 
@@ -284,7 +286,7 @@ describe('WdkManager', () => {
       it('should return token balance from read-only account with wdkType WDKReadOnly', async () => {
         manager.initWdkReadOnly()
         const mockAccount = { getTokenBalance: jest.fn().mockResolvedValue(BigInt(750)) }
-        mockWdkReadOnlyGetAccount.mockResolvedValue(mockAccount)
+        mockWdkReadOnlyGetAbstractedAccount.mockResolvedValue(mockAccount)
 
         const result = await manager.getAbstractedAddressTokenBalance(wdkType.WDKReadOnly, Blockchain.Ethereum, '0xtoken', { address: '0xtest' })
 
@@ -354,7 +356,7 @@ describe('WdkManager', () => {
         manager.initWdkReadOnly()
         const mockQuote = { fee: BigInt(200) }
         const mockAccount = { quoteTransfer: jest.fn().mockResolvedValue(mockQuote) }
-        mockWdkReadOnlyGetAccount.mockResolvedValue(mockAccount)
+        mockWdkReadOnlyGetAbstractedAccount.mockResolvedValue(mockAccount)
 
         const options = { recipient: '0xabc', token: '0xtoken', amount: 1000000 }
         const result = await manager.abstractedAccountQuoteTransfer(wdkType.WDKReadOnly, Blockchain.Ethereum, { address: '0xtest' }, options)
@@ -380,7 +382,7 @@ describe('WdkManager', () => {
         manager.initWdkReadOnly()
         const mockReceipt = { status: 1, blockNumber: 12345 }
         const mockAccount = { getTransactionReceipt: jest.fn().mockResolvedValue(mockReceipt) }
-        mockWdkReadOnlyGetAccount.mockResolvedValue(mockAccount)
+        mockWdkReadOnlyGetAbstractedAccount.mockResolvedValue(mockAccount)
 
         const result = await manager.getTransactionReceipt(wdkType.WDKReadOnly, Blockchain.Ethereum, { address: '0xtest' }, '0xhash')
 
@@ -461,11 +463,11 @@ describe('WdkManager', () => {
     it('should return read-only account when type is WDKReadOnly', async () => {
       manager.initWdkReadOnly()
       const mockAccount = { address: '0xreadonly' }
-      mockWdkReadOnlyGetAccount.mockResolvedValue(mockAccount)
+      mockWdkReadOnlyGetAbstractedAccount.mockResolvedValue(mockAccount)
 
       const result = await manager.getAbstractedAccountByType(wdkType.WDKReadOnly, Blockchain.Ethereum, { address: '0xtest' })
 
-      expect(mockWdkReadOnlyGetAccount).toHaveBeenCalledWith(Blockchain.Ethereum, '0xtest')
+      expect(mockWdkReadOnlyGetAbstractedAccount).toHaveBeenCalledWith(Blockchain.Ethereum, '0xtest')
       expect(result).toEqual(mockAccount)
     })
 
@@ -518,6 +520,90 @@ describe('WdkManager', () => {
       const result = await manager.quoteSendTransaction(wdkType.WDK, Blockchain.Ethereum, { index: 0 }, options)
 
       expect(mockAccount.quoteSendTransaction).toHaveBeenCalledWith(options)
+      expect(result).toEqual(mockQuote)
+    })
+  })
+
+  describe('getMaxSpendable', () => {
+    it('should return max spendable info with wdkType WDK', async () => {
+      manager.initWdk(mockSeed)
+      const mockResult = { amount: BigInt(1000), fee: BigInt(50), changeValue: BigInt(0) }
+      const mockAccount = { getMaxSpendable: jest.fn().mockResolvedValue(mockResult) }
+      mockWdkGetAccount.mockResolvedValue(mockAccount)
+
+      const result = await manager.getMaxSpendable(wdkType.WDK, Blockchain.Bitcoin, { index: 0 })
+
+      expect(mockWdkGetAccount).toHaveBeenCalledWith(Blockchain.Bitcoin, 0)
+      expect(mockAccount.getMaxSpendable).toHaveBeenCalled()
+      expect(result).toEqual(mockResult)
+    })
+
+    it('should return max spendable info with wdkType WDKReadOnly', async () => {
+      manager.initWdkReadOnly()
+      const mockResult = { amount: BigInt(2000), fee: BigInt(100), changeValue: BigInt(10) }
+      const mockAccount = { getMaxSpendable: jest.fn().mockResolvedValue(mockResult) }
+      mockWdkReadOnlyGetAccount.mockResolvedValue(mockAccount)
+
+      const result = await manager.getMaxSpendable(wdkType.WDKReadOnly, Blockchain.Bitcoin, { address: '0xtest' })
+
+      expect(mockWdkReadOnlyGetAccount).toHaveBeenCalledWith(Blockchain.Bitcoin, '0xtest')
+      expect(mockAccount.getMaxSpendable).toHaveBeenCalled()
+      expect(result).toEqual(mockResult)
+    })
+
+    it('should use default empty options when none provided', async () => {
+      manager.initWdk(mockSeed)
+      const mockResult = { amount: BigInt(500), fee: BigInt(25), changeValue: BigInt(0) }
+      const mockAccount = { getMaxSpendable: jest.fn().mockResolvedValue(mockResult) }
+      mockWdkGetAccount.mockResolvedValue(mockAccount)
+
+      const result = await manager.getMaxSpendable(wdkType.WDK, Blockchain.Bitcoin)
+
+      expect(mockAccount.getMaxSpendable).toHaveBeenCalled()
+      expect(result).toEqual(mockResult)
+    })
+  })
+
+  describe('abstractedQuoteSendTransaction', () => {
+    it('should quote send transaction via abstracted account with wdkType WDK', async () => {
+      manager.initWdk(mockSeed)
+      const mockQuote = { fee: BigInt(300) }
+      const mockAccount = { quoteSendTransaction: jest.fn().mockResolvedValue(mockQuote) }
+      mockWdkGetAbstractedAccount.mockResolvedValue(mockAccount)
+
+      const options = { to: '0xrecipient', value: 100, data: '0xdata' }
+      const config = { paymasterToken: { address: '0xtoken' } }
+      const result = await manager.abstractedQuoteSendTransaction(wdkType.WDK, Blockchain.Ethereum, { index: 0 }, options, config)
+
+      expect(mockWdkGetAbstractedAccount).toHaveBeenCalledWith(Blockchain.Ethereum, 0)
+      expect(mockAccount.quoteSendTransaction).toHaveBeenCalledWith(options, config)
+      expect(result).toEqual(mockQuote)
+    })
+
+    it('should quote send transaction via read-only abstracted account with wdkType WDKReadOnly', async () => {
+      manager.initWdkReadOnly()
+      const mockQuote = { fee: BigInt(400) }
+      const mockAccount = { quoteSendTransaction: jest.fn().mockResolvedValue(mockQuote) }
+      mockWdkReadOnlyGetAbstractedAccount.mockResolvedValue(mockAccount)
+
+      const options = { to: '0xrecipient', value: 200 }
+      const result = await manager.abstractedQuoteSendTransaction(wdkType.WDKReadOnly, Blockchain.Ethereum, { address: '0xtest' }, options)
+
+      expect(mockWdkReadOnlyGetAbstractedAccount).toHaveBeenCalledWith(Blockchain.Ethereum, '0xtest')
+      expect(mockAccount.quoteSendTransaction).toHaveBeenCalledWith(options, undefined)
+      expect(result).toEqual(mockQuote)
+    })
+
+    it('should quote send transaction without config', async () => {
+      manager.initWdk(mockSeed)
+      const mockQuote = { fee: BigInt(150) }
+      const mockAccount = { quoteSendTransaction: jest.fn().mockResolvedValue(mockQuote) }
+      mockWdkGetAbstractedAccount.mockResolvedValue(mockAccount)
+
+      const options = { to: '0xrecipient', value: 50 }
+      const result = await manager.abstractedQuoteSendTransaction(wdkType.WDK, Blockchain.Ethereum, { index: 0 }, options)
+
+      expect(mockAccount.quoteSendTransaction).toHaveBeenCalledWith(options, undefined)
       expect(result).toEqual(mockQuote)
     })
   })

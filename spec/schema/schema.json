@@ -1,5 +1,5 @@
 {
-  "version": 2,
+  "version": 1,
   "schema": [
     {
       "name": "log-type-enum",
@@ -413,6 +413,61 @@
       ]
     },
     {
+      "name": "getMaxSpendable-request",
+      "namespace": "wdk-core",
+      "compact": false,
+      "flagsPosition": 2,
+      "fields": [
+        {
+          "name": "wdkType",
+          "required": true,
+          "type": "string",
+          "version": 1
+        },
+        {
+          "name": "network",
+          "required": true,
+          "type": "string",
+          "version": 1
+        },
+        {
+          "name": "accountIndex",
+          "required": false,
+          "type": "uint",
+          "version": 1
+        },
+        {
+          "name": "address",
+          "required": false,
+          "type": "string",
+          "version": 1
+        }
+      ]
+    },
+    {
+      "name": "getMaxSpendable-response",
+      "namespace": "wdk-core",
+      "compact": false,
+      "flagsPosition": 0,
+      "fields": [
+        {
+          "name": "amount",
+          "type": "string",
+          "version": 1
+        },
+        {
+          "name": "fee",
+          "type": "string",
+          "version": 1
+        },
+        {
+          "name": "changeValue",
+          "type": "string",
+          "version": 1
+        }
+      ]
+    },
+    {
       "name": "getAbstractedAddress-request",
       "namespace": "wdk-core",
       "compact": false,
@@ -723,6 +778,32 @@
       ]
     },
     {
+      "name": "abstractedSendTransaction-request-options",
+      "namespace": "wdk-core",
+      "compact": false,
+      "flagsPosition": 2,
+      "fields": [
+        {
+          "name": "to",
+          "required": true,
+          "type": "string",
+          "version": 1
+        },
+        {
+          "name": "value",
+          "required": true,
+          "type": "string",
+          "version": 1
+        },
+        {
+          "name": "data",
+          "required": false,
+          "type": "string",
+          "version": 1
+        }
+      ]
+    },
+    {
       "name": "abstractedSendTransaction-request-config",
       "namespace": "wdk-core",
       "compact": false,
@@ -757,7 +838,7 @@
         {
           "name": "options",
           "required": true,
-          "type": "string",
+          "type": "@wdk-core/abstractedSendTransaction-request-options",
           "version": 1
         },
         {
@@ -779,6 +860,105 @@
           "type": "string",
           "version": 1
         },
+        {
+          "name": "fee",
+          "type": "string",
+          "version": 1
+        }
+      ]
+    },
+    {
+      "name": "abstractedQuoteSendTransaction-request-config-paymasterToken",
+      "namespace": "wdk-core",
+      "compact": false,
+      "flagsPosition": -1,
+      "fields": [
+        {
+          "name": "address",
+          "required": true,
+          "type": "string",
+          "version": 1
+        }
+      ]
+    },
+    {
+      "name": "abstractedQuoteSendTransaction-request-options",
+      "namespace": "wdk-core",
+      "compact": false,
+      "flagsPosition": 2,
+      "fields": [
+        {
+          "name": "to",
+          "required": true,
+          "type": "string",
+          "version": 1
+        },
+        {
+          "name": "value",
+          "required": true,
+          "type": "string",
+          "version": 1
+        },
+        {
+          "name": "data",
+          "required": false,
+          "type": "string",
+          "version": 1
+        }
+      ]
+    },
+    {
+      "name": "abstractedQuoteSendTransaction-request-config",
+      "namespace": "wdk-core",
+      "compact": false,
+      "flagsPosition": 0,
+      "fields": [
+        {
+          "name": "paymasterToken",
+          "required": false,
+          "type": "@wdk-core/abstractedQuoteSendTransaction-request-config-paymasterToken",
+          "version": 1
+        }
+      ]
+    },
+    {
+      "name": "abstractedQuoteSendTransaction-request",
+      "namespace": "wdk-core",
+      "compact": false,
+      "flagsPosition": 3,
+      "fields": [
+        {
+          "name": "network",
+          "required": true,
+          "type": "string",
+          "version": 1
+        },
+        {
+          "name": "accountIndex",
+          "required": true,
+          "type": "uint",
+          "version": 1
+        },
+        {
+          "name": "options",
+          "required": true,
+          "type": "@wdk-core/abstractedQuoteSendTransaction-request-options",
+          "version": 1
+        },
+        {
+          "name": "config",
+          "required": false,
+          "type": "@wdk-core/abstractedQuoteSendTransaction-request-config",
+          "version": 1
+        }
+      ]
+    },
+    {
+      "name": "abstractedQuoteSendTransaction-response",
+      "namespace": "wdk-core",
+      "compact": false,
+      "flagsPosition": 0,
+      "fields": [
         {
           "name": "fee",
           "type": "string",
