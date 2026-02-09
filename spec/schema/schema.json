@@ -1,5 +1,5 @@
 {
-  "version": 1,
+  "version": 2,
   "schema": [
     {
       "name": "log-type-enum",
@@ -948,6 +948,39 @@
       "compact": false,
       "flagsPosition": -1,
       "fields": []
+    },
+    {
+      "name": "getBatchAbstractedAddresses-request",
+      "namespace": "wdk-core",
+      "compact": false,
+      "flagsPosition": -1,
+      "fields": [
+        {
+          "name": "network",
+          "required": true,
+          "type": "string",
+          "version": 2
+        },
+        {
+          "name": "accountIndices",
+          "required": true,
+          "type": "string",
+          "version": 2
+        }
+      ]
+    },
+    {
+      "name": "getBatchAbstractedAddresses-response",
+      "namespace": "wdk-core",
+      "compact": false,
+      "flagsPosition": 0,
+      "fields": [
+        {
+          "name": "addresses",
+          "type": "string",
+          "version": 2
+        }
+      ]
     }
   ]
 }
