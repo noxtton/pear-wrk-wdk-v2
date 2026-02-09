@@ -179,9 +179,15 @@ rpc.onGetAbstractedAddress(async payload => {
 rpc.onGetBatchAbstractedAddresses(async payload => {
   try {
     const indices = JSON.parse(payload.accountIndices)
+    const entries = await Promise.all(
+      indices.map(async (index) => {
+        const address = await wdk.getAbstractedAddress(payload.network, index)
+        return [index, address]
+      })
+    )
     const result = {}
-    for (const index of indices) {
-      result[index] = await wdk.getAbstractedAddress(payload.network, index)
+    for (const [index, address] of entries) {
+      result[index] = address
     }
     return { addresses: JSON.stringify(result) }
   } catch (error) {
