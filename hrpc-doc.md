@@ -354,3 +354,20 @@ _No fields defined_
 
 ---
 
+## getBatchAbstractedAddresses
+
+**Request:** `@wdk-core/getBatchAbstractedAddresses-request`
+
+**Fields:**
+
+- `network`: `string` _(v2)_
+- `accountIndices`: `string` _(v2)_
+
+**Response:** `@wdk-core/getBatchAbstractedAddresses-response`
+
+**Fields:**
+
+- `addresses`: `string` _(v2)_
+
+---
+

@@ -1,5 +1,5 @@
 {
-  "version": 1,
+  "version": 2,
   "schema": [
     {
       "id": 0,
@@ -239,6 +239,19 @@
         "stream": false
       },
       "version": 1
+    },
+    {
+      "id": 8,
+      "name": "@wdk-core/getBatchAbstractedAddresses",
+      "request": {
+        "name": "@wdk-core/getBatchAbstractedAddresses-request",
+        "stream": false
+      },
+      "response": {
+        "name": "@wdk-core/getBatchAbstractedAddresses-response",
+        "stream": false
+      },
+      "version": 2
     }
   ]
 }

@@ -185,6 +185,19 @@ rpc.onGetAbstractedAddress(async payload => {
   }
 })
 
+rpc.onGetBatchAbstractedAddresses(async payload => {
+  try {
+    const indices = JSON.parse(payload.accountIndices)
+    const result = {}
+    for (const index of indices) {
+      result[index] = await wdk.getAbstractedAddress(payload.network, index)
+    }
+    return { addresses: JSON.stringify(result) }
+  } catch (error) {
+    throw new Error(stringifyError(error))
+  }
+})
+
 rpc.onGetAbstractedAddressBalance(async payload => {
   try {
     const balance = await wdk.getAbstractedAddressBalance(payload.network, payload.accountIndex)

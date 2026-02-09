@@ -183,6 +183,24 @@ schemaNs.register({
 })
 
 /**
+ * Get batch abstracted addresses
+ */
+schemaNs.register({
+  name: 'getBatchAbstractedAddresses-request',
+  fields: [
+    { name: 'network', type: 'string', required: true },
+    { name: 'accountIndices', type: 'string', required: true }
+  ]
+})
+
+schemaNs.register({
+  name: 'getBatchAbstractedAddresses-response',
+  fields: [
+    { name: 'addresses', type: 'string' }
+  ]
+})
+
+/**
  * Get abstracted address balance based on network
  */
 schemaNs.register({
@@ -492,6 +510,11 @@ ns.register({
   response: { name: '@wdk-core/getAbstractedAddress-response', stream: false }
 })
 
+ns.register({
+  name: 'getBatchAbstractedAddresses',
+  request: { name: '@wdk-core/getBatchAbstractedAddresses-request', stream: false },
+  response: { name: '@wdk-core/getBatchAbstractedAddresses-response', stream: false }
+})
 ns.register({
   name: 'getAbstractedAddressBalance',
   request: { name: '@wdk-core/getAbstractedAddressBalance-request', stream: false },

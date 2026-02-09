@@ -24,6 +24,7 @@ declare class HRPC {
     quoteSendTransaction(args: any): Promise<any>;
     sendTransaction(args: any): Promise<any>;
     getAbstractedAddress(args: any): Promise<any>;
+    getBatchAbstractedAddresses(args: any): Promise<any>;
     getAbstractedAddressBalance(args: any): Promise<any>;
     getAbstractedAddressTokenBalance(args: any): Promise<any>;
     abstractedAccountTransfer(args: any): Promise<any>;
@@ -43,6 +44,7 @@ declare class HRPC {
     onQuoteSendTransaction(responseFn: any): void;
     onSendTransaction(responseFn: any): void;
     onGetAbstractedAddress(responseFn: any): void;
+    onGetBatchAbstractedAddresses(responseFn: any): void;
     onGetAbstractedAddressBalance(responseFn: any): void;
     onGetAbstractedAddressTokenBalance(responseFn: any): void;
     onAbstractedAccountTransfer(responseFn: any): void;
