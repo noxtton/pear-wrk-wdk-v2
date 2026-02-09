@@ -10,7 +10,7 @@
     "lint:fix": "standard --fix",
     "gen:bundle": "bare-pack --target ios-arm64 --target ios-arm64-simulator --target ios-x64-simulator --target android-arm --target android-arm64 --target android-ia32 --target android-x64 --linked --defer ledger-bitcoin --imports ./pack.imports.json --out bundle/worklet.bundle.mjs src/worklet.mjs",
     "gen:schema": "node src/schema/schema.js && node src/lib/hrpc-docs-builder.js",
-    "postinstall": "npm run gen:bundle"
+    "postinstall": "bare-pack --version > /dev/null 2>&1 && npm run gen:bundle || echo 'Skipping gen:bundle (bare-pack not available, using pre-built bundle)'"
   },
   "dependencies": {
     "@tetherto/wdk-secret-manager": "1.0.0-beta.3",
