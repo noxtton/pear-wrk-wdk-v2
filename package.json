@@ -31,7 +31,7 @@
     "hrpc": "4.0.1",
     "hyperschema": "1.12.4",
     "os": "npm:bare-os@3.6.1",
-    "sodium-native": "5.0.9"
+    "sodium-native": "^5.0.10"
   },
   "devDependencies": {
     "rimraf": "6.0.1",
